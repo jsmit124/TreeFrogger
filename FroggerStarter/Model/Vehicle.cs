@@ -8,5 +8,6 @@ namespace FroggerStarter.Model
 {
     class Vehicle
     {
+
     }
 }
