@@ -26,6 +26,38 @@ namespace FroggerStarter.Model
             SetSpeed(SpeedXDirection, SpeedYDirection);
         }
 
+        public override void MoveRight()
+        {
+            if (base.X + this.SpeedX < 650)
+            {
+                base.MoveRight();
+            }
+        }
+
+        public override void MoveLeft()
+        {
+            if (base.X > 0)
+            {
+                base.MoveLeft();
+            }
+        }
+
+        public override void MoveUp()
+        {
+            if (base.Y > 55)
+            {
+                base.MoveUp();
+            }
+        }
+
+        public override void MoveDown()
+        {
+            if (base.Y + this.SpeedY < 405)
+            {
+                base.MoveDown();
+            }
+        }
+
         #endregion
     }
 }

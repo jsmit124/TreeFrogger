@@ -12,13 +12,15 @@ namespace FroggerStarter.Controller
     public class GameManager
     {
         #region Data members
-
-        private const int BottomLaneOffset = 5;
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
+        private readonly int topLaneYLocation;
+
+        private const int BottomLaneOffset = 5;
         private Canvas gameCanvas;
         private Frog player;
         private DispatcherTimer timer;
+        private LaneManager laneManager;
 
         #endregion
 
@@ -49,6 +51,8 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
 
+            this.laneManager = new LaneManager();
+
             this.setupGameTimer();
         }
 
@@ -76,6 +80,7 @@ namespace FroggerStarter.Controller
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createAndPlacePlayer();
+            this.addVehicles();
         }
 
         private void createAndPlacePlayer()
@@ -83,6 +88,14 @@ namespace FroggerStarter.Controller
             this.player = new Frog();
             this.gameCanvas.Children.Add(this.player.Sprite);
             this.setPlayerToCenterOfBottomLane();
+        }
+
+        private void addVehicles()
+        {
+            foreach (var vehicle in this.laneManager.GetAllVehicles())
+            {
+                this.gameCanvas.Children.Add(vehicle.Sprite);
+            }
         }
 
         private void setPlayerToCenterOfBottomLane()
