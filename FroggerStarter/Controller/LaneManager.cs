@@ -20,11 +20,16 @@ namespace FroggerStarter.Controller
 
         private void createLanes()
         {
-            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.SportsCar, 3, 2,105));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.Semi, 2, 2,155));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 3, 2,205));
-            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.Semi, 3, 2,255));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 2, 2, 305));
+            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.SportsCar, 3, 2, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.Semi, 2, 2, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 3, 2, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.Semi, 3, 2, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 2, 2, this.calculateNextLaneYLocation()));
+        }
+
+        private int calculateNextLaneYLocation()
+        {
+            return Defaults.TopLaneYLocation + ((this.Lanes.Count + 1) * Defaults.LaneWidth);
         }
 
         public void IncrementSpeed(double increment)
