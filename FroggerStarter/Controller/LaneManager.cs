@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Model;
 
@@ -8,19 +9,60 @@ namespace FroggerStarter.Controller
     public class LaneManager
     {
         public IList<Lane> Lanes { get; private set; }
+        public IEnumerable<Vehicle> AllVehicles => this.Lanes.SelectMany(lane => lane.Vehicles);
 
         public LaneManager()
         {
             this.Lanes = new List<Lane>();
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.Semi, 2, 2));
+            this.createLanes();
+            this.setVehicleLocations();
         }
 
-        public IEnumerable<Vehicle> GetAllVehicles()
+        private void createLanes()
         {
-            return this.Lanes.SelectMany(lane => lane.Vehicles);
+            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.SportsCar, 3, 2,105));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.Semi, 2, 2,155));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 3, 2,205));
+            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.Semi, 3, 2,255));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 2, 2, 305));
         }
-        
 
+        public void IncrementSpeed(double increment)
+        {
+            foreach (var lane in this.Lanes)
+            {
+                lane.IncrementSpeed(increment);
+            }
+        }
+
+        private void setVehicleLocations()
+        {
+            foreach (var lane in this.Lanes)
+            {
+                this.setVehicleXLocations(lane);
+                this.setVehicleYLocations(lane);
+            }
+        }
+
+        private void setVehicleYLocations(Lane lane)
+        {
+            foreach (var vehicle in lane)
+            {
+                vehicle.Y = ((Defaults.LaneWidth - vehicle.Height) / 2) + lane.YLocation;
+            }
+        }
+
+        private void setVehicleXLocations(Lane lane)
+        {
+            var distance = Defaults.LaneLength / lane.NumberOfVehicles;
+
+            var count = 0;
+            foreach (var vehicle in lane.Vehicles)
+            {
+                vehicle.X = count;
+                count += (int) distance;
+            }
+        }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using FroggerStarter.View.Sprites;
+﻿using FroggerStarter.Constants;
+using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
 {
@@ -28,7 +29,7 @@ namespace FroggerStarter.Model
 
         public override void MoveRight()
         {
-            if (base.X + this.SpeedX < 650)
+            if (base.X + this.SpeedX < Defaults.LaneLength)
             {
                 base.MoveRight();
             }
@@ -44,7 +45,7 @@ namespace FroggerStarter.Model
 
         public override void MoveUp()
         {
-            if (base.Y > 55)
+            if (base.Y > Defaults.TopLaneYLocation)
             {
                 base.MoveUp();
             }

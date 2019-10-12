@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using FroggerStarter.Constants;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
@@ -14,13 +15,11 @@ namespace FroggerStarter.Controller
         #region Data members
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
-        private readonly int topLaneYLocation;
 
-        private const int BottomLaneOffset = 5;
         private Canvas gameCanvas;
         private Frog player;
         private DispatcherTimer timer;
-        private LaneManager laneManager;
+        private readonly LaneManager laneManager;
 
         #endregion
 
@@ -50,7 +49,6 @@ namespace FroggerStarter.Controller
 
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
-
             this.laneManager = new LaneManager();
 
             this.setupGameTimer();
@@ -92,7 +90,7 @@ namespace FroggerStarter.Controller
 
         private void addVehicles()
         {
-            foreach (var vehicle in this.laneManager.GetAllVehicles())
+            foreach (var vehicle in this.laneManager.AllVehicles)
             {
                 this.gameCanvas.Children.Add(vehicle.Sprite);
             }
@@ -101,7 +99,7 @@ namespace FroggerStarter.Controller
         private void setPlayerToCenterOfBottomLane()
         {
             this.player.X = this.backgroundWidth / 2 - this.player.Width / 2;
-            this.player.Y = this.backgroundHeight - this.player.Height - BottomLaneOffset;
+            this.player.Y = this.backgroundHeight - this.player.Height - Defaults.BottomLaneOffset;
         }
 
         private void timerOnTick(object sender, object e)

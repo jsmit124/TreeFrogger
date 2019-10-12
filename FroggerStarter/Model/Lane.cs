@@ -7,43 +7,46 @@ namespace FroggerStarter.Model
 {
     public class Lane : IEnumerable<Vehicle>
     {
-        private double speed;
-        private readonly int numberOfVehicles;
-        private LaneDirection laneDirection;
+        public int NumberOfVehicles { get; private set; }
+        public int YLocation { get; private set; }
+        public LaneDirection Direction { get; private set; }
 
         public ICollection<Vehicle> Vehicles { get; private set; }
 
-        public Lane(LaneDirection direction, VehicleType vehicleType, int numberOfVehicles, double speed)
+        public Lane(LaneDirection direction, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed, int yLocation)
         {
             if (numberOfVehicles <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            if (speed <= 0)
+            if (defaultSpeed <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             this.Vehicles = new List<Vehicle>();
-            this.numberOfVehicles = numberOfVehicles;
-            this.laneDirection = direction;
-            this.speed = speed;
+            this.NumberOfVehicles = numberOfVehicles;
+            this.Direction = direction;
+            this.YLocation = yLocation;
 
-            this.populateLane(vehicleType);
+            this.populateLane(vehicleType, defaultSpeed);
         }
 
-        private void populateLane(VehicleType vehicleType)
+        private void populateLane(VehicleType vehicleType, double defaultSpeed)
         {
-            for (var i = 0; i < this.numberOfVehicles; i++)
+            for (var i = 0; i < this.NumberOfVehicles; i++)
             {
-                this.Vehicles.Add(new Vehicle(vehicleType));
+                this.Vehicles.Add(new Vehicle(vehicleType, defaultSpeed));
             }
         }
 
         public void IncrementSpeed(double increment)
         {
-            this.speed += increment;
+            foreach (var vehicle in this.Vehicles)
+            {
+                vehicle.IncrementSpeed(increment);
+            }
         }
 
         public IEnumerator<Vehicle> GetEnumerator()
@@ -55,5 +58,6 @@ namespace FroggerStarter.Model
         {
             return this.Vehicles.GetEnumerator();
         }
+
     }
 }

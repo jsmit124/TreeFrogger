@@ -1,28 +1,25 @@
-﻿using FroggerStarter.Enums;
+﻿using System;
+using FroggerStarter.Constants;
+using FroggerStarter.Enums;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
 {
     public class Vehicle : GameObject
     {
-        public int SpeedXDirection { get; private set; }
-        public int SpeedYDirection { get; private set; }
-
-        public Vehicle(VehicleType vehicleType)
+        public Vehicle(VehicleType vehicleType, double defaultSpeed)
         {
             switch (vehicleType)
             {
                 case VehicleType.SportsCar:
-                {
                     Sprite = new CarSprite();
                     break;
-                }
                 case VehicleType.Semi:
                     Sprite = new SemiSprite();
                     break;
             }
-        
-        SetSpeed(this.SpeedXDirection, this.SpeedYDirection);
+
+            SetSpeed(defaultSpeed, 0);
         }
 
         public override void MoveRight()
@@ -31,7 +28,7 @@ namespace FroggerStarter.Model
 
             if (base.X < 0 - base.Width)
             {
-                base.X = 650;
+                base.X = Defaults.LaneLength;
             }
         }
 
@@ -39,10 +36,15 @@ namespace FroggerStarter.Model
         {
             base.MoveLeft();
 
-            if (base.X > 650)
+            if (base.X > Defaults.LaneLength)
             {
                 base.X = 0;
             }
+        }
+
+        public void IncrementSpeed(double amountToIncrement)
+        {
+            base.SetSpeed(base.SpeedX + amountToIncrement, 0);
         }
 
     }
