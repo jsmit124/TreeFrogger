@@ -26,9 +26,9 @@ namespace FroggerStarter.Model
         {
             base.MoveRight();
 
-            if (base.X < 0 - base.Width)
+            if (base.X > Defaults.LaneLength)
             {
-                base.X = Defaults.LaneLength;
+                base.X = 0 - base.Width;
             }
         }
 
@@ -36,15 +36,15 @@ namespace FroggerStarter.Model
         {
             base.MoveLeft();
 
-            if (base.X > Defaults.LaneLength)
+            if (base.X < 0 - base.Width)
             {
-                base.X = 0;
+                base.X = Defaults.LaneLength;
             }
         }
 
         public void IncrementSpeed(double amountToIncrement)
         {
-            base.SetSpeed(base.SpeedX + amountToIncrement, 0);
+            SetSpeed(base.SpeedX + amountToIncrement, 0);
         }
 
     }

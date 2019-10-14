@@ -20,10 +20,10 @@ namespace FroggerStarter.Controller
 
         private void createLanes()
         {
-            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.SportsCar, 3, 2, this.calculateNextLaneYLocation()));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.Semi, 2, 2, this.calculateNextLaneYLocation()));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 3, 2, this.calculateNextLaneYLocation()));
-            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.Semi, 3, 2, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.SportsCar, 3, 3.6, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.Semi, 2, 3.2, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 3, 2.8, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.Semi, 3, 2.4, this.calculateNextLaneYLocation()));
             this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 2, 2, this.calculateNextLaneYLocation()));
         }
 
@@ -44,12 +44,12 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.Lanes)
             {
-                this.setVehicleXLocations(lane);
-                this.setVehicleYLocations(lane);
+                setVehicleXLocations(lane);
+                setVehicleYLocations(lane);
             }
         }
 
-        private void setVehicleYLocations(Lane lane)
+        private static void setVehicleYLocations(Lane lane)
         {
             foreach (var vehicle in lane)
             {
@@ -57,7 +57,7 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void setVehicleXLocations(Lane lane)
+        private static void setVehicleXLocations(Lane lane)
         {
             var distance = Defaults.LaneLength / lane.NumberOfVehicles;
 
@@ -66,6 +66,37 @@ namespace FroggerStarter.Controller
             {
                 vehicle.X = count;
                 count += (int) distance;
+            }
+        }
+
+        public void MoveVehicles()
+        {
+            foreach (var lane in this.Lanes)
+            {
+                if (lane.Direction == LaneDirection.Left)
+                {
+                    moveAllVehiclesInLaneLeft(lane);
+                }
+                else
+                {
+                    moveAllVehiclesInLaneRight(lane);
+                }
+            }
+        }
+
+        private static void moveAllVehiclesInLaneLeft(Lane lane)
+        {
+            foreach (var vehicle in lane)
+            {
+                vehicle.MoveLeft();
+            }
+        }
+
+        private static void moveAllVehiclesInLaneRight(Lane lane)
+        {
+            foreach (var vehicle in lane)
+            {
+                vehicle.MoveRight();
             }
         }
 
