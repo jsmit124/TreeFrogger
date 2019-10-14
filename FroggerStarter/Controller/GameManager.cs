@@ -7,7 +7,7 @@ using FroggerStarter.Model;
 namespace FroggerStarter.Controller
 {
     /// <summary>
-    ///     Manages all aspects of the game play including moving the player,
+    ///     Manages all aspects of the game play including moving the playerSprite,
     ///     the vehicles as well as lives and score.
     /// </summary>
     public class GameManager
@@ -18,7 +18,8 @@ namespace FroggerStarter.Controller
         private readonly double backgroundWidth;
 
         private Canvas gameCanvas;
-        private Frog player;
+        private Frog playerSprite;
+        private readonly Player playerStats;
         private DispatcherTimer gameTimer;
         private DispatcherTimer speedTimer;
         private readonly LaneManager laneManager;
@@ -52,6 +53,7 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
             this.laneManager = new LaneManager();
+            this.playerStats = new Player();
 
             this.setupGameTimer();
             this.setupSpeedTimer();
@@ -94,8 +96,8 @@ namespace FroggerStarter.Controller
 
         private void createAndPlacePlayer()
         {
-            this.player = new Frog();
-            this.gameCanvas.Children.Add(this.player.Sprite);
+            this.playerSprite = new Frog();
+            this.gameCanvas.Children.Add(this.playerSprite.Sprite);
             this.setPlayerToCenterOfBottomLane();
         }
 
@@ -109,15 +111,15 @@ namespace FroggerStarter.Controller
 
         private void setPlayerToCenterOfBottomLane()
         {
-            this.player.X = this.backgroundWidth / 2 - this.player.Width / 2;
-            this.player.Y = this.backgroundHeight - this.player.Height - Defaults.BottomLaneOffset;
+            this.playerSprite.X = this.backgroundWidth / 2 - this.playerSprite.Width / 2;
+            this.playerSprite.Y = this.backgroundHeight - this.playerSprite.Height - Defaults.BottomLaneOffset;
         }
 
         private void gameTimerOnTick(object sender, object e)
         {
-            // TODO Update game state, check for collision
             this.laneManager.MoveVehicles();
             this.checkForCollision();
+            this.checkForPlayerScored();
         }
 
         private void speedTimerOnTick(object sender, object e)
@@ -126,50 +128,50 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        ///     Moves the player to the left.
+        ///     Moves the playerSprite to the left.
         ///     Precondition: none
-        ///     Postcondition: player.X = player.X@prev - player.Width
+        ///     Postcondition: playerSprite.X = playerSprite.X@prev - playerSprite.Width
         /// </summary>
         public void MovePlayerLeft()
         {
-            this.player.MoveLeft();
+            this.playerSprite.MoveLeft();
         }
 
         /// <summary>
-        ///     Moves the player to the right.
+        ///     Moves the playerSprite to the right.
         ///     Precondition: none
-        ///     Postcondition: player.X = player.X@prev + player.Width
+        ///     Postcondition: playerSprite.X = playerSprite.X@prev + playerSprite.Width
         /// </summary>
         public void MovePlayerRight()
         {
-            this.player.MoveRight();
+            this.playerSprite.MoveRight();
         }
 
         /// <summary>
-        ///     Moves the player up.
+        ///     Moves the playerSprite up.
         ///     Precondition: none
-        ///     Postcondition: player.Y = player.Y@prev - player.Height
+        ///     Postcondition: playerSprite.Y = playerSprite.Y@prev - playerSprite.Height
         /// </summary>
         public void MovePlayerUp()
         {
-            this.player.MoveUp();
+            this.playerSprite.MoveUp();
         }
 
         /// <summary>
-        ///     Moves the player down.
+        ///     Moves the playerSprite down.
         ///     Precondition: none
-        ///     Postcondition: player.Y = player.Y@prev + player.Height
+        ///     Postcondition: playerSprite.Y = playerSprite.Y@prev + playerSprite.Height
         /// </summary>
         public void MovePlayerDown()
         {
-            this.player.MoveDown();
+            this.playerSprite.MoveDown();
         }
 
         private void checkForCollision()
         {
             foreach (var vehicle in this.laneManager.AllVehicles)
             {
-                if (vehicle.CollisionDetected(this.player))
+                if (vehicle.CollisionDetected(this.playerSprite))
                 {
                     this.handleCollision();
                 }
@@ -179,7 +181,47 @@ namespace FroggerStarter.Controller
         private void handleCollision()
         {
             this.laneManager.ResetVehicleSpeedsToDefault();
+            this.playerStats.DecrementLives();
+            if (!this.checkForGameOver())
+            {
+                this.setPlayerToCenterOfBottomLane();
+            }
+        }
+
+        private void checkForPlayerScored()
+        {
+            if (this.playerSprite.Y <= Defaults.TopLaneYLocation)
+            {
+                this.handlePlayerScored();
+            }
+        }
+
+        private void handlePlayerScored()
+        {
             this.setPlayerToCenterOfBottomLane();
+            this.playerStats.IncrementScore();
+            this.checkForGameOver();
+        }
+
+        private bool checkForGameOver()
+        {
+            if (this.playerStats.Lives == 0 || this.playerStats.Score == 3)
+            {
+                this.handleGameOver();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void handleGameOver()
+        {
+            this.gameTimer.Stop();
+            this.speedTimer.Stop();
+            this.playerSprite.StopMovement();
+            this.laneManager.StopAllVehicleMovement();
         }
 
         #endregion

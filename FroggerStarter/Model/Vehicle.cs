@@ -5,11 +5,28 @@ using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
 {
+    /// <summary>
+    /// Stores information for the Vehicle GameObject class
+    /// </summary>
+    /// <seealso cref="FroggerStarter.Model.GameObject" />
     public class Vehicle : GameObject
     {
         private readonly double defaultSpeed;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vehicle"/> class.
+        /// Precondition: defaultSpeed > 0
+        /// Postcondition: this.defaultSpeed == defaultSpeed AND base.SpeedX == default speed
+        /// </summary>
+        /// <param name="vehicleType">Type of the vehicle.</param>
+        /// <param name="defaultSpeed">The default speed.</param>
         public Vehicle(VehicleType vehicleType, double defaultSpeed)
         {
+            if (defaultSpeed <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             switch (vehicleType)
             {
                 case VehicleType.SportsCar:
@@ -24,6 +41,11 @@ namespace FroggerStarter.Model
             SetSpeed(defaultSpeed, 0);
         }
 
+        /// <summary>
+        /// Moves the game object right.
+        /// Precondition: None
+        /// Postcondition: X == X@prev + SpeedX
+        /// </summary>
         public override void MoveRight()
         {
             base.MoveRight();
@@ -34,6 +56,11 @@ namespace FroggerStarter.Model
             }
         }
 
+        /// <summary>
+        /// Moves the game object left.
+        /// Precondition: None
+        /// Postcondition: X == X@prev + SpeedX
+        /// </summary>
         public override void MoveLeft()
         {
             base.MoveLeft();
@@ -44,11 +71,26 @@ namespace FroggerStarter.Model
             }
         }
 
+        /// <summary>
+        /// Increments the speed.
+        /// Precondition: amountToIncrement > 0
+        /// Postcondition: base.SpeedX == base.SpeedX + amountToIncrement
+        /// </summary>
+        /// <param name="amountToIncrement">The amount to increment.</param>
         public void IncrementSpeed(double amountToIncrement)
         {
+            if (amountToIncrement <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             SetSpeed(base.SpeedX + amountToIncrement, 0);
         }
 
+        /// <summary>
+        /// Resets the speed to default.
+        /// Precondition: None
+        /// Postcondition: base.SpeedX == this.defaultSpeed
+        /// </summary>
         public void ResetSpeedToDefault()
         {
             SetSpeed(this.defaultSpeed, 0);

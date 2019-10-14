@@ -62,6 +62,12 @@ namespace FroggerStarter.View
             }
         }
 
+        public void DisplayGameOverText()
+        {
+            this.gameOverTextBlock.Visibility = Visibility.Visible;
+        }
+
         #endregion
+
     }
 }

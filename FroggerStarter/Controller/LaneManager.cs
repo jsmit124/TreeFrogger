@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
@@ -6,11 +7,30 @@ using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
 {
+    /// <summary>
+    /// Stores information for the LaneManager class
+    /// </summary>
     public class LaneManager
     {
+        /// <summary>
+        /// Gets the lanes.
+        /// </summary>
+        /// <value>
+        /// The lanes.
+        /// </value>
         public IList<Lane> Lanes { get; private set; }
+
+        /// <summary>
+        /// Gets all vehicles.
+        /// </summary>
+        /// <value>
+        /// All vehicles.
+        /// </value>
         public IEnumerable<Vehicle> AllVehicles => this.Lanes.SelectMany(lane => lane.Vehicles);
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LaneManager"/> class.
+        /// </summary>
         public LaneManager()
         {
             this.Lanes = new List<Lane>();
@@ -32,8 +52,19 @@ namespace FroggerStarter.Controller
             return Defaults.TopLaneYLocation + ((this.Lanes.Count + 1) * Defaults.LaneWidth);
         }
 
+        /// <summary>
+        /// Increments the speed.
+        /// Precondition: increment > 0
+        /// Postcondition: speed is increased for each vehicle in this.Lanes
+        /// </summary>
+        /// <param name="increment">The increment.</param>
         public void IncrementSpeed(double increment)
         {
+            if (increment <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             foreach (var lane in this.Lanes)
             {
                 lane.IncrementSpeed(increment);
@@ -69,6 +100,11 @@ namespace FroggerStarter.Controller
             }
         }
 
+        /// <summary>
+        /// Moves the vehicles.
+        /// Precondition: None
+        /// Postcondition: each vehicle X is increased by their respective speed
+        /// </summary>
         public void MoveVehicles()
         {
             foreach (var lane in this.Lanes)
@@ -100,11 +136,24 @@ namespace FroggerStarter.Controller
             }
         }
 
+        /// <summary>
+        /// Resets the vehicle speeds to default.
+        /// Precondition: None
+        /// Postcondition: each vehicle.SpeedX in this.AllVehicles == default speed for their lane
+        /// </summary>
         public void ResetVehicleSpeedsToDefault()
         {
             foreach (var vehicle in this.AllVehicles)
             {
                 vehicle.ResetSpeedToDefault();
+            }
+        }
+
+        public void StopAllVehicleMovement()
+        {
+            foreach (var vehicle in this.AllVehicles)
+            {
+                vehicle.StopMovement();
             }
         }
 

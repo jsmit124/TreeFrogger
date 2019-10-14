@@ -172,13 +172,30 @@ namespace FroggerStarter.Model
             this.SpeedY = speedY;
         }
 
+        /// <summary>
+        /// Detects collisions of two game objects.
+        /// Precondition: otherObject != null
+        /// Postcondition: None
+        /// </summary>
+        /// <param name="otherObject">The other object.</param>
+        /// <returns></returns>
         public bool CollisionDetected(GameObject otherObject)
         {
+            if (otherObject == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             var collisionArea = new Rectangle((int) otherObject.X,(int) otherObject.Y,
                 (int) otherObject.Width,(int) otherObject.Height);
             var currentArea = new Rectangle((int) this.X,(int) this.Y,(int) this.Width,(int) this.Height);
 
             return currentArea.IntersectsWith(collisionArea);
+        }
+
+        public void StopMovement()
+        {
+            this.SetSpeed(0, 0);
         }
 
         #endregion
