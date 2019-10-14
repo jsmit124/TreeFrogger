@@ -100,5 +100,13 @@ namespace FroggerStarter.Controller
             }
         }
 
+        public void ResetVehicleSpeedsToDefault()
+        {
+            foreach (var vehicle in this.AllVehicles)
+            {
+                vehicle.ResetSpeedToDefault();
+            }
+        }
+
     }
 }

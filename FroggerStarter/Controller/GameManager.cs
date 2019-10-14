@@ -89,7 +89,7 @@ namespace FroggerStarter.Controller
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createAndPlacePlayer();
-            this.addVehicles();
+            this.addVehiclesToView();
         }
 
         private void createAndPlacePlayer()
@@ -99,71 +99,89 @@ namespace FroggerStarter.Controller
             this.setPlayerToCenterOfBottomLane();
         }
 
-        private void addVehicles()
+        private void addVehiclesToView()
+        {
+            foreach (var vehicle in this.laneManager.AllVehicles)
             {
-                foreach (var vehicle in this.laneManager.AllVehicles)
+                this.gameCanvas.Children.Add(vehicle.Sprite);
+            }
+        }
+
+        private void setPlayerToCenterOfBottomLane()
+        {
+            this.player.X = this.backgroundWidth / 2 - this.player.Width / 2;
+            this.player.Y = this.backgroundHeight - this.player.Height - Defaults.BottomLaneOffset;
+        }
+
+        private void gameTimerOnTick(object sender, object e)
+        {
+            // TODO Update game state, check for collision
+            this.laneManager.MoveVehicles();
+            this.checkForCollision();
+        }
+
+        private void speedTimerOnTick(object sender, object e)
+        {
+            this.laneManager.IncrementSpeed(0.1);
+        }
+
+        /// <summary>
+        ///     Moves the player to the left.
+        ///     Precondition: none
+        ///     Postcondition: player.X = player.X@prev - player.Width
+        /// </summary>
+        public void MovePlayerLeft()
+        {
+            this.player.MoveLeft();
+        }
+
+        /// <summary>
+        ///     Moves the player to the right.
+        ///     Precondition: none
+        ///     Postcondition: player.X = player.X@prev + player.Width
+        /// </summary>
+        public void MovePlayerRight()
+        {
+            this.player.MoveRight();
+        }
+
+        /// <summary>
+        ///     Moves the player up.
+        ///     Precondition: none
+        ///     Postcondition: player.Y = player.Y@prev - player.Height
+        /// </summary>
+        public void MovePlayerUp()
+        {
+            this.player.MoveUp();
+        }
+
+        /// <summary>
+        ///     Moves the player down.
+        ///     Precondition: none
+        ///     Postcondition: player.Y = player.Y@prev + player.Height
+        /// </summary>
+        public void MovePlayerDown()
+        {
+            this.player.MoveDown();
+        }
+
+        private void checkForCollision()
+        {
+            foreach (var vehicle in this.laneManager.AllVehicles)
+            {
+                if (vehicle.CollisionDetected(this.player))
                 {
-                    this.gameCanvas.Children.Add(vehicle.Sprite);
+                    this.handleCollision();
                 }
             }
-
-            private void setPlayerToCenterOfBottomLane()
-            {
-                this.player.X = this.backgroundWidth / 2 - this.player.Width / 2;
-                this.player.Y = this.backgroundHeight - this.player.Height - Defaults.BottomLaneOffset;
-            }
-
-            private void gameTimerOnTick(object sender, object e)
-            {
-                // TODO Update game state, e.g., move vehicles, check for collision, etc.
-                this.laneManager.MoveVehicles();
-            }
-
-            private void speedTimerOnTick(object sender, object e)
-            {
-                this.laneManager.IncrementSpeed(0.1);
-            }
-
-            /// <summary>
-            ///     Moves the player to the left.
-            ///     Precondition: none
-            ///     Postcondition: player.X = player.X@prev - player.Width
-            /// </summary>
-            public void MovePlayerLeft()
-            {
-                this.player.MoveLeft();
-            }
-
-            /// <summary>
-            ///     Moves the player to the right.
-            ///     Precondition: none
-            ///     Postcondition: player.X = player.X@prev + player.Width
-            /// </summary>
-            public void MovePlayerRight()
-            {
-                this.player.MoveRight();
-            }
-
-            /// <summary>
-            ///     Moves the player up.
-            ///     Precondition: none
-            ///     Postcondition: player.Y = player.Y@prev - player.Height
-            /// </summary>
-            public void MovePlayerUp()
-            {
-                this.player.MoveUp();
-            }
-
-            /// <summary>
-            ///     Moves the player down.
-            ///     Precondition: none
-            ///     Postcondition: player.Y = player.Y@prev + player.Height
-            /// </summary>
-            public void MovePlayerDown()
-            {
-                this.player.MoveDown();
-            }
-
-            #endregion
         }
+
+        private void handleCollision()
+        {
+            this.laneManager.ResetVehicleSpeedsToDefault();
+            this.setPlayerToCenterOfBottomLane();
+        }
+
+        #endregion
     }
+}

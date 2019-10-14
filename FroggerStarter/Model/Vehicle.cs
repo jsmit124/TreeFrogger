@@ -7,6 +7,7 @@ namespace FroggerStarter.Model
 {
     public class Vehicle : GameObject
     {
+        private readonly double defaultSpeed;
         public Vehicle(VehicleType vehicleType, double defaultSpeed)
         {
             switch (vehicleType)
@@ -19,6 +20,7 @@ namespace FroggerStarter.Model
                     break;
             }
 
+            this.defaultSpeed = defaultSpeed;
             SetSpeed(defaultSpeed, 0);
         }
 
@@ -45,6 +47,11 @@ namespace FroggerStarter.Model
         public void IncrementSpeed(double amountToIncrement)
         {
             SetSpeed(base.SpeedX + amountToIncrement, 0);
+        }
+
+        public void ResetSpeedToDefault()
+        {
+            SetSpeed(this.defaultSpeed, 0);
         }
 
     }

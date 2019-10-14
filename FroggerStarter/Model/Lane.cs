@@ -10,7 +10,6 @@ namespace FroggerStarter.Model
         public int NumberOfVehicles { get; private set; }
         public int YLocation { get; private set; }
         public LaneDirection Direction { get; private set; }
-
         public ICollection<Vehicle> Vehicles { get; private set; }
 
         public Lane(LaneDirection direction, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed, int yLocation)

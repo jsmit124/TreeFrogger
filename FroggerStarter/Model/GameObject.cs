@@ -1,6 +1,7 @@
 ﻿using System;
-using Windows.Foundation;
+using System.Drawing;
 using FroggerStarter.View.Sprites;
+using Point = Windows.Foundation.Point;
 
 namespace FroggerStarter.Model
 {
@@ -169,6 +170,15 @@ namespace FroggerStarter.Model
 
             this.SpeedX = speedX;
             this.SpeedY = speedY;
+        }
+
+        public bool CollisionDetected(GameObject otherObject)
+        {
+            var collisionArea = new Rectangle((int) otherObject.X,(int) otherObject.Y,
+                (int) otherObject.Width,(int) otherObject.Height);
+            var currentArea = new Rectangle((int) this.X,(int) this.Y,(int) this.Width,(int) this.Height);
+
+            return currentArea.IntersectsWith(collisionArea);
         }
 
         #endregion
