@@ -8,28 +8,34 @@ using FroggerStarter.Model;
 namespace FroggerStarter.Controller
 {
     /// <summary>
-    /// Stores information for the LaneManager class
+    ///     Stores information for the LaneManager class
     /// </summary>
     public class LaneManager
     {
-        /// <summary>
-        /// Gets the lanes.
-        /// </summary>
-        /// <value>
-        /// The lanes.
-        /// </value>
-        public IList<Lane> Lanes { get; private set; }
+        #region Properties
 
         /// <summary>
-        /// Gets all vehicles.
+        ///     Gets the lanes.
         /// </summary>
         /// <value>
-        /// All vehicles.
+        ///     The lanes.
+        /// </value>
+        public IList<Lane> Lanes { get; }
+
+        /// <summary>
+        ///     Gets all vehicles.
+        /// </summary>
+        /// <value>
+        ///     All vehicles.
         /// </value>
         public IEnumerable<Vehicle> AllVehicles => this.Lanes.SelectMany(lane => lane.Vehicles);
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="LaneManager"/> class.
+        ///     Initializes a new instance of the <see cref="LaneManager" /> class.
         /// </summary>
         public LaneManager()
         {
@@ -38,24 +44,31 @@ namespace FroggerStarter.Controller
             this.setVehicleLocations();
         }
 
+        #endregion
+
+        #region Methods
+
         private void createLanes()
         {
-            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.SportsCar, 3, 3.6, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.SportsCar, 3, 3.6,
+                this.calculateNextLaneYLocation()));
             this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.Semi, 2, 3.2, this.calculateNextLaneYLocation()));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 3, 2.8, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 3, 2.8,
+                this.calculateNextLaneYLocation()));
             this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.Semi, 3, 2.4, this.calculateNextLaneYLocation()));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 2, 2, this.calculateNextLaneYLocation()));
+            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.SportsCar, 2, 2,
+                this.calculateNextLaneYLocation()));
         }
 
         private int calculateNextLaneYLocation()
         {
-            return Defaults.TopLaneYLocation + ((this.Lanes.Count + 1) * Defaults.LaneWidth);
+            return Defaults.TopLaneYLocation + (this.Lanes.Count + 1) * Defaults.LaneWidth;
         }
 
         /// <summary>
-        /// Increments the speed.
-        /// Precondition: increment > 0
-        /// Postcondition: speed is increased for each vehicle in this.Lanes
+        ///     Increments the speed.
+        ///     Precondition: increment > 0
+        ///     Postcondition: speed is increased for each vehicle in this.Lanes
         /// </summary>
         /// <param name="increment">The increment.</param>
         public void IncrementSpeed(double increment)
@@ -84,7 +97,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var vehicle in lane)
             {
-                vehicle.Y = ((Defaults.LaneWidth - vehicle.Height) / 2) + lane.YLocation;
+                vehicle.Y = (Defaults.LaneWidth - vehicle.Height) / 2 + lane.YLocation;
             }
         }
 
@@ -96,14 +109,14 @@ namespace FroggerStarter.Controller
             foreach (var vehicle in lane.Vehicles)
             {
                 vehicle.X = count;
-                count += (int) distance;
+                count += distance;
             }
         }
 
         /// <summary>
-        /// Moves the vehicles.
-        /// Precondition: None
-        /// Postcondition: each vehicle X is increased by their respective speed
+        ///     Moves the vehicles.
+        ///     Precondition: None
+        ///     Postcondition: each vehicle X is increased by their respective speed
         /// </summary>
         public void MoveVehicles()
         {
@@ -137,9 +150,9 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Resets the vehicle speeds to default.
-        /// Precondition: None
-        /// Postcondition: each vehicle.SpeedX in this.AllVehicles == default speed for their lane
+        ///     Resets the vehicle speeds to default.
+        ///     Precondition: None
+        ///     Postcondition: each vehicle.SpeedX in this.AllVehicles == default speed for their lane
         /// </summary>
         public void ResetVehicleSpeedsToDefault()
         {
@@ -149,6 +162,11 @@ namespace FroggerStarter.Controller
             }
         }
 
+        /// <summary>
+        ///     Stops all vehicle movement.
+        ///     Precondition: None
+        ///     Postcondition: All vehicles in this.AllVehicles speed set to zero
+        /// </summary>
         public void StopAllVehicleMovement()
         {
             foreach (var vehicle in this.AllVehicles)
@@ -157,5 +175,6 @@ namespace FroggerStarter.Controller
             }
         }
 
+        #endregion
     }
 }

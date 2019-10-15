@@ -10,7 +10,7 @@
     Width="50">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="FrogColor" Color="LawnGreen"/>
+        <SolidColorBrush x:Key="FrogColor" Color="LawnGreen" />
     </UserControl.Resources>
 
     <Canvas Width="50" Height="50" Background="Transparent">

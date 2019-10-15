@@ -11,13 +11,15 @@ namespace FroggerStarter
     /// <summary>
     ///     Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public sealed partial class App 
+    public sealed partial class App
     {
         #region Constructors
 
         /// <summary>
         ///     Initializes the singleton application object.  This is the first line of authored code
         ///     executed, and as such is the logical equivalent of main() or WinMain().
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         public App()
         {
@@ -32,6 +34,8 @@ namespace FroggerStarter
         /// <summary>
         ///     Invoked when the application is launched normally by the end user.  Other entry points
         ///     will be used such as when the application is launched to open a specific file.
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
@@ -73,6 +77,8 @@ namespace FroggerStarter
 
         /// <summary>
         ///     Invoked when Navigation to a certain page fails
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         /// <param name="sender">The Frame which failed navigation</param>
         /// <param name="e">Details about the navigation failure</param>
@@ -85,6 +91,8 @@ namespace FroggerStarter
         ///     Invoked when application execution is being suspended.  Application state is saved
         ///     without knowing whether the application will be terminated or resumed with the contents
         ///     of memory still intact.
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>

@@ -12,24 +12,36 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class GameManager
     {
+        #region Types and Delegates
+
+        /// <summary>
+        ///     Delegate for the Game Over event
+        /// </summary>
+        public delegate void GameOverHandler();
+
+        /// <summary>
+        ///     Delegate for the Lives Decreased event
+        /// </summary>
+        /// <param name="lives">The lives.</param>
+        public delegate void LivesDecreasedHandler(int lives);
+
+        /// <summary>
+        ///     Delegate for the Score Increased event
+        /// </summary>
+        /// <param name="score">The score.</param>
+        public delegate void ScoreIncreasedHandler(int score);
+
+        #endregion
+
         #region Data members
 
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
 
-        public delegate void ScoreIncreasedHandler(int score);
-
-        public delegate void LivesDecreasedHandler(int lives);
-
-        public delegate void GameOverHandler();
-
-        public event ScoreIncreasedHandler ScoreIncreased;
-        public event LivesDecreasedHandler LifeLost;
-        public event GameOverHandler GameOver;
-
         private Canvas gameCanvas;
         private Frog playerSprite;
-        public PlayerStatistics PlayerStats { get; private set; }
+
+        private readonly PlayerStatistics playerStats;
 
         private DispatcherTimer gameTimer;
         private DispatcherTimer speedTimer;
@@ -64,7 +76,7 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
             this.laneManager = new LaneManager();
-            this.PlayerStats = new PlayerStatistics();
+            this.playerStats = new PlayerStatistics();
 
             this.setupGameTimer();
             this.setupSpeedTimer();
@@ -73,6 +85,21 @@ namespace FroggerStarter.Controller
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///     Occurs when [score increased].
+        /// </summary>
+        public event ScoreIncreasedHandler ScoreIncreased;
+
+        /// <summary>
+        ///     Occurs when [life lost].
+        /// </summary>
+        public event LivesDecreasedHandler LifeLost;
+
+        /// <summary>
+        ///     Occurs when [game over].
+        /// </summary>
+        public event GameOverHandler GameOver;
 
         private void setupGameTimer()
         {
@@ -192,8 +219,8 @@ namespace FroggerStarter.Controller
         private void handleCollision()
         {
             this.laneManager.ResetVehicleSpeedsToDefault();
-            this.PlayerStats.DecrementLives();
-            this.LifeLost?.Invoke(this.PlayerStats.Lives);
+            this.playerStats.DecrementLives();
+            this.LifeLost?.Invoke(this.playerStats.Lives);
 
             if (!this.checkForGameOver())
             {
@@ -211,23 +238,21 @@ namespace FroggerStarter.Controller
 
         private void handlePlayerScored()
         {
-            this.ScoreIncreased?.Invoke(this.PlayerStats.Score);
-            this.PlayerStats.IncrementScore();
+            this.ScoreIncreased?.Invoke(this.playerStats.Score);
+            this.playerStats.IncrementScore();
             this.checkForGameOver();
             this.setPlayerToCenterOfBottomLane();
         }
 
         private bool checkForGameOver()
         {
-            if (this.PlayerStats.Lives == 0 || this.PlayerStats.Score == 3)
+            if (this.playerStats.Lives == 0 || this.playerStats.Score == 3)
             {
                 this.handleGameOver();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private void handleGameOver()

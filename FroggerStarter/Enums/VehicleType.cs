@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FroggerStarter.Enums
+﻿namespace FroggerStarter.Enums
 {
+    /// <summary>
+    ///     Stores enumerators for the Vehicle Type enumerators
+    /// </summary>
     public enum VehicleType
     {
         Semi,

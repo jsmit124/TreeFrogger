@@ -173,9 +173,9 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Detects collisions of two game objects.
-        /// Precondition: otherObject != null
-        /// Postcondition: None
+        ///     Detects collisions of two game objects.
+        ///     Precondition: otherObject != null
+        ///     Postcondition: None
         /// </summary>
         /// <param name="otherObject">The other object.</param>
         /// <returns></returns>
@@ -186,13 +186,18 @@ namespace FroggerStarter.Model
                 throw new ArgumentNullException();
             }
 
-            var collisionArea = new Rectangle((int) otherObject.X,(int) otherObject.Y,
-                (int) otherObject.Width,(int) otherObject.Height);
-            var currentArea = new Rectangle((int) this.X,(int) this.Y,(int) this.Width,(int) this.Height);
+            var collisionArea = new Rectangle((int) otherObject.X, (int) otherObject.Y,
+                (int) otherObject.Width, (int) otherObject.Height);
+            var currentArea = new Rectangle((int) this.X, (int) this.Y, (int) this.Width, (int) this.Height);
 
             return currentArea.IntersectsWith(collisionArea);
         }
 
+        /// <summary>
+        ///     Stops the movement.
+        ///     Precondition: None
+        ///     Postcondition: SpeedX && SpeedY set to zero
+        /// </summary>
         public void StopMovement()
         {
             this.SetSpeed(0, 0);

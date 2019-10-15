@@ -25,8 +25,8 @@ namespace FroggerStarter.View.Sprites
         #region Methods
 
         /// <summary>
-        /// Renders user control at the specified (x,y) location in relation
-        /// to the top, left part of the canvas.
+        ///     Renders user control at the specified (x,y) location in relation
+        ///     to the top, left part of the canvas.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>

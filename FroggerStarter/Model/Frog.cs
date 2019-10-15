@@ -27,33 +27,57 @@ namespace FroggerStarter.Model
             SetSpeed(SpeedXDirection, SpeedYDirection);
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Moves the game object right.
+        ///     Precondition: None
+        ///     Postcondition: X == X@prev + SpeedX
+        /// </summary>
         public override void MoveRight()
         {
-            if (base.X + this.SpeedX < Defaults.LaneLength)
+            if (X + SpeedX < Defaults.LaneLength)
             {
                 base.MoveRight();
             }
         }
 
+        /// <summary>
+        ///     Moves the game object left.
+        ///     Precondition: None
+        ///     Postcondition: X == X@prev + SpeedX
+        /// </summary>
         public override void MoveLeft()
         {
-            if (base.X > 0)
+            if (X > 0)
             {
                 base.MoveLeft();
             }
         }
 
+        /// <summary>
+        ///     Moves the game object up.
+        ///     Precondition: None
+        ///     Postcondition: Y == Y@prev - SpeedY
+        /// </summary>
         public override void MoveUp()
         {
-            if (base.Y > Defaults.TopLaneYLocation)
+            if (Y > Defaults.TopLaneYLocation)
             {
                 base.MoveUp();
             }
         }
 
+        /// <summary>
+        ///     Moves the game object down.
+        ///     Precondition: None
+        ///     Postcondition: Y == Y@prev + SpeedY
+        /// </summary>
         public override void MoveDown()
         {
-            if (base.Y + this.SpeedY < 405)
+            if (Y + SpeedY < 405)
             {
                 base.MoveDown();
             }

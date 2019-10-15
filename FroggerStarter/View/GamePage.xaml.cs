@@ -24,6 +24,9 @@ namespace FroggerStarter.View
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="GamePage" /> class.
+        /// </summary>
         public GamePage()
         {
             this.InitializeComponent();
@@ -68,19 +71,19 @@ namespace FroggerStarter.View
 
         private void onScoreCountUpdated(int score)
         {
-            this.scoreTextBlock.Text = "Score: " + (score + 1).ToString();
+            this.scoreTextBlock.Text = "Score: " + (score + 1);
         }
 
         private void onLivesCountUpdated(int lives)
         {
-            this.livesTextBlock.Text = "Lives: " + lives.ToString();
+            this.livesTextBlock.Text = "Lives: " + lives;
         }
 
         private void onGameOver()
         {
             this.gameOverTextBlock.Visibility = Visibility.Visible;
         }
-        #endregion
 
+        #endregion
     }
 }
