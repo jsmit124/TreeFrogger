@@ -5,7 +5,7 @@ namespace FroggerStarter.Model
     /// <summary>
     /// Stores basic information for the Player class
     /// </summary>
-    public class Player
+    public class PlayerStatistics
     {
         /// <summary>
         /// Gets the lives.
@@ -23,11 +23,11 @@ namespace FroggerStarter.Model
         public int Score { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Player"/> class.
+        /// Initializes a new instance of the <see cref="PlayerStatistics"/> class.
         /// Precondition: None
         /// Postcondition: this.Lives == Defaults.PlayerLives AND this.Score == 0
         /// </summary>
-        public Player()
+        public PlayerStatistics()
         {
             this.Lives = Defaults.PlayerLives;
             this.Score = 0;

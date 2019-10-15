@@ -17,9 +17,20 @@ namespace FroggerStarter.Controller
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
 
+        public delegate void ScoreIncreasedHandler(int score);
+
+        public delegate void LivesDecreasedHandler(int lives);
+
+        public delegate void GameOverHandler();
+
+        public event ScoreIncreasedHandler ScoreIncreased;
+        public event LivesDecreasedHandler LifeLost;
+        public event GameOverHandler GameOver;
+
         private Canvas gameCanvas;
         private Frog playerSprite;
-        private readonly Player playerStats;
+        public PlayerStatistics PlayerStats { get; private set; }
+
         private DispatcherTimer gameTimer;
         private DispatcherTimer speedTimer;
         private readonly LaneManager laneManager;
@@ -53,7 +64,7 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
             this.laneManager = new LaneManager();
-            this.playerStats = new Player();
+            this.PlayerStats = new PlayerStatistics();
 
             this.setupGameTimer();
             this.setupSpeedTimer();
@@ -181,7 +192,9 @@ namespace FroggerStarter.Controller
         private void handleCollision()
         {
             this.laneManager.ResetVehicleSpeedsToDefault();
-            this.playerStats.DecrementLives();
+            this.PlayerStats.DecrementLives();
+            this.LifeLost?.Invoke(this.PlayerStats.Lives);
+
             if (!this.checkForGameOver())
             {
                 this.setPlayerToCenterOfBottomLane();
@@ -198,14 +211,15 @@ namespace FroggerStarter.Controller
 
         private void handlePlayerScored()
         {
-            this.setPlayerToCenterOfBottomLane();
-            this.playerStats.IncrementScore();
+            this.ScoreIncreased?.Invoke(this.PlayerStats.Score);
+            this.PlayerStats.IncrementScore();
             this.checkForGameOver();
+            this.setPlayerToCenterOfBottomLane();
         }
 
         private bool checkForGameOver()
         {
-            if (this.playerStats.Lives == 0 || this.playerStats.Score == 3)
+            if (this.PlayerStats.Lives == 0 || this.PlayerStats.Score == 3)
             {
                 this.handleGameOver();
                 return true;
@@ -222,6 +236,7 @@ namespace FroggerStarter.Controller
             this.speedTimer.Stop();
             this.playerSprite.StopMovement();
             this.laneManager.StopAllVehicleMovement();
+            this.GameOver?.Invoke();
         }
 
         #endregion

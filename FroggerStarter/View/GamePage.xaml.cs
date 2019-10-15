@@ -37,6 +37,10 @@ namespace FroggerStarter.View
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
             this.gameManager = new GameManager(this.applicationHeight, this.applicationWidth);
             this.gameManager.InitializeGame(this.canvas);
+
+            this.gameManager.ScoreIncreased += this.onScoreCountUpdated;
+            this.gameManager.LifeLost += this.onLivesCountUpdated;
+            this.gameManager.GameOver += this.onGameOver;
         }
 
         #endregion
@@ -62,11 +66,20 @@ namespace FroggerStarter.View
             }
         }
 
-        public void DisplayGameOverText()
+        private void onScoreCountUpdated(int score)
+        {
+            this.scoreTextBlock.Text = "Score: " + (score + 1).ToString();
+        }
+
+        private void onLivesCountUpdated(int lives)
+        {
+            this.livesTextBlock.Text = "Lives: " + lives.ToString();
+        }
+
+        private void onGameOver()
         {
             this.gameOverTextBlock.Visibility = Visibility.Visible;
         }
-
         #endregion
 
     }
