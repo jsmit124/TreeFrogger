@@ -13,9 +13,9 @@
         <TextBlock x:Name="gameOverTextBlock" Canvas.ZIndex="100" Text="GAME OVER" LineStackingStrategy="MaxHeight"
                    TextWrapping="Wrap" Canvas.Left="161" Canvas.Top="165" Height="87" Width="372" FontSize="60"
                    RenderTransformOrigin="0.492,0.483" Visibility="Collapsed" />
-        <Rectangle Canvas.Top="55" Fill="Gray" Width="{StaticResource AppWidth}" Height="50" />
+        <Rectangle Canvas.Top="55" Fill="Silver" Width="{StaticResource AppWidth}" Height="50" />
 
-        <Rectangle Canvas.Top="355" Fill="Gray" Width="{StaticResource AppWidth}" Height="55" />
+        <Rectangle Canvas.Top="355" Fill="Silver" Width="{StaticResource AppWidth}" Height="55" />
         <TextBlock Canvas.Left="263" Text="Frogger" TextWrapping="Wrap" Height="47" Width="142" FontSize="40"
                    RenderTransformOrigin="0.544,0.383" FontFamily="Bauhaus 93" FocusVisualPrimaryBrush="Lime"
                    Foreground="Lime" />

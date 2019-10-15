@@ -143,8 +143,8 @@
       <DependentUpon>FrogSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\ISpriteRenderer.cs" />
-    <Compile Include="View\Sprites\SemiSprite.xaml.cs">
-      <DependentUpon>SemiSprite.xaml</DependentUpon>
+    <Compile Include="View\Sprites\BusSprite.xaml.cs">
+      <DependentUpon>BusSprite.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +183,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\SemiSprite.xaml">
+    <Page Include="View\Sprites\BusSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

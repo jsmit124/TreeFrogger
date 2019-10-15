@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Windows.UI.Xaml.Media;
 using FroggerStarter.View.Sprites;
 using Point = Windows.Foundation.Point;
 
@@ -201,6 +202,17 @@ namespace FroggerStarter.Model
         public void StopMovement()
         {
             this.SetSpeed(0, 0);
+        }
+
+        /// <summary>
+        ///     Flips the sprite horizontal.
+        ///     Precondition: None
+        ///     Postcondition: Sprite flipped horizontally
+        /// </summary>
+        public void FlipSpriteHorizontal()
+        {
+            this.Sprite.RenderTransformOrigin = new Point(0.5, 0.5);
+            this.Sprite.RenderTransform = new ScaleTransform {ScaleX = -1};
         }
 
         #endregion

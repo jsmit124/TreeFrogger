@@ -110,7 +110,14 @@ namespace FroggerStarter.Model
         {
             for (var i = 0; i < this.NumberOfVehicles; i++)
             {
-                this.Vehicles.Add(new Vehicle(vehicleType, defaultSpeed));
+                var vehicleToAdd = new Vehicle(vehicleType, defaultSpeed);
+
+                if (this.Direction == LaneDirection.Right)
+                {
+                    vehicleToAdd.FlipSpriteHorizontal();
+                }
+
+                this.Vehicles.Add(vehicleToAdd);
             }
         }
 

@@ -11,7 +11,36 @@
     Width="50">
 
     <Canvas Height="50" Width="50" Background="Transparent">
-        <Rectangle Canvas.Top="5" Fill="Red" Width="50" Height="40" />
+        <Rectangle Canvas.Top="10" Fill="MidnightBlue" Width="48" Height="30" Canvas.Left="2" />
+        <Rectangle Canvas.Top="40" Fill="DimGray" Width="10" Height="2" Canvas.Left="6" />
+        <Rectangle Canvas.Top="40" Fill="DimGray" Width="10" Height="2" Canvas.Left="33" />
+        <Rectangle Canvas.Top="8" Fill="DimGray" Width="10" Height="2" Canvas.Left="33" />
+        <Rectangle Canvas.Top="8" Fill="DimGray" Width="10" Height="2" Canvas.Left="6" />
+        <Rectangle Canvas.Top="10" Fill="DimGray" Width="1" Height="30" Canvas.Left="2" />
+        <Rectangle Canvas.Top="30" Fill="DimGray" Width="2" Height="1" />
+        <Rectangle Canvas.Top="20" Fill="DimGray" Width="2" Height="1" />
+        <Rectangle Canvas.Top="31" Fill="White" Width="2" Height="7" Canvas.Left="3" />
+        <Rectangle Canvas.Top="12" Fill="White" Width="2" Height="7" Canvas.Left="3" />
+        <Rectangle Canvas.Top="11" Fill="Goldenrod" Width="2" Height="1" Canvas.Left="3" />
+        <Rectangle Canvas.Top="38" Fill="Goldenrod" Width="2" Height="1" Canvas.Left="3" />
+        <Rectangle Canvas.Top="10" Fill="DimGray" Width="1" Height="30" Canvas.Left="49" />
+        <Rectangle Canvas.Top="10" Fill="Beige" Width="18" Height="30" Canvas.Left="18" />
+        <TextBlock Text="POLICE" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" Canvas.Left="31.542"
+                   Canvas.Top="20.631" UseLayoutRounding="False" d:LayoutRounding="Auto" FontSize="7" FontWeight="Bold">
+            <TextBlock.RenderTransform>
+                <CompositeTransform Rotation="-90" />
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <Rectangle Canvas.Top="13" Fill="Black" Width="5" Height="24" Canvas.Left="13" />
+        <Rectangle Canvas.Top="13" Fill="White" Width="5" Height="24" Canvas.Left="23" />
+        <Rectangle Canvas.Top="35" Fill="Red" Width="5" Height="2" Canvas.Left="23" />
+        <Rectangle Canvas.Top="31" Fill="Red" Width="5" Height="2" Canvas.Left="23" />
+        <Rectangle Canvas.Top="27" Fill="Red" Width="5" Height="2" Canvas.Left="23" />
+        <Rectangle Canvas.Top="13" Fill="Blue" Width="5" Height="2" Canvas.Left="23" />
+        <Rectangle Canvas.Top="17" Fill="Blue" Width="5" Height="2" Canvas.Left="23" />
+        <Rectangle Canvas.Top="21" Fill="Blue" Width="5" Height="2" Canvas.Left="23" />
+        <Rectangle Canvas.Top="13" Stroke="Black" Width="5" Height="24" Canvas.Left="23" />
+
     </Canvas>
-    
+
 </local:BaseSprite>
