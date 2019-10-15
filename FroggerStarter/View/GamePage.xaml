@@ -20,8 +20,8 @@
                    RenderTransformOrigin="0.544,0.383" FontFamily="Bauhaus 93" FocusVisualPrimaryBrush="Lime"
                    Foreground="Lime" />
         <TextBlock x:Name="livesTextBlock" Canvas.Left="10" Canvas.Top="10" Text="Lives: 3" TextWrapping="Wrap"
-                   Height="38" Width="126" FontSize="26" />
+                   Height="38" Width="126" FontSize="26" FontWeight="Bold" />
         <TextBlock x:Name="scoreTextBlock" Canvas.Left="542" Canvas.Top="10" Text="Score: 0" TextWrapping="Wrap"
-                   Height="38" Width="126" FontSize="26" />
+                   Height="38" Width="126" FontSize="26" FontWeight="Bold" />
     </Canvas>
 </Page>
