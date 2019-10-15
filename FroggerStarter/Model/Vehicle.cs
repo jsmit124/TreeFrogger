@@ -1,7 +1,7 @@
-﻿using System;
-using FroggerStarter.Constants;
+﻿using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.View.Sprites;
+using System;
 
 namespace FroggerStarter.Model
 {

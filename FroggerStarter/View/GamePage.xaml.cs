@@ -1,9 +1,9 @@
-﻿using Windows.Foundation;
+﻿using FroggerStarter.Controller;
+using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using FroggerStarter.Controller;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -16,8 +16,8 @@ namespace FroggerStarter.View
     {
         #region Data members
 
-        private readonly double applicationHeight = (double) Application.Current.Resources["AppHeight"];
-        private readonly double applicationWidth = (double) Application.Current.Resources["AppWidth"];
+        private readonly double applicationHeight = (double)Application.Current.Resources["AppHeight"];
+        private readonly double applicationWidth = (double)Application.Current.Resources["AppWidth"];
         private readonly GameManager gameManager;
 
         #endregion
@@ -32,7 +32,7 @@ namespace FroggerStarter.View
             this.InitializeComponent();
 
             ApplicationView.PreferredLaunchViewSize = new Size
-                {Width = this.applicationWidth, Height = this.applicationHeight};
+            { Width = this.applicationWidth, Height = this.applicationHeight };
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView()
                            .SetPreferredMinSize(new Size(this.applicationWidth, this.applicationHeight));

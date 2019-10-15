@@ -1,7 +1,7 @@
-﻿using System;
+﻿using FroggerStarter.View.Sprites;
+using System;
 using System.Drawing;
 using Windows.UI.Xaml.Media;
-using FroggerStarter.View.Sprites;
 using Point = Windows.Foundation.Point;
 
 namespace FroggerStarter.Model
@@ -187,9 +187,9 @@ namespace FroggerStarter.Model
                 throw new ArgumentNullException();
             }
 
-            var collisionArea = new Rectangle((int) otherObject.X, (int) otherObject.Y,
-                (int) otherObject.Width, (int) otherObject.Height);
-            var currentArea = new Rectangle((int) this.X, (int) this.Y, (int) this.Width, (int) this.Height);
+            var collisionArea = new Rectangle((int)otherObject.X, (int)otherObject.Y,
+                (int)otherObject.Width, (int)otherObject.Height);
+            var currentArea = new Rectangle((int)this.X, (int)this.Y, (int)this.Width, (int)this.Height);
 
             return currentArea.IntersectsWith(collisionArea);
         }
@@ -212,7 +212,7 @@ namespace FroggerStarter.Model
         public void FlipSpriteHorizontal()
         {
             this.Sprite.RenderTransformOrigin = new Point(0.5, 0.5);
-            this.Sprite.RenderTransform = new ScaleTransform {ScaleX = -1};
+            this.Sprite.RenderTransform = new ScaleTransform { ScaleX = -1 };
         }
 
         #endregion

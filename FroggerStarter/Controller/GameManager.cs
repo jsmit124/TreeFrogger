@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FroggerStarter.Constants;
+using FroggerStarter.Model;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using FroggerStarter.Constants;
-using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
 {

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FroggerStarter.Constants;
+﻿using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FroggerStarter.Controller
 {

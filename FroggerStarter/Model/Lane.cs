@@ -1,7 +1,7 @@
-﻿using System;
+﻿using FroggerStarter.Enums;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using FroggerStarter.Enums;
 
 namespace FroggerStarter.Model
 {
