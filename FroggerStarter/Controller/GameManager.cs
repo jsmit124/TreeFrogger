@@ -39,7 +39,7 @@ namespace FroggerStarter.Controller
         private readonly double backgroundWidth;
 
         private Canvas gameCanvas;
-        private Frog playerSprite;
+        private Frog player;
 
         private readonly PlayerStatistics playerStats;
 
@@ -134,8 +134,8 @@ namespace FroggerStarter.Controller
 
         private void createAndPlacePlayer()
         {
-            this.playerSprite = new Frog();
-            this.gameCanvas.Children.Add(this.playerSprite.Sprite);
+            this.player = new Frog();
+            this.gameCanvas.Children.Add(this.player.Sprite);
             this.setPlayerToCenterOfBottomLane();
         }
 
@@ -149,8 +149,8 @@ namespace FroggerStarter.Controller
 
         private void setPlayerToCenterOfBottomLane()
         {
-            this.playerSprite.X = this.backgroundWidth / 2 - this.playerSprite.Width / 2;
-            this.playerSprite.Y = this.backgroundHeight - this.playerSprite.Height - Defaults.BottomLaneOffset;
+            this.player.X = this.backgroundWidth / 2 - this.player.Width / 2;
+            this.player.Y = this.backgroundHeight - this.player.Height - Defaults.BottomLaneOffset;
         }
 
         private void gameTimerOnTick(object sender, object e)
@@ -172,7 +172,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
-            this.playerSprite.MoveLeft();
+            this.player.MoveLeft();
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            this.playerSprite.MoveRight();
+            this.player.MoveRight();
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            this.playerSprite.MoveUp();
+            this.player.MoveUp();
         }
 
         /// <summary>
@@ -202,14 +202,14 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            this.playerSprite.MoveDown();
+            this.player.MoveDown();
         }
 
         private void checkForCollision()
         {
             foreach (var vehicle in this.laneManager.AllVehicles)
             {
-                if (vehicle.CollisionDetected(this.playerSprite))
+                if (vehicle.CollisionDetected(this.player))
                 {
                     this.handleCollision();
                 }
@@ -230,7 +230,7 @@ namespace FroggerStarter.Controller
 
         private void checkForPlayerScored()
         {
-            if (this.playerSprite.Y <= Defaults.TopLaneYLocation)
+            if (this.player.Y <= Defaults.TopLaneYLocation)
             {
                 this.handlePlayerScored();
             }
@@ -259,7 +259,7 @@ namespace FroggerStarter.Controller
         {
             this.gameTimer.Stop();
             this.speedTimer.Stop();
-            this.playerSprite.StopMovement();
+            this.player.StopMovement();
             this.laneManager.StopAllVehicleMovement();
             this.GameOver?.Invoke();
         }
