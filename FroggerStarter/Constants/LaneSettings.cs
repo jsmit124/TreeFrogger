@@ -1,9 +1,9 @@
 ﻿namespace FroggerStarter.Constants
 {
     /// <summary>
-    ///     Stores information for the default constants for use throughout the program
+    ///     Stores information for the lane settings
     /// </summary>
-    public static class Defaults
+    public static class LaneSettings
     {
         #region Data members
 
@@ -26,11 +26,6 @@
         ///     The top lane y location
         /// </summary>
         public static int TopLaneYLocation = 55;
-
-        /// <summary>
-        ///     The player lives
-        /// </summary>
-        public static int PlayerLives = 3;
 
         #endregion
     }

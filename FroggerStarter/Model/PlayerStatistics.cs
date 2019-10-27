@@ -36,7 +36,7 @@ namespace FroggerStarter.Model
         /// </summary>
         public PlayerStatistics()
         {
-            this.Lives = Defaults.PlayerLives;
+            this.Lives = GameSettings.PlayerLives;
             this.Score = 0;
         }
 

@@ -119,7 +119,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Constants\Defaults.cs" />
+    <Compile Include="Constants\LaneSettings.cs" />
+    <Compile Include="Constants\GameSettings.cs" />
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Enums\LaneDirection.cs" />
     <Compile Include="Enums\VehicleType.cs" />

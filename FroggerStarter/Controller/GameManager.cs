@@ -150,7 +150,7 @@ namespace FroggerStarter.Controller
         private void setPlayerToCenterOfBottomLane()
         {
             this.player.X = this.backgroundWidth / 2 - this.player.Width / 2;
-            this.player.Y = this.backgroundHeight - this.player.Height - Defaults.BottomLaneOffset;
+            this.player.Y = this.backgroundHeight - this.player.Height - LaneSettings.BottomLaneOffset;
         }
 
         private void gameTimerOnTick(object sender, object e)
@@ -230,7 +230,7 @@ namespace FroggerStarter.Controller
 
         private void checkForPlayerScored()
         {
-            if (this.player.Y <= Defaults.TopLaneYLocation)
+            if (this.player.Y <= LaneSettings.TopLaneYLocation)
             {
                 this.handlePlayerScored();
             }

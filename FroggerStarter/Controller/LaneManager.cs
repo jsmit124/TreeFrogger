@@ -62,7 +62,7 @@ namespace FroggerStarter.Controller
 
         private int calculateNextLaneYLocation()
         {
-            return Defaults.TopLaneYLocation + (this.Lanes.Count + 1) * Defaults.LaneWidth;
+            return LaneSettings.TopLaneYLocation + (this.Lanes.Count + 1) * LaneSettings.LaneWidth;
         }
 
         /// <summary>
@@ -97,13 +97,13 @@ namespace FroggerStarter.Controller
         {
             foreach (var vehicle in lane)
             {
-                vehicle.Y = (Defaults.LaneWidth - vehicle.Height) / 2 + lane.YLocation;
+                vehicle.Y = (LaneSettings.LaneWidth - vehicle.Height) / 2 + lane.YLocation;
             }
         }
 
         private static void setVehicleXLocations(Lane lane)
         {
-            var distance = Defaults.LaneLength / lane.NumberOfVehicles;
+            var distance = LaneSettings.LaneLength / lane.NumberOfVehicles;
 
             var count = 0;
             foreach (var vehicle in lane.Vehicles)

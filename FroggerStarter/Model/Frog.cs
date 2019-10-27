@@ -38,7 +38,7 @@ namespace FroggerStarter.Model
         /// </summary>
         public override void MoveRight()
         {
-            if (X + SpeedX < Defaults.LaneLength)
+            if (X + SpeedX < LaneSettings.LaneLength)
             {
                 base.MoveRight();
             }
@@ -64,7 +64,7 @@ namespace FroggerStarter.Model
         /// </summary>
         public override void MoveUp()
         {
-            if (Y > Defaults.TopLaneYLocation)
+            if (Y > LaneSettings.TopLaneYLocation)
             {
                 base.MoveUp();
             }
