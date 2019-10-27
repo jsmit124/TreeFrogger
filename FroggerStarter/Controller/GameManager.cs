@@ -196,7 +196,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var vehicle in this.laneManager)
             {
-                if (vehicle.CollisionDetected(this.player))
+                if (player.CollisionDetected(vehicle))
                 {
                     this.handleCollision();
                 }
