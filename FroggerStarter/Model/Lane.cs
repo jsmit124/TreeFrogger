@@ -37,13 +37,7 @@ namespace FroggerStarter.Model
         /// </value>
         public LaneDirection Direction { get; }
 
-        /// <summary>
-        ///     Gets the vehicles.
-        /// </summary>
-        /// <value>
-        ///     The vehicles.
-        /// </value>
-        public ICollection<Vehicle> Vehicles { get; }
+        private ICollection<Vehicle> vehicles;
 
         #endregion
 
@@ -72,7 +66,7 @@ namespace FroggerStarter.Model
                 throw new ArgumentOutOfRangeException();
             }
 
-            this.Vehicles = new List<Vehicle>();
+            this.vehicles = new List<Vehicle>();
             this.NumberOfVehicles = numberOfVehicles;
             this.Direction = direction;
             this.YLocation = yLocation;
@@ -92,7 +86,7 @@ namespace FroggerStarter.Model
         /// </returns>
         public IEnumerator<Vehicle> GetEnumerator()
         {
-            return this.Vehicles.GetEnumerator();
+            return this.vehicles.GetEnumerator();
         }
 
         /// <summary>
@@ -103,7 +97,7 @@ namespace FroggerStarter.Model
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.Vehicles.GetEnumerator();
+            return this.vehicles.GetEnumerator();
         }
 
         private void populateLane(VehicleType vehicleType, double defaultSpeed)
@@ -117,7 +111,7 @@ namespace FroggerStarter.Model
                     vehicleToAdd.FlipSpriteHorizontal();
                 }
 
-                this.Vehicles.Add(vehicleToAdd);
+                this.vehicles.Add(vehicleToAdd);
             }
         }
 
@@ -133,7 +127,7 @@ namespace FroggerStarter.Model
                 throw new ArgumentOutOfRangeException();
             }
 
-            foreach (var vehicle in this.Vehicles)
+            foreach (var vehicle in this.vehicles)
             {
                 vehicle.IncrementSpeed(increment);
             }

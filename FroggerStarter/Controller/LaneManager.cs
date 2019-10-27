@@ -2,6 +2,7 @@
 using FroggerStarter.Enums;
 using FroggerStarter.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -11,7 +12,7 @@ namespace FroggerStarter.Controller
     /// <summary>
     ///     Stores information for the LaneManager class
     /// </summary>
-    public class LaneManager
+    public class LaneManager : IEnumerable<Vehicle>
     {
         #region Properties
 
@@ -22,14 +23,6 @@ namespace FroggerStarter.Controller
         ///     The lanes.
         /// </value>
         public IList<Lane> Lanes { get; }
-
-        /// <summary>
-        ///     Gets all vehicles.
-        /// </summary>
-        /// <value>
-        ///     All vehicles.
-        /// </value>
-        public IEnumerable<Vehicle> AllVehicles => this.Lanes.SelectMany(lane => lane.Vehicles);
 
         #endregion
 
@@ -112,7 +105,7 @@ namespace FroggerStarter.Controller
             var distance = LaneSettings.LaneLength / lane.NumberOfVehicles;
 
             var count = 0;
-            foreach (var vehicle in lane.Vehicles)
+            foreach (var vehicle in lane)
             {
                 vehicle.X = count;
                 count += distance;
@@ -162,7 +155,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void ResetVehicleSpeedsToDefault()
         {
-            foreach (var vehicle in this.AllVehicles)
+            foreach (var vehicle in this.Lanes.SelectMany(lane => lane))
             {
                 vehicle.ResetSpeedToDefault();
             }
@@ -175,7 +168,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void StopAllVehicleMovement()
         {
-            foreach (var vehicle in this.AllVehicles)
+            foreach (var vehicle in this.Lanes.SelectMany(lane => lane))
             {
                 vehicle.StopMovement();
             }
@@ -202,6 +195,16 @@ namespace FroggerStarter.Controller
         public void StopSpeedTimer()
         {
             this.speedTimer.Stop();
+        }
+
+        public IEnumerator<Vehicle> GetEnumerator()
+        {
+            return this.Lanes.SelectMany(lane => lane).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.Lanes.SelectMany(lane => lane).GetEnumerator();
         }
 
         #endregion

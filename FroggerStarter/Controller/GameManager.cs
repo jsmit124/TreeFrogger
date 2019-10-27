@@ -133,7 +133,7 @@ namespace FroggerStarter.Controller
 
         private void addVehiclesToView()
         {
-            foreach (var vehicle in this.laneManager.AllVehicles)
+            foreach (var vehicle in this.laneManager)
             {
                 this.gameCanvas.Children.Add(vehicle.Sprite);
             }
@@ -194,7 +194,7 @@ namespace FroggerStarter.Controller
 
         private void checkForPlayerCollisionWithVehicle()
         {
-            foreach (var vehicle in this.laneManager.AllVehicles)
+            foreach (var vehicle in this.laneManager)
             {
                 if (vehicle.CollisionDetected(this.player))
                 {
@@ -233,7 +233,7 @@ namespace FroggerStarter.Controller
 
         private bool checkForGameOver()
         {
-            if (this.playerStats.Lives == 0 || this.playerStats.Score == 3)
+            if (this.playerStats.Lives == 0 || this.playerStats.Score == GameSettings.WinningScore)
             {
                 this.handleGameOver();
                 return true;

@@ -23,5 +23,11 @@
                    Height="38" Width="126" FontSize="26" FontWeight="Bold" Foreground="White" />
         <TextBlock x:Name="scoreTextBlock" Canvas.Left="542" Canvas.Top="10" Text="Score: 0" TextWrapping="Wrap"
                    Height="38" Width="126" FontSize="26" FontWeight="Bold" Foreground="White" />
+        <Rectangle Canvas.Top="52" Fill="Silver" Width="{StaticResource AppWidth}" Height="3" />
+        <Rectangle Canvas.Top="55" Canvas.Left="0" Fill="Black" Width="50" Height="50" />
+        <Rectangle Canvas.Top="55" Canvas.Left="150" Fill="Black" Width="50" Height="50" />
+        <Rectangle Canvas.Top="55" Canvas.Left="300" Fill="Black" Width="50" Height="50" />
+        <Rectangle Canvas.Top="55" Canvas.Left="450" Fill="Black" Width="50" Height="50" />
+        <Rectangle Canvas.Top="55" Canvas.Left="600" Fill="Black" Width="50" Height="50" />
     </Canvas>
 </Page>
