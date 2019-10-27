@@ -44,7 +44,6 @@ namespace FroggerStarter.Controller
         private readonly PlayerStatistics playerStats;
 
         private DispatcherTimer gameTimer;
-        private DispatcherTimer speedTimer;
         private readonly LaneManager laneManager;
 
         #endregion
@@ -79,7 +78,6 @@ namespace FroggerStarter.Controller
             this.playerStats = new PlayerStatistics();
 
             this.setupGameTimer();
-            this.setupSpeedTimer();
         }
 
         #endregion
@@ -107,14 +105,6 @@ namespace FroggerStarter.Controller
             this.gameTimer.Tick += this.gameTimerOnTick;
             this.gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 15);
             this.gameTimer.Start();
-        }
-
-        private void setupSpeedTimer()
-        {
-            this.speedTimer = new DispatcherTimer();
-            this.speedTimer.Tick += this.speedTimerOnTick;
-            this.speedTimer.Interval = new TimeSpan(0, 0, 1);
-            this.speedTimer.Start();
         }
 
         /// <summary>
@@ -158,11 +148,6 @@ namespace FroggerStarter.Controller
             this.laneManager.MoveVehicles();
             this.checkForPlayerCollisionWithVehicle();
             this.checkForPlayerScored();
-        }
-
-        private void speedTimerOnTick(object sender, object e)
-        {
-            this.laneManager.IncrementSpeed(0.1);
         }
 
         /// <summary>
@@ -258,7 +243,7 @@ namespace FroggerStarter.Controller
         private void handleGameOver()
         {
             this.gameTimer.Stop();
-            this.speedTimer.Stop();
+            this.laneManager.StopSpeedTimer();
             this.player.StopMovement();
             this.laneManager.StopAllVehicleMovement();
             this.GameOver?.Invoke();

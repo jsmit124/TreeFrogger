@@ -4,6 +4,7 @@ using FroggerStarter.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI.Xaml;
 
 namespace FroggerStarter.Controller
 {
@@ -32,6 +33,8 @@ namespace FroggerStarter.Controller
 
         #endregion
 
+        private DispatcherTimer speedTimer;
+
         #region Constructors
 
         /// <summary>
@@ -42,6 +45,7 @@ namespace FroggerStarter.Controller
             this.Lanes = new List<Lane>();
             this.createLanes();
             this.setVehicleLocations();
+            this.setupSpeedTimer();
         }
 
         #endregion
@@ -173,6 +177,29 @@ namespace FroggerStarter.Controller
             {
                 vehicle.StopMovement();
             }
+        }
+
+        private void setupSpeedTimer()
+        {
+            this.speedTimer = new DispatcherTimer();
+            this.speedTimer.Tick += this.speedTimerOnTick;
+            this.speedTimer.Interval = new TimeSpan(0, 0, 1);
+            this.speedTimer.Start();
+        }
+
+        private void speedTimerOnTick(object sender, object e)
+        {
+            this.IncrementSpeed(0.1);
+        }
+
+        /// <summary>
+        /// Stops the speed timer.
+        /// Precondition: None
+        /// Postcondition: this.speedTimer is stopped
+        /// </summary>
+        public void StopSpeedTimer()
+        {
+            this.speedTimer.Stop();
         }
 
         #endregion
