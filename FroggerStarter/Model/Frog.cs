@@ -77,7 +77,7 @@ namespace FroggerStarter.Model
         /// </summary>
         public void MoveDownWithBoundaryCheck(double bottomBoundary)
         {
-            if (Y + SpeedY < 405)
+            if (Y + SpeedY < bottomBoundary - LaneSettings.BottomLaneOffset)
             {
                 base.MoveDown();
             }
