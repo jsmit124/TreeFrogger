@@ -19,7 +19,7 @@
         <TextBlock Canvas.Left="263" Text="Frogger" TextWrapping="Wrap" Height="47" Width="142" FontSize="40"
                    RenderTransformOrigin="0.544,0.383" FontFamily="Bauhaus 93" FocusVisualPrimaryBrush="Lime"
                    Foreground="Lime" />
-        <TextBlock x:Name="livesTextBlock" Canvas.Left="10" Canvas.Top="10" Text="Lives: 3" TextWrapping="Wrap"
+        <TextBlock x:Name="livesTextBlock" Canvas.Left="10" Canvas.Top="10" Text="Lives: 4" TextWrapping="Wrap"
                    Height="38" Width="126" FontSize="26" FontWeight="Bold" Foreground="White" />
         <TextBlock x:Name="scoreTextBlock" Canvas.Left="542" Canvas.Top="10" Text="Score: 0" TextWrapping="Wrap"
                    Height="38" Width="126" FontSize="26" FontWeight="Bold" Foreground="White" />

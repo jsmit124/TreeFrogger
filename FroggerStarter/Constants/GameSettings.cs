@@ -9,7 +9,7 @@
         /// <summary>
         ///     The player lives
         /// </summary>
-        public static int PlayerLives = 3;
+        public static int PlayerLives = 4;
 
         /// <summary>
         /// The winning score
