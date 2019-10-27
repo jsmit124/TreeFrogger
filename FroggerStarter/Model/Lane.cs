@@ -29,7 +29,7 @@ namespace FroggerStarter.Model
         /// </value>
         public double YLocation { get; }
 
-        private LaneDirection direction { get; }
+        private LaneDirection direction;
 
         private ICollection<Vehicle> vehicles;
 

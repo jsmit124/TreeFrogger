@@ -1,5 +1,6 @@
 ﻿using FroggerStarter.Constants;
 using FroggerStarter.Enums;
+using FroggerStarter.Factory;
 using FroggerStarter.View.Sprites;
 using System;
 
@@ -33,15 +34,7 @@ namespace FroggerStarter.Model
                 throw new ArgumentOutOfRangeException();
             }
 
-            switch (vehicleType)
-            {
-                case VehicleType.SportsCar:
-                    Sprite = new CarSprite();
-                    break;
-                case VehicleType.Semi:
-                    Sprite = new SemiSprite();
-                    break;
-            }
+            Sprite = VehicleFactory.BuildVehicleSprite(vehicleType);
 
             this.defaultSpeed = defaultSpeed;
             SetSpeed(defaultSpeed, 0);

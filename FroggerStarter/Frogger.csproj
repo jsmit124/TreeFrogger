@@ -125,6 +125,7 @@
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Enums\LaneDirection.cs" />
     <Compile Include="Enums\VehicleType.cs" />
+    <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Model\Frog.cs" />
     <Compile Include="Controller\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
