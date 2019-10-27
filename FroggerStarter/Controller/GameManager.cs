@@ -156,7 +156,7 @@ namespace FroggerStarter.Controller
         private void gameTimerOnTick(object sender, object e)
         {
             this.laneManager.MoveVehicles();
-            this.checkForCollision();
+            this.checkForPlayerCollisionWithVehicle();
             this.checkForPlayerScored();
         }
 
@@ -205,7 +205,7 @@ namespace FroggerStarter.Controller
             this.player.MoveDown();
         }
 
-        private void checkForCollision()
+        private void checkForPlayerCollisionWithVehicle()
         {
             foreach (var vehicle in this.laneManager.AllVehicles)
             {
