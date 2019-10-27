@@ -121,30 +121,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.Lanes)
             {
-                if (lane.Direction == LaneDirection.Left)
-                {
-                    moveAllVehiclesInLaneLeft(lane);
-                }
-                else
-                {
-                    moveAllVehiclesInLaneRight(lane);
-                }
-            }
-        }
-
-        private static void moveAllVehiclesInLaneLeft(Lane lane)
-        {
-            foreach (var vehicle in lane)
-            {
-                vehicle.MoveLeft();
-            }
-        }
-
-        private static void moveAllVehiclesInLaneRight(Lane lane)
-        {
-            foreach (var vehicle in lane)
-            {
-                vehicle.MoveRight();
+                lane.MoveVehiclesForward();
             }
         }
 

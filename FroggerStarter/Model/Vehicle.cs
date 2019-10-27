@@ -82,6 +82,22 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
+        /// Moves the vehicle forward.
+        /// </summary>
+        /// <param name="direction">The direction.</param>
+        public void MoveForward(LaneDirection direction)
+        {
+            if (direction == LaneDirection.Left)
+            {
+                this.MoveLeft();
+            }
+            else if (direction == LaneDirection.Right)
+            {
+                this.MoveRight();
+            }
+        }
+
+        /// <summary>
         ///     Increments the speed.
         ///     Precondition: amountToIncrement > 0
         ///     Postcondition: base.SpeedX == base.SpeedX + amountToIncrement

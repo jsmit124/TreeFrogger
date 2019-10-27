@@ -29,13 +29,7 @@ namespace FroggerStarter.Model
         /// </value>
         public double YLocation { get; }
 
-        /// <summary>
-        ///     Gets the direction.
-        /// </summary>
-        /// <value>
-        ///     The direction.
-        /// </value>
-        public LaneDirection Direction { get; }
+        private LaneDirection direction { get; }
 
         private ICollection<Vehicle> vehicles;
 
@@ -68,7 +62,7 @@ namespace FroggerStarter.Model
 
             this.vehicles = new List<Vehicle>();
             this.NumberOfVehicles = numberOfVehicles;
-            this.Direction = direction;
+            this.direction = direction;
             this.YLocation = yLocation;
 
             this.populateLane(vehicleType, defaultSpeed);
@@ -106,7 +100,7 @@ namespace FroggerStarter.Model
             {
                 var vehicleToAdd = new Vehicle(vehicleType, defaultSpeed);
 
-                if (this.Direction == LaneDirection.Right)
+                if (this.direction == LaneDirection.Right)
                 {
                     vehicleToAdd.FlipSpriteHorizontal();
                 }
@@ -130,6 +124,14 @@ namespace FroggerStarter.Model
             foreach (var vehicle in this.vehicles)
             {
                 vehicle.IncrementSpeed(increment);
+            }
+        }
+
+        public void MoveVehiclesForward()
+        {
+            foreach (var vehicle in this.vehicles)
+            {
+                vehicle.MoveForward(this.direction);
             }
         }
 
