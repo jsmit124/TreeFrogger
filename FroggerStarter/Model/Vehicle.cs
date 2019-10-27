@@ -62,7 +62,7 @@ namespace FroggerStarter.Model
 
             if (X > LaneSettings.LaneLength)
             {
-                X = 0 - Width;
+                X = 0 - base.Width;
             }
         }
 
@@ -75,7 +75,7 @@ namespace FroggerStarter.Model
         {
             base.MoveLeft();
 
-            if (X < 0 - Width)
+            if (X < 0 - base.Width)
             {
                 X = LaneSettings.LaneLength;
             }

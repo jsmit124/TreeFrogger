@@ -36,9 +36,9 @@ namespace FroggerStarter.Model
         ///     Precondition: None
         ///     Postcondition: X == X@prev + SpeedX
         /// </summary>
-        public override void MoveRight()
+        public void MoveRightWithBoundaryCheck(double rightBoundary)
         {
-            if (X + SpeedX < LaneSettings.LaneLength)
+            if (X + SpeedX < rightBoundary)
             {
                 base.MoveRight();
             }
@@ -49,9 +49,9 @@ namespace FroggerStarter.Model
         ///     Precondition: None
         ///     Postcondition: X == X@prev + SpeedX
         /// </summary>
-        public override void MoveLeft()
+        public void MoveLeftWithBoundaryCheck(double leftBoundary)
         {
-            if (X > 0)
+            if (X > leftBoundary)
             {
                 base.MoveLeft();
             }
@@ -62,9 +62,9 @@ namespace FroggerStarter.Model
         ///     Precondition: None
         ///     Postcondition: Y == Y@prev - SpeedY
         /// </summary>
-        public override void MoveUp()
+        public void MoveUpWithBoundaryCheck(double topBoundary)
         {
-            if (Y > LaneSettings.TopLaneYLocation)
+            if (Y > topBoundary)
             {
                 base.MoveUp();
             }
@@ -75,7 +75,7 @@ namespace FroggerStarter.Model
         ///     Precondition: None
         ///     Postcondition: Y == Y@prev + SpeedY
         /// </summary>
-        public override void MoveDown()
+        public void MoveDownWithBoundaryCheck(double bottomBoundary)
         {
             if (Y + SpeedY < 405)
             {

@@ -41,6 +41,8 @@ namespace FroggerStarter.Controller
         private Canvas gameCanvas;
         private Frog player;
 
+        private readonly double topLaneYLocation = (Double)Application.Current.Resources["HighRoadYLocation"];
+
         private readonly PlayerStatistics playerStats;
 
         private DispatcherTimer gameTimer;
@@ -74,7 +76,7 @@ namespace FroggerStarter.Controller
 
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
-            this.laneManager = new LaneManager();
+            this.laneManager = new LaneManager(this.topLaneYLocation);
             this.playerStats = new PlayerStatistics();
 
             this.setupGameTimer();
@@ -157,7 +159,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
-            this.player.MoveLeft();
+            this.player.MoveLeftWithBoundaryCheck(0);
         }
 
         /// <summary>
@@ -167,7 +169,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            this.player.MoveRight();
+            this.player.MoveRightWithBoundaryCheck(this.backgroundWidth);
         }
 
         /// <summary>
@@ -177,7 +179,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            this.player.MoveUp();
+            this.player.MoveUpWithBoundaryCheck(this.topLaneYLocation);
         }
 
         /// <summary>
@@ -187,7 +189,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            this.player.MoveDown();
+            this.player.MoveDownWithBoundaryCheck((int)Math.Floor(this.backgroundHeight));
         }
 
         private void checkForPlayerCollisionWithVehicle()
@@ -215,7 +217,7 @@ namespace FroggerStarter.Controller
 
         private void checkForPlayerScored()
         {
-            if (this.player.Y <= LaneSettings.TopLaneYLocation)
+            if (this.player.Y <= this.topLaneYLocation)
             {
                 this.handlePlayerScored();
             }

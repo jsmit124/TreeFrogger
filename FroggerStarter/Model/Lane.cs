@@ -27,7 +27,7 @@ namespace FroggerStarter.Model
         /// <value>
         ///     The y location.
         /// </value>
-        public int YLocation { get; }
+        public double YLocation { get; }
 
         /// <summary>
         ///     Gets the direction.
@@ -60,7 +60,7 @@ namespace FroggerStarter.Model
         /// <exception cref="ArgumentOutOfRangeException">
         /// </exception>
         public Lane(LaneDirection direction, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
-            int yLocation)
+            double yLocation)
         {
             if (numberOfVehicles <= 0)
             {

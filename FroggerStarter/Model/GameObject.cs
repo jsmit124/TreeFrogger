@@ -120,7 +120,7 @@ namespace FroggerStarter.Model
         ///     Precondition: None
         ///     Postcondition: Y == Y@prev - SpeedY
         /// </summary>
-        public virtual void MoveUp()
+        public void MoveUp()
         {
             this.moveY(-this.SpeedY);
         }
@@ -130,7 +130,7 @@ namespace FroggerStarter.Model
         ///     Precondition: None
         ///     Postcondition: Y == Y@prev + SpeedY
         /// </summary>
-        public virtual void MoveDown()
+        public void MoveDown()
         {
             this.moveY(this.SpeedY);
         }

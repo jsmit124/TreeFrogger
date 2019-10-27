@@ -34,15 +34,17 @@ namespace FroggerStarter.Controller
         #endregion
 
         private DispatcherTimer speedTimer;
+        private double topLaneYLocation;
 
         #region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="LaneManager" /> class.
         /// </summary>
-        public LaneManager()
+        public LaneManager(double topLaneYLocation)
         {
             this.Lanes = new List<Lane>();
+            this.topLaneYLocation = topLaneYLocation;
             this.createLanes();
             this.setVehicleLocations();
             this.setupSpeedTimer();
@@ -64,9 +66,9 @@ namespace FroggerStarter.Controller
                 this.calculateNextLaneYLocation()));
         }
 
-        private int calculateNextLaneYLocation()
+        private double calculateNextLaneYLocation()
         {
-            return LaneSettings.TopLaneYLocation + (this.Lanes.Count + 1) * LaneSettings.LaneWidth;
+            return this.topLaneYLocation + (this.Lanes.Count + 1) * LaneSettings.LaneWidth;
         }
 
         /// <summary>

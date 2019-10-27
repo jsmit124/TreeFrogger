@@ -22,11 +22,6 @@
         /// </summary>
         public static int LaneLength = 650;
 
-        /// <summary>
-        ///     The top lane y location
-        /// </summary>
-        public static int TopLaneYLocation = 55;
-
         #endregion
     }
 }
