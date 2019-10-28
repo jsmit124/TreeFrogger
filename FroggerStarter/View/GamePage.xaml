@@ -30,6 +30,6 @@
         <Rectangle Canvas.Top="55" Canvas.Left="450" Fill="Black" Width="50" Height="50" />
         <Rectangle Canvas.Top="55" Canvas.Left="600" Fill="Black" Width="50" Height="50" />
         <TextBlock x:Name="timeRemainingTextBlock" Canvas.Left="10" Text="Time: 20" TextWrapping="Wrap"
-            Height="35" Width="126" FontSize="26" FontWeight="Bold" Foreground="White" Canvas.Top="8" />
+            Height="35" Width="114" FontSize="26" FontWeight="Bold" Foreground="White" Canvas.Top="8" />
     </Canvas>
 </Page>

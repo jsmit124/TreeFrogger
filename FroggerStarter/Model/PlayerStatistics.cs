@@ -25,7 +25,21 @@ namespace FroggerStarter.Model
         /// </value>
         public int Score { get; private set; }
 
+        /// <summary>
+        /// Gets the time remaining.
+        /// </summary>
+        /// <value>
+        /// The time remaining.
+        /// </value>
         public int TimeRemaining { get; private set; }
+
+        /// <summary>
+        /// Gets the amount of frogs in home.
+        /// </summary>
+        /// <value>
+        /// The amount of frogs in home.
+        /// </value>
+        public int AmountOfFrogsInHome { get; private set; }
 
         #endregion
 
@@ -41,6 +55,7 @@ namespace FroggerStarter.Model
             this.Lives = GameSettings.PlayerLives;
             this.Score = 0;
             this.TimeRemaining = GameSettings.TimeRemainingAtStart;
+            this.AmountOfFrogsInHome = 0;
         }
 
         #endregion
@@ -81,6 +96,14 @@ namespace FroggerStarter.Model
         public void ResetTimeRemaining()
         {
             this.TimeRemaining = GameSettings.TimeRemainingAtStart;
+        }
+
+        /// <summary>
+        /// Increments the frogs in homes.
+        /// </summary>
+        public void IncrementFrogsInHomes()
+        {
+            this.AmountOfFrogsInHome += 1;
         }
 
         #endregion

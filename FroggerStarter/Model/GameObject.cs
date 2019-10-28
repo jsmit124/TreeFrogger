@@ -1,55 +1,14 @@
-﻿using FroggerStarter.View.Sprites;
-using System;
-using System.Drawing;
-using Windows.UI.Xaml.Media;
-using Point = Windows.Foundation.Point;
+﻿using System;
 
 namespace FroggerStarter.Model
 {
     /// <summary>
     ///     Defines basic properties and behavior of every game object.
     /// </summary>
-    public abstract class GameObject
+    public abstract class GameObject : BaseObject
     {
-        #region Data members
-
-        private Point location;
-
-        #endregion
 
         #region Properties
-
-        /// <summary>
-        ///     Gets or sets the x location of the game object.
-        /// </summary>
-        /// <value>
-        ///     The x.
-        /// </value>
-        public double X
-        {
-            get => this.location.X;
-            set
-            {
-                this.location.X = value;
-                this.render();
-            }
-        }
-
-        /// <summary>
-        ///     Gets or sets the y location of the game object.
-        /// </summary>
-        /// <value>
-        ///     The y.
-        /// </value>
-        public double Y
-        {
-            get => this.location.Y;
-            set
-            {
-                this.location.Y = value;
-                this.render();
-            }
-        }
 
         /// <summary>
         ///     Gets the x speed of the game object.
@@ -66,30 +25,6 @@ namespace FroggerStarter.Model
         ///     The speed y.
         /// </value>
         public double SpeedY { get; private set; }
-
-        /// <summary>
-        ///     Gets the width of the game object.
-        /// </summary>
-        /// <value>
-        ///     The width.
-        /// </value>
-        public double Width => this.Sprite.Width;
-
-        /// <summary>
-        ///     Gets the height of the game object.
-        /// </summary>
-        /// <value>
-        ///     The height.
-        /// </value>
-        public double Height => this.Sprite.Height;
-
-        /// <summary>
-        ///     Gets or sets the sprite associated with the game object.
-        /// </summary>
-        /// <value>
-        ///     The sprite.
-        /// </value>
-        public BaseSprite Sprite { get; protected set; }
 
         #endregion
 
@@ -137,17 +72,12 @@ namespace FroggerStarter.Model
 
         private void moveX(double x)
         {
-            this.X += x;
+            base.X += x;
         }
 
         private void moveY(double y)
         {
-            this.Y += y;
-        }
-
-        private void render()
-        {
-            this.Sprite.RenderAt(this.X, this.Y);
+            base.Y += y;
         }
 
         /// <summary>
@@ -174,45 +104,13 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        ///     Detects collisions of two game objects.
-        ///     Precondition: otherObject != null
-        ///     Postcondition: None
-        /// </summary>
-        /// <param name="otherObject">The other object.</param>
-        /// <returns></returns>
-        public bool CollisionDetected(GameObject otherObject)
-        {
-            if (otherObject == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            var collisionArea = new Rectangle((int)otherObject.X, (int)otherObject.Y,
-                (int)otherObject.Width, (int)otherObject.Height);
-            var currentArea = new Rectangle((int)this.X, (int)this.Y, (int)this.Width, (int)this.Height);
-
-            return currentArea.IntersectsWith(collisionArea);
-        }
-
-        /// <summary>
         ///     Stops the movement.
         ///     Precondition: None
-        ///     Postcondition: SpeedX && SpeedY set to zero
+        ///     Postcondition: SpeedX and SpeedY set to zero
         /// </summary>
         public void StopMovement()
         {
             this.SetSpeed(0, 0);
-        }
-
-        /// <summary>
-        ///     Flips the sprite horizontal.
-        ///     Precondition: None
-        ///     Postcondition: Sprite flipped horizontally
-        /// </summary>
-        public void FlipSpriteHorizontal()
-        {
-            this.Sprite.RenderTransformOrigin = new Point(0.5, 0.5);
-            this.Sprite.RenderTransform = new ScaleTransform { ScaleX = -1 };
         }
 
         #endregion

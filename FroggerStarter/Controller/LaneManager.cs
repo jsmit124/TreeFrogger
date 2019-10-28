@@ -119,10 +119,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MoveVehicles()
         {
-            foreach (var lane in this.Lanes)
-            {
-                lane.MoveVehiclesForward();
-            }
+            this.Lanes.ToList().ForEach(lane => lane.MoveVehiclesForward());
         }
 
         /// <summary>
@@ -132,10 +129,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void ResetVehicleSpeedsToDefault()
         {
-            foreach (var vehicle in this.Lanes.SelectMany(lane => lane))
-            {
-                vehicle.ResetSpeedToDefault();
-            }
+            this.Lanes.SelectMany(lane => lane).ToList().ForEach(vehicle => vehicle.ResetSpeedToDefault());
         }
 
         /// <summary>
@@ -145,10 +139,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void StopAllVehicleMovement()
         {
-            foreach (var vehicle in this.Lanes.SelectMany(lane => lane))
-            {
-                vehicle.StopMovement();
-            }
+            this.Lanes.SelectMany(lane => lane).ToList().ForEach(vehicle => vehicle.StopMovement());
         }
 
         private void setupSpeedTimer()
@@ -174,11 +165,23 @@ namespace FroggerStarter.Controller
             this.speedTimer.Stop();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// An enumerator that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator<Vehicle> GetEnumerator()
         {
             return this.Lanes.SelectMany(lane => lane).GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.Lanes.SelectMany(lane => lane).GetEnumerator();

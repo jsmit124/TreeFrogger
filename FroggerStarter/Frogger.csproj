@@ -126,9 +126,12 @@
     <Compile Include="Enums\LaneDirection.cs" />
     <Compile Include="Enums\VehicleType.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
+    <Compile Include="Model\BaseObject.cs" />
     <Compile Include="Model\Frog.cs" />
     <Compile Include="Controller\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
+    <Compile Include="Model\HomeFrog.cs" />
+    <Compile Include="Model\HomeFrogManager.cs" />
     <Compile Include="Model\Lane.cs" />
     <Compile Include="Model\PlayerStatistics.cs" />
     <Compile Include="Model\Vehicle.cs" />
@@ -144,6 +147,9 @@
     </Compile>
     <Compile Include="View\Sprites\FrogSprite.xaml.cs">
       <DependentUpon>FrogSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\HomeSprite.xaml.cs">
+      <DependentUpon>HomeSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\ISpriteRenderer.cs" />
     <Compile Include="View\Sprites\BusSprite.xaml.cs">
@@ -188,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\BusSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\HomeSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

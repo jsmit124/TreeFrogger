@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 namespace FroggerStarter.Model
 {
+
     /// <summary>
-    ///     Stores information for the Lane class
+    /// 
     /// </summary>
     /// <seealso cref="System.Collections.Generic.IEnumerable{FroggerStarter.Model.Vehicle}" />
     public class Lane : IEnumerable<Vehicle>
@@ -127,6 +128,9 @@ namespace FroggerStarter.Model
             }
         }
 
+        /// <summary>
+        /// Moves the vehicles forward.
+        /// </summary>
         public void MoveVehiclesForward()
         {
             foreach (var vehicle in this.vehicles)

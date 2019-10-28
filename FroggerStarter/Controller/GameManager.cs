@@ -42,17 +42,14 @@ namespace FroggerStarter.Controller
 
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
-
         private Canvas gameCanvas;
         private Frog player;
-
         private readonly double topLaneYLocation = (Double)Application.Current.Resources["HighRoadYLocation"];
-
         private readonly PlayerStatistics playerStats;
-
         private DispatcherTimer gameTimer;
         private DispatcherTimer timeRemainingTimer;
         private readonly LaneManager laneManager;
+        private readonly HomeFrogManager homeManager;
 
         #endregion
 
@@ -83,6 +80,7 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
             this.laneManager = new LaneManager(this.topLaneYLocation);
+            this.homeManager = new HomeFrogManager(this.topLaneYLocation);
             this.playerStats = new PlayerStatistics();
 
             this.setupGameTimer();
@@ -142,6 +140,7 @@ namespace FroggerStarter.Controller
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createAndPlacePlayer();
             this.addVehiclesToView();
+            this.placeHomeFrogs();
         }
 
         private void createAndPlacePlayer()
@@ -149,6 +148,14 @@ namespace FroggerStarter.Controller
             this.player = new Frog();
             this.gameCanvas.Children.Add(this.player.Sprite);
             this.setPlayerToCenterOfBottomLane();
+        }
+
+        private void placeHomeFrogs()
+        {
+            foreach (var homeFrog in this.homeManager)
+            {
+                this.gameCanvas.Children.Add(homeFrog.Sprite);
+            }
         }
 
         private void addVehiclesToView()
@@ -168,8 +175,8 @@ namespace FroggerStarter.Controller
         private void gameTimerOnTick(object sender, object e)
         {
             this.laneManager.MoveVehicles();
-            this.checkForPlayerCollisionWithVehicle();
-            this.checkForPlayerScored();
+            this.checkForPlayerCollisionWithObjects();
+            this.checkForPlayerDidntMakeItHome();
         }
 
         private void timeRemainingTimerOnTick(object sender, object e)
@@ -223,13 +230,21 @@ namespace FroggerStarter.Controller
             this.player.MoveDownWithBoundaryCheck((int)Math.Floor(this.backgroundHeight));
         }
 
-        private void checkForPlayerCollisionWithVehicle()
+        private void checkForPlayerCollisionWithObjects()
         {
             foreach (var vehicle in this.laneManager)
             {
                 if (player.CollisionDetected(vehicle))
                 {
                     this.handleCollision();
+                }
+            }
+
+            foreach (var frogHome in this.homeManager)
+            {
+                if (player.CollisionDetected(frogHome))
+                {
+                    this.handleFrogMadeItHome(frogHome);
                 }
             }
         }
@@ -247,11 +262,11 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void checkForPlayerScored()
+        private void checkForPlayerDidntMakeItHome()
         {
             if (this.player.Y <= this.topLaneYLocation)
             {
-                this.handlePlayerScored();
+                this.handleCollision();
             }
         }
 
@@ -266,7 +281,7 @@ namespace FroggerStarter.Controller
 
         private bool checkForGameOver()
         {
-            if (this.playerStats.Lives == 0)
+            if (this.playerStats.Lives == 0 || this.playerStats.AmountOfFrogsInHome == GameSettings.FrogHomeCount)
             {
                 this.handleGameOver();
                 return true;
@@ -301,6 +316,22 @@ namespace FroggerStarter.Controller
             this.playerStats.ResetTimeRemaining();
             this.TimeRemainingCount?.Invoke(this.playerStats.TimeRemaining);
             this.timeRemainingTimer.Start();
+        }
+
+        private void handleFrogMadeItHome(HomeFrog frogHome)
+        {
+            if (frogHome.Sprite.Visibility == Visibility.Visible)
+            {
+                this.handleCollision();
+            }
+            else
+            {
+                this.handlePlayerScored();
+                frogHome.Sprite.Visibility = Visibility.Visible;
+                this.playerStats.IncrementFrogsInHomes();
+                this.checkForGameOver();
+            }
+
         }
         #endregion
     }
