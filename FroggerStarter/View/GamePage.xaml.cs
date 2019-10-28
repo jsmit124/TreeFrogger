@@ -44,6 +44,7 @@ namespace FroggerStarter.View
             this.gameManager.ScoreIncreased += this.onScoreCountUpdated;
             this.gameManager.LifeLost += this.onLivesCountUpdated;
             this.gameManager.GameOver += this.onGameOver;
+            this.gameManager.TimeRemainingCount += this.onTimeRemainingUpdate;
         }
 
         #endregion
@@ -82,6 +83,11 @@ namespace FroggerStarter.View
         private void onGameOver()
         {
             this.gameOverTextBlock.Visibility = Visibility.Visible;
+        }
+
+        private void onTimeRemainingUpdate(int timeRemaining)
+        {
+            this.timeRemainingTextBlock.Text = "Time: " + timeRemaining;
         }
 
         #endregion

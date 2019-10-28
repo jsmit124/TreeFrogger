@@ -16,5 +16,15 @@
         /// </summary>
         public static int WinningScore = 5;
 
+        /// <summary>
+        /// The frog home count
+        /// </summary>
+        public static int FrogHomeCount = 5;
+
+        /// <summary>
+        /// The time remaining at start of the game
+        /// </summary>
+        public static int TimeRemainingAtStart = 20;
+
     }
 }

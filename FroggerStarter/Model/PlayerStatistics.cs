@@ -25,6 +25,8 @@ namespace FroggerStarter.Model
         /// </value>
         public int Score { get; private set; }
 
+        public int TimeRemaining { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -38,6 +40,7 @@ namespace FroggerStarter.Model
         {
             this.Lives = GameSettings.PlayerLives;
             this.Score = 0;
+            this.TimeRemaining = GameSettings.TimeRemainingAtStart;
         }
 
         #endregion
@@ -49,9 +52,9 @@ namespace FroggerStarter.Model
         ///     Precondition: None
         ///     Postcondition: this.Score == this.Score + 1
         /// </summary>
-        public void IncrementScore()
+        public void IncrementScore(int amountToIncrease)
         {
-            this.Score += 1;
+            this.Score += amountToIncrease;
         }
 
         /// <summary>
@@ -62,6 +65,22 @@ namespace FroggerStarter.Model
         public void DecrementLives()
         {
             this.Lives -= 1;
+        }
+
+        /// <summary>
+        /// Decrements the time remaining.
+        /// </summary>
+        public void DecrementTimeRemaining()
+        {
+            this.TimeRemaining -= 1;
+        }
+
+        /// <summary>
+        /// Resets the time remaining.
+        /// </summary>
+        public void ResetTimeRemaining()
+        {
+            this.TimeRemaining = GameSettings.TimeRemainingAtStart;
         }
 
         #endregion

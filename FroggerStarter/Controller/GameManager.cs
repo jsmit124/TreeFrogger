@@ -31,6 +31,11 @@ namespace FroggerStarter.Controller
         /// <param name="score">The score.</param>
         public delegate void ScoreIncreasedHandler(int score);
 
+        /// <summary>
+        /// Delegate for the Timer event
+        /// </summary>
+        public delegate void TimerHandler(int timeRemaining);
+
         #endregion
 
         #region Data members
@@ -46,6 +51,7 @@ namespace FroggerStarter.Controller
         private readonly PlayerStatistics playerStats;
 
         private DispatcherTimer gameTimer;
+        private DispatcherTimer timeRemainingTimer;
         private readonly LaneManager laneManager;
 
         #endregion
@@ -80,6 +86,7 @@ namespace FroggerStarter.Controller
             this.playerStats = new PlayerStatistics();
 
             this.setupGameTimer();
+            this.setupTimeRemainingTimer();
         }
 
         #endregion
@@ -101,12 +108,25 @@ namespace FroggerStarter.Controller
         /// </summary>
         public event GameOverHandler GameOver;
 
+        /// <summary>
+        /// Occurs when [game timer].
+        /// </summary>
+        public event TimerHandler TimeRemainingCount;
+
         private void setupGameTimer()
         {
             this.gameTimer = new DispatcherTimer();
             this.gameTimer.Tick += this.gameTimerOnTick;
             this.gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 15);
             this.gameTimer.Start();
+        }
+
+        private void setupTimeRemainingTimer()
+        {
+            this.timeRemainingTimer = new DispatcherTimer();
+            this.timeRemainingTimer.Tick += this.timeRemainingTimerOnTick;
+            this.timeRemainingTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            this.timeRemainingTimer.Start();
         }
 
         /// <summary>
@@ -150,6 +170,17 @@ namespace FroggerStarter.Controller
             this.laneManager.MoveVehicles();
             this.checkForPlayerCollisionWithVehicle();
             this.checkForPlayerScored();
+        }
+
+        private void timeRemainingTimerOnTick(object sender, object e)
+        {
+            this.playerStats.DecrementTimeRemaining();
+            this.TimeRemainingCount?.Invoke(this.playerStats.TimeRemaining);
+
+            if (this.playerStats.TimeRemaining == 0)
+            {
+                this.handleTimeRemainingIsZero();
+            }
         }
 
         /// <summary>
@@ -212,6 +243,7 @@ namespace FroggerStarter.Controller
             if (!this.checkForGameOver())
             {
                 this.setPlayerToCenterOfBottomLane();
+                this.resetTimeRemainingTimer();
             }
         }
 
@@ -225,15 +257,16 @@ namespace FroggerStarter.Controller
 
         private void handlePlayerScored()
         {
+            this.playerStats.IncrementScore(this.playerStats.TimeRemaining);
             this.ScoreIncreased?.Invoke(this.playerStats.Score);
-            this.playerStats.IncrementScore();
             this.checkForGameOver();
+            this.resetTimeRemainingTimer();
             this.setPlayerToCenterOfBottomLane();
         }
 
         private bool checkForGameOver()
         {
-            if (this.playerStats.Lives == 0 || this.playerStats.Score == GameSettings.WinningScore)
+            if (this.playerStats.Lives == 0)
             {
                 this.handleGameOver();
                 return true;
@@ -245,12 +278,30 @@ namespace FroggerStarter.Controller
         private void handleGameOver()
         {
             this.gameTimer.Stop();
+            this.timeRemainingTimer.Stop();
             this.laneManager.StopSpeedTimer();
             this.player.StopMovement();
             this.laneManager.StopAllVehicleMovement();
             this.GameOver?.Invoke();
         }
 
+        private void handleTimeRemainingIsZero()
+        {
+            this.playerStats.DecrementLives();
+            this.LifeLost?.Invoke(this.playerStats.Lives);
+            if (!this.checkForGameOver())
+            {
+                this.resetTimeRemainingTimer();
+            }
+        }
+
+        private void resetTimeRemainingTimer()
+        {
+            this.timeRemainingTimer.Stop();
+            this.playerStats.ResetTimeRemaining();
+            this.TimeRemainingCount?.Invoke(this.playerStats.TimeRemaining);
+            this.timeRemainingTimer.Start();
+        }
         #endregion
     }
 }
