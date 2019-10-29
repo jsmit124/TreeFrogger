@@ -11,12 +11,21 @@
     Width="50">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="AnimationColor" Color="Aqua" />
+        <SolidColorBrush x:Key="AnimationColor" Color="Red" />
     </UserControl.Resources>
 
     <Canvas Width="50" Height="50" Background="Transparent">
 
-        <Rectangle Canvas.Top="10" Canvas.Left="10" Fill="{StaticResource AnimationColor}" Width="30" Height="30" />
+        <Rectangle Canvas.Top="30" Canvas.Left="23" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
+        <Rectangle Canvas.Top="22" Canvas.Left="25" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
+        <Rectangle Canvas.Top="26" Canvas.Left="27" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
+        <Rectangle Canvas.Top="25" Canvas.Left="21" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
+        <Rectangle Canvas.Top="18" Canvas.Left="29" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
+        <Rectangle Canvas.Top="28" Canvas.Left="33" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
+        <Rectangle Canvas.Top="33" Canvas.Left="20" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
+        <Rectangle Canvas.Top="17" Canvas.Left="19" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
+        <Rectangle Canvas.Top="33" Canvas.Left="29" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
+        <Rectangle Canvas.Top="22" Canvas.Left="14" Fill="{StaticResource AnimationColor}" Width="3" Height="3" />
 
     </Canvas>
 </local:BaseSprite>

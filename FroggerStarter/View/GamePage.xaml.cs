@@ -1,9 +1,11 @@
 ﻿using FroggerStarter.Controller;
+using System;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using static FroggerStarter.Controller.GameManager;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -70,24 +72,24 @@ namespace FroggerStarter.View
             }
         }
 
-        private void onScoreCountUpdated(int score)
+        private void onScoreCountUpdated(object sender, ScoreIncreasedEventArgs score)
         {
-            this.scoreTextBlock.Text = "Score: " + (score + 1);
+            this.scoreTextBlock.Text = "Score: " + (score.Score + 1);
         }
 
-        private void onLivesCountUpdated(int lives)
+        private void onLivesCountUpdated(object sender, LivesLostEventArgs lives)
         {
-            this.livesTextBlock.Text = "Lives: " + lives;
+            this.livesTextBlock.Text = "Lives: " + lives.Lives;
         }
 
-        private void onGameOver()
+        private void onGameOver(object sender, EventArgs e)
         {
             this.gameOverTextBlock.Visibility = Visibility.Visible;
         }
 
-        private void onTimeRemainingUpdate(int timeRemaining)
+        private void onTimeRemainingUpdate(object sender, TimeRemainingEventArgs timeRemaining)
         {
-            this.timeRemainingTextBlock.Text = "Time: " + timeRemaining;
+            this.timeRemainingTextBlock.Text = "Time: " + timeRemaining.TimeRemaining;
         }
 
         #endregion

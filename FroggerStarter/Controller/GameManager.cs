@@ -15,26 +15,47 @@ namespace FroggerStarter.Controller
         #region Types and Delegates
 
         /// <summary>
-        ///     Delegate for the Game Over event
+        /// Handles the event arguments for the Lives Lost event
         /// </summary>
-        public delegate void GameOverHandler();
-
+        /// <seealso cref="System.EventArgs" />
+        public class LivesLostEventArgs : EventArgs
+        {
+            /// <summary>
+            /// Gets or sets the lives.
+            /// </summary>
+            /// <value>
+            /// The lives.
+            /// </value>
+            public int Lives { get; set; }
+        }
         /// <summary>
-        ///     Delegate for the Lives Decreased event
+        /// Handles the event arguments for the Time Remaining event
         /// </summary>
-        /// <param name="lives">The lives.</param>
-        public delegate void LivesDecreasedHandler(int lives);
-
+        /// <seealso cref="System.EventArgs" />
+        public class TimeRemainingEventArgs : EventArgs
+        {
+            /// <summary>
+            /// Gets or sets the time remaining.
+            /// </summary>
+            /// <value>
+            /// The time remaining.
+            /// </value>
+            public int TimeRemaining { get; set; }
+        }
         /// <summary>
-        ///     Delegate for the Score Increased event
+        /// Handles the event arguments for the Score Increased event
         /// </summary>
-        /// <param name="score">The score.</param>
-        public delegate void ScoreIncreasedHandler(int score);
-
-        /// <summary>
-        /// Delegate for the Timer event
-        /// </summary>
-        public delegate void TimerHandler(int timeRemaining);
+        /// <seealso cref="System.EventArgs" />
+        public class ScoreIncreasedEventArgs : EventArgs
+        {
+            /// <summary>
+            /// Gets or sets the score.
+            /// </summary>
+            /// <value>
+            /// The score.
+            /// </value>
+            public int Score { get; set; }
+        }
 
         #endregion
 
@@ -97,24 +118,24 @@ namespace FroggerStarter.Controller
         #region Methods
 
         /// <summary>
-        ///     Occurs when [score increased].
+        /// The game over event handler
         /// </summary>
-        public event ScoreIncreasedHandler ScoreIncreased;
+        public EventHandler<EventArgs> GameOver;
 
         /// <summary>
-        ///     Occurs when [life lost].
+        /// The life lost event handler
         /// </summary>
-        public event LivesDecreasedHandler LifeLost;
+        public EventHandler<LivesLostEventArgs> LifeLost;
 
         /// <summary>
-        ///     Occurs when [game over].
+        /// The time remaining count event handler
         /// </summary>
-        public event GameOverHandler GameOver;
+        public EventHandler<TimeRemainingEventArgs> TimeRemainingCount;
 
         /// <summary>
-        /// Occurs when [game timer].
+        /// The score increased event handler
         /// </summary>
-        public event TimerHandler TimeRemainingCount;
+        public EventHandler<ScoreIncreasedEventArgs> ScoreIncreased;
 
         private void setupGameTimer()
         {
@@ -208,7 +229,9 @@ namespace FroggerStarter.Controller
         private void timeRemainingTimerOnTick(object sender, object e)
         {
             this.playerStats.DecrementTimeRemaining();
-            this.TimeRemainingCount?.Invoke(this.playerStats.TimeRemaining);
+
+            var timeRemaining = new TimeRemainingEventArgs { TimeRemaining = this.playerStats.TimeRemaining };
+            this.TimeRemainingCount?.Invoke(this, timeRemaining);
 
             if (this.playerStats.TimeRemaining == 0)
             {
@@ -300,7 +323,9 @@ namespace FroggerStarter.Controller
         {
             this.player.Sprite.Visibility = Visibility.Collapsed;
             this.playerStats.DecrementLives();
-            this.LifeLost?.Invoke(this.playerStats.Lives);
+
+            var lives = new LivesLostEventArgs() { Lives = this.playerStats.Lives };
+            this.LifeLost?.Invoke(this, lives);
 
             this.timeRemainingTimer.Stop();
             this.handleDeathAnimation();
@@ -331,7 +356,10 @@ namespace FroggerStarter.Controller
         private void handlePlayerScored()
         {
             this.playerStats.IncrementScore(this.playerStats.TimeRemaining);
-            this.ScoreIncreased?.Invoke(this.playerStats.Score);
+
+            var score = new ScoreIncreasedEventArgs() { Score = this.playerStats.Score };
+            this.ScoreIncreased?.Invoke(this, score);
+
             this.checkForGameOver();
             this.resetTimeRemainingTimer();
             this.setPlayerToCenterOfBottomLane();
@@ -356,13 +384,16 @@ namespace FroggerStarter.Controller
             this.player.StopMovement();
             this.timeRemainingTimer.Stop();
             this.laneManager.StopAllVehicleMovement();
-            this.GameOver?.Invoke();
+            this.GameOver?.Invoke(this, EventArgs.Empty);
         }
 
         private void handleTimeRemainingIsZero()
         {
             this.playerStats.DecrementLives();
-            this.LifeLost?.Invoke(this.playerStats.Lives);
+
+            var lives = new LivesLostEventArgs() { Lives = this.playerStats.Lives };
+            this.LifeLost?.Invoke(this, lives);
+
             if (!this.checkForGameOver())
             {
                 this.resetTimeRemainingTimer();
@@ -373,7 +404,10 @@ namespace FroggerStarter.Controller
         {
             this.timeRemainingTimer.Stop();
             this.playerStats.ResetTimeRemaining();
-            this.TimeRemainingCount?.Invoke(this.playerStats.TimeRemaining);
+
+            var timeRemaining = new TimeRemainingEventArgs { TimeRemaining = this.playerStats.TimeRemaining };
+            this.TimeRemainingCount?.Invoke(this, timeRemaining);
+
             this.timeRemainingTimer.Start();
         }
 
