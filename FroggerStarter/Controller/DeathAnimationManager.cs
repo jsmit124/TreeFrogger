@@ -13,14 +13,14 @@ namespace FroggerStarter.Controller
     /// <seealso cref="System.Collections.Generic.IEnumerable{FroggerStarter.Model.DeathAnimation}" />
     public class DeathAnimationManager : IEnumerable<DeathAnimation>
     {
-        private DispatcherTimer deathAnimationTimer;
         private IList<DeathAnimation> animations;
-        private int currentAnimationFrameIndex;
-
         /// <summary>
-        /// The animation is running
+        /// Gets the index of the current animation frame.
         /// </summary>
-        public bool IsRunning { get; private set; }
+        /// <value>
+        /// The index of the current animation frame.
+        /// </value>
+        public int CurrentAnimationFrameIndex { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeathAnimationManager"/> class.
@@ -29,14 +29,16 @@ namespace FroggerStarter.Controller
         {
             this.animations = new List<DeathAnimation>();
             this.buildAnimationCollection();
-            this.setupDeathAnimationTimer();
-            this.resetFrameCount();
-            this.collapseAllAnimationFrames();
+            this.ResetFrameCount();
+            this.CollapseAllAnimationFrames();
         }
 
-        private void resetFrameCount()
+        /// <summary>
+        /// Resets the frame count.
+        /// </summary>
+        public void ResetFrameCount()
         {
-            this.currentAnimationFrameIndex = 0;
+            this.CurrentAnimationFrameIndex = 0;
         }
 
         private void buildAnimationCollection()
@@ -62,60 +64,35 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void showNextFrame()
+        /// <summary>
+        /// Shows the next death animation frame.
+        /// </summary>
+        public void ShowNextFrame()
         {
-            if (this.currentAnimationFrameIndex > 0)
+            if (this.CurrentAnimationFrameIndex > 0)
             {
-                var previousFrame = this.animations[currentAnimationFrameIndex];
+                var previousFrame = this.animations[CurrentAnimationFrameIndex];
                 previousFrame.Sprite.Visibility = Visibility.Collapsed;
             }
 
-            if (this.currentAnimationFrameIndex <= GameSettings.AnimationCount - 1)
+            if (this.CurrentAnimationFrameIndex <= GameSettings.AnimationCount - 1)
             {
-                var nextFrame = this.animations[currentAnimationFrameIndex];
+                var nextFrame = this.animations[CurrentAnimationFrameIndex];
                 nextFrame.Sprite.Visibility = Visibility.Visible;
             }
 
-            currentAnimationFrameIndex++;
-        }
-        
-        private void setupDeathAnimationTimer()
-        {
-            this.deathAnimationTimer = new DispatcherTimer();
-            this.deathAnimationTimer.Tick += this.deathAnimationTimerOnTick;
-            this.deathAnimationTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            CurrentAnimationFrameIndex++;
         }
 
-        private void deathAnimationTimerOnTick(object sender, object e)
-        {
-            if (this.currentAnimationFrameIndex > GameSettings.AnimationCount - 1)
-            {
-                this.collapseAllAnimationFrames();
-                this.deathAnimationTimer.Stop();
-                this.resetFrameCount();
-                this.IsRunning = false;
-            }
-            else
-            {
-                this.IsRunning = true;
-                this.showNextFrame();
-            }
-        }
-
-        private void collapseAllAnimationFrames()
+        /// <summary>
+        /// Collapses all death animation frames.
+        /// </summary>
+        public void CollapseAllAnimationFrames()
         {
             foreach (var frame in this.animations)
             {
                 frame.Sprite.Visibility = Visibility.Collapsed;
             }
-        }
-
-        /// <summary>
-        /// Plays the animation.
-        /// </summary>
-        public void PlayDeathAnimation()
-        {
-            this.deathAnimationTimer.Start();
         }
 
         /// <summary>
