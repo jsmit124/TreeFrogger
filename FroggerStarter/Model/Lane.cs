@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 
 namespace FroggerStarter.Model
@@ -106,11 +108,19 @@ namespace FroggerStarter.Model
         {
             for (var i = 0; i < this.NumberOfVehicles; i++)
             {
-                var vehicleToAdd = new Vehicle(vehicleType, defaultSpeed);
+                var vehicleToAdd = new Vehicle(vehicleType, defaultSpeed) {
+                    X = LaneSettings.LaneLength
+                };
 
                 if (this.direction == LaneDirection.Right)
                 {
                     vehicleToAdd.FlipSpriteHorizontal();
+                    vehicleToAdd.X = 0 - vehicleToAdd.Width;
+                }
+
+                if (this.vehicles.Count > 0)
+                {
+                    vehicleToAdd.StopMovement();
                 }
 
                 this.vehicles.Add(vehicleToAdd);
@@ -127,6 +137,42 @@ namespace FroggerStarter.Model
             foreach (var vehicle in this.vehicles)
             {
                 vehicle.MoveForward(this.direction);
+            }
+        }
+
+        /// <summary>
+        ///     Moves the next available vehicle.
+        ///     Precondition: None
+        ///     Postcondition: Next available vehicle beings moving
+        /// </summary>
+        public void MoveNextAvailableVehicle()
+        {
+            var nextVehicle = this.vehicles.FirstOrDefault(vehicle => !vehicle.IsMoving);
+            nextVehicle?.StartMovement();
+        }
+
+        /// <summary>
+        ///     Resets to one vehicle.
+        ///     Precondition: None
+        ///     Postcondition: Lane is reset to only one moving vehicle
+        /// </summary>
+        public void ResetToOneVehicle()
+        {
+            this.resetAllVehiclesToStart();
+            this.vehicles.ToList()[0].StartMovement();
+        }
+
+        private void resetAllVehiclesToStart()
+        {
+            var xLocation = LaneSettings.LaneLength;
+            if (this.direction == LaneDirection.Right)
+            {
+                xLocation = 0 - this.vehicles.ToList()[0].Width;
+            }
+
+            foreach (var vehicle in this.vehicles)
+            {
+                vehicle.Reset(xLocation);
             }
         }
 

@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Model;
@@ -14,9 +16,10 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
-        private readonly ICollection<Lane> Lanes;
-
+        private readonly ICollection<Lane> lanes;
         private readonly double topLaneYLocation;
+
+        private DispatcherTimer addCarsTimer;
 
         #endregion
 
@@ -27,10 +30,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public LaneManager(double topLaneYLocation)
         {
-            this.Lanes = new List<Lane>();
+            this.lanes = new List<Lane>();
             this.topLaneYLocation = topLaneYLocation;
             this.createLanes();
             this.setVehicleLocations();
+            this.setupAddCarsTimer();
         }
 
         #endregion
@@ -47,7 +51,7 @@ namespace FroggerStarter.Controller
         /// </returns>
         public IEnumerator<Vehicle> GetEnumerator()
         {
-            return this.Lanes.SelectMany(lane => lane).GetEnumerator();
+            return this.lanes.SelectMany(lane => lane).GetEnumerator();
         }
 
         /// <summary>
@@ -60,31 +64,30 @@ namespace FroggerStarter.Controller
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.Lanes.SelectMany(lane => lane).GetEnumerator();
+            return this.lanes.SelectMany(lane => lane).GetEnumerator();
         }
 
         private void createLanes()
         {
-            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.PoliceCar, 3, 3.6,
+            this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.PoliceCar, 3, 3.6,
                 this.calculateNextLaneYLocation()));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.Bus, 2, 3.2, this.calculateNextLaneYLocation()));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 3, 2.8,
+            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.Bus, 2, 3.2, this.calculateNextLaneYLocation()));
+            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 4, 2.8,
                 this.calculateNextLaneYLocation()));
-            this.Lanes.Add(new Lane(LaneDirection.Right, VehicleType.Bus, 3, 2.4, this.calculateNextLaneYLocation()));
-            this.Lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 2, 2,
+            this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.Bus, 3, 2.4, this.calculateNextLaneYLocation()));
+            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 5, 2,
                 this.calculateNextLaneYLocation()));
         }
 
         private double calculateNextLaneYLocation()
         {
-            return this.topLaneYLocation + (this.Lanes.Count + 1) * LaneSettings.LaneWidth;
+            return this.topLaneYLocation + (this.lanes.Count + 1) * LaneSettings.LaneWidth;
         }
 
         private void setVehicleLocations()
         {
-            foreach (var lane in this.Lanes)
+            foreach (var lane in this.lanes)
             {
-                setVehicleXLocations(lane);
                 setVehicleYLocations(lane);
             }
         }
@@ -97,18 +100,6 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private static void setVehicleXLocations(Lane lane)
-        {
-            var distance = LaneSettings.LaneLength / lane.NumberOfVehicles;
-
-            var count = 0;
-            foreach (var vehicle in lane)
-            {
-                vehicle.X = count;
-                count += distance;
-            }
-        }
-
         /// <summary>
         ///     Moves the vehicles.
         ///     Precondition: None
@@ -116,7 +107,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MoveVehicles()
         {
-            this.Lanes.ToList().ForEach(lane => lane.MoveVehiclesForward());
+            this.lanes.ToList().ForEach(lane => lane.MoveVehiclesForward());
         }
 
         /// <summary>
@@ -126,7 +117,45 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void StopAllVehicleMovement()
         {
-            this.Lanes.SelectMany(lane => lane).ToList().ForEach(vehicle => vehicle.StopMovement());
+            this.lanes.SelectMany(lane => lane).ToList().ForEach(vehicle => vehicle.StopMovement());
+        }
+
+        private void setupAddCarsTimer()
+        {
+            this.addCarsTimer = new DispatcherTimer();
+            this.addCarsTimer.Tick += this.addCarsTimerOnTick;
+            this.addCarsTimer.Interval = new TimeSpan(0, 0, 0, 3, 0);
+            this.addCarsTimer.Start();
+        }
+
+        private void addCarsTimerOnTick(object sender, object e)
+        {
+            this.startMovingAnotherCarInEachLane();
+        }
+
+        private void startMovingAnotherCarInEachLane()
+        {
+            foreach (var lane in this.lanes)
+            {
+                lane.MoveNextAvailableVehicle();
+            }
+        }
+
+        /// <summary>
+        ///     Resets the lanes to one vehicle.
+        ///     Precondition: None
+        ///     Postcondition: All lanes are reset to one moving vehicle
+        /// </summary>
+        public void ResetLanesToOneVehicle()
+        {
+            this.lanes.ToList().ForEach(lane => lane.ResetToOneVehicle());
+            this.resetAddCarsTimer();
+        }
+
+        private void resetAddCarsTimer()
+        {
+            this.addCarsTimer.Stop();
+            this.addCarsTimer.Start();
         }
 
         #endregion

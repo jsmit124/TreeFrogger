@@ -20,7 +20,7 @@
         /// <summary>
         ///     The lane length
         /// </summary>
-        public static int LaneLength = 650;
+        public static double LaneLength = 650;
 
         #endregion
     }

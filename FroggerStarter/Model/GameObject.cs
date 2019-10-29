@@ -107,7 +107,7 @@ namespace FroggerStarter.Model
         ///     Precondition: None
         ///     Postcondition: SpeedX and SpeedY set to zero
         /// </summary>
-        public void StopMovement()
+        public virtual void StopMovement()
         {
             this.SetSpeed(0, 0);
         }

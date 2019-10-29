@@ -299,7 +299,7 @@ namespace FroggerStarter.Controller
             this.LifeLost?.Invoke(this, lives);
 
             this.timeRemainingTimer.Stop();
-            this.handleDeathAnimation();
+            this.handleStartDeathAnimation();
 
             if (!this.checkForGameOver())
             {
@@ -307,7 +307,7 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void handleDeathAnimation()
+        private void handleStartDeathAnimation()
         {
             this.player.StopMovement();
             this.player.Sprite.Visibility = Visibility.Collapsed;
@@ -377,6 +377,7 @@ namespace FroggerStarter.Controller
                 this.player.Sprite.Visibility = Visibility.Visible;
                 this.player.EnableMovement();
                 this.resetTimeRemainingTimer();
+                this.laneManager.ResetLanesToOneVehicle();
             }
         }
 

@@ -17,6 +17,18 @@ namespace FroggerStarter.Model
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///     Gets a value indicating whether this instance is moving.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance is moving; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMoving { get; private set; }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -28,7 +40,7 @@ namespace FroggerStarter.Model
         /// <param name="defaultSpeed">The default speed.</param>
         public Vehicle(VehicleType vehicleType, double defaultSpeed)
         {
-            if (defaultSpeed <= 0)
+            if (defaultSpeed < 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -81,14 +93,50 @@ namespace FroggerStarter.Model
         /// <param name="direction">The direction.</param>
         public void MoveForward(LaneDirection direction)
         {
-            if (direction == LaneDirection.Left)
+            switch (direction)
             {
-                this.MoveLeft();
+                case LaneDirection.Left:
+                    this.MoveLeft();
+                    break;
+                case LaneDirection.Right:
+                    this.MoveRight();
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
-            else if (direction == LaneDirection.Right)
-            {
-                this.MoveRight();
-            }
+        }
+
+        /// <summary>
+        ///     Stops the movement.
+        ///     Precondition: None
+        ///     Postcondition: SpeedX and SpeedY set to zero and this.IsMoving = false
+        /// </summary>
+        public override void StopMovement()
+        {
+            base.StopMovement();
+            this.IsMoving = false;
+        }
+
+        /// <summary>
+        ///     Starts the vehicle movement.
+        ///     Precondition: None
+        ///     Postcondition: SpeedX set to this.defaultSpeed and this.IsMoving = true
+        /// </summary>
+        public void StartMovement()
+        {
+            SetSpeed(this.defaultSpeed, 0);
+            this.IsMoving = true;
+        }
+
+        /// <summary>
+        ///     Resets this vehicle to no movement and default Y location
+        ///     Precondition:
+        ///     Postcondition: thi
+        /// </summary>
+        public void Reset(double xLocation)
+        {
+            this.StopMovement();
+            X = xLocation;
         }
 
         #endregion
