@@ -26,18 +26,18 @@ namespace FroggerStarter.Model
         public int Score { get; private set; }
 
         /// <summary>
-        /// Gets the time remaining.
+        ///     Gets the time remaining.
         /// </summary>
         /// <value>
-        /// The time remaining.
+        ///     The time remaining.
         /// </value>
         public int TimeRemaining { get; private set; }
 
         /// <summary>
-        /// Gets the amount of frogs in home.
+        ///     Gets the amount of frogs in home.
         /// </summary>
         /// <value>
-        /// The amount of frogs in home.
+        ///     The amount of frogs in home.
         /// </value>
         public int AmountOfFrogsInHome { get; private set; }
 
@@ -83,7 +83,9 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Decrements the time remaining.
+        ///     Decrements the time remaining.
+        ///     Precondition: None
+        ///     Postcondition: this.TimeRemaining -= 1
         /// </summary>
         public void DecrementTimeRemaining()
         {
@@ -91,7 +93,9 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Resets the time remaining.
+        ///     Resets the time remaining.
+        ///     Precondition: None
+        ///     Postcondition: this.TimeRemaining = GameSettings.TimeRemainingAtStart
         /// </summary>
         public void ResetTimeRemaining()
         {
@@ -99,7 +103,9 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Increments the frogs in homes.
+        ///     Increments the frogs in homes.
+        ///     Precondition: None
+        ///     Postcondition: this.AmountOfFrogsInHome += 1
         /// </summary>
         public void IncrementFrogsInHomes()
         {

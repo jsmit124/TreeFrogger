@@ -1,10 +1,11 @@
 ﻿namespace FroggerStarter.Constants
 {
     /// <summary>
-    /// Stores information for the game settings
+    ///     Stores information for the game settings
     /// </summary>
-    class GameSettings
+    internal class GameSettings
     {
+        #region Data members
 
         /// <summary>
         ///     The player lives
@@ -12,29 +13,30 @@
         public static int PlayerLives = 4;
 
         /// <summary>
-        /// The winning score
+        ///     The winning score
         /// </summary>
         public static int WinningScore = 5;
 
         /// <summary>
-        /// The frog home count
+        ///     The frog home count
         /// </summary>
         public static int FrogHomeCount = 5;
 
         /// <summary>
-        /// The time remaining at start of the game
+        ///     The time remaining at start of the game
         /// </summary>
         public static int TimeRemainingAtStart = 20;
 
         /// <summary>
-        /// The animation count
+        ///     The animation count
         /// </summary>
         public static int AnimationCount = 4;
 
         /// <summary>
-        /// The player movement speed
+        ///     The player movement speed
         /// </summary>
         public const int PlayerMovementSpeed = 50;
 
+        #endregion
     }
 }

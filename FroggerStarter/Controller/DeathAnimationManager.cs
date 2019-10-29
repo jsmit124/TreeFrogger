@@ -1,29 +1,39 @@
-﻿using FroggerStarter.Constants;
-using FroggerStarter.Model;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
+using FroggerStarter.Constants;
+using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
 {
     /// <summary>
-    /// Stores information for the default animation manager class
+    ///     Stores information for the default animation manager class
     /// </summary>
     /// <seealso cref="System.Collections.Generic.IEnumerable{FroggerStarter.Model.DeathAnimation}" />
     public class DeathAnimationManager : IEnumerable<DeathAnimation>
     {
-        private IList<DeathAnimation> animations;
+        #region Data members
+
+        private readonly IList<DeathAnimation> animations;
+
+        #endregion
+
+        #region Properties
+
         /// <summary>
-        /// Gets the index of the current animation frame.
+        ///     Gets the index of the current animation frame.
         /// </summary>
         /// <value>
-        /// The index of the current animation frame.
+        ///     The index of the current animation frame.
         /// </value>
         public int CurrentAnimationFrameIndex { get; private set; }
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="DeathAnimationManager"/> class.
+        ///     Initializes a new instance of the <see cref="DeathAnimationManager" /> class.
         /// </summary>
         public DeathAnimationManager()
         {
@@ -33,8 +43,40 @@ namespace FroggerStarter.Controller
             this.CollapseAllAnimationFrames();
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        /// Resets the frame count.
+        ///     Returns an enumerator that iterates through the collection.
+        ///     Precondition: None
+        ///     Postcondition: None
+        /// </summary>
+        /// <returns>
+        ///     An enumerator that can be used to iterate through the collection.
+        /// </returns>
+        public IEnumerator<DeathAnimation> GetEnumerator()
+        {
+            return this.animations.GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through a collection.
+        ///     Precondition: None
+        ///     Postcondition: None
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.animations.GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Resets the frame count.
+        ///     Precondition: None
+        ///     Postcondition: this.CurrentAnimationFrameIndex = 0
         /// </summary>
         public void ResetFrameCount()
         {
@@ -52,7 +94,9 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Sets the animation location.
+        ///     Sets the animation location.
+        ///     Precondition: None
+        ///     Postcondition: every animation in this.animations x, y = x, y
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
@@ -65,27 +109,31 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Shows the next death animation frame.
+        ///     Shows the next death animation frame.
+        ///     Precondition: None
+        ///     Postcondition: currentAnimationFrameIndex++, prev frame = collapsed, new frame = visible
         /// </summary>
         public void ShowNextFrame()
         {
             if (this.CurrentAnimationFrameIndex > 0)
             {
-                var previousFrame = this.animations[CurrentAnimationFrameIndex];
+                var previousFrame = this.animations[this.CurrentAnimationFrameIndex];
                 previousFrame.Sprite.Visibility = Visibility.Collapsed;
             }
 
             if (this.CurrentAnimationFrameIndex <= GameSettings.AnimationCount - 1)
             {
-                var nextFrame = this.animations[CurrentAnimationFrameIndex];
+                var nextFrame = this.animations[this.CurrentAnimationFrameIndex];
                 nextFrame.Sprite.Visibility = Visibility.Visible;
             }
 
-            CurrentAnimationFrameIndex++;
+            this.CurrentAnimationFrameIndex++;
         }
 
         /// <summary>
-        /// Collapses all death animation frames.
+        ///     Collapses all death animation frames.
+        ///     Precondition: None
+        ///     Postcondition: frame.Sprite.Visibility = Collapsed
         /// </summary>
         public void CollapseAllAnimationFrames()
         {
@@ -95,26 +143,6 @@ namespace FroggerStarter.Controller
             }
         }
 
-        /// <summary>
-        /// Returns an enumerator that iterates through the collection.
-        /// </summary>
-        /// <returns>
-        /// An enumerator that can be used to iterate through the collection.
-        /// </returns>
-        public IEnumerator<DeathAnimation> GetEnumerator()
-        {
-            return this.animations.GetEnumerator();
-        }
-
-        /// <summary>
-        /// Returns an enumerator that iterates through a collection.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
-        /// </returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.animations.GetEnumerator();
-        }
+        #endregion
     }
 }

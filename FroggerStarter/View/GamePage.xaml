@@ -10,7 +10,8 @@
     Width="650">
 
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}" Background="Black">
-        <TextBlock x:Name="gameOverTextBlock" Canvas.ZIndex="100" Text="GAME OVER" Foreground="White" LineStackingStrategy="MaxHeight"
+        <TextBlock x:Name="gameOverTextBlock" Canvas.ZIndex="100" Text="GAME OVER" Foreground="White"
+                   LineStackingStrategy="MaxHeight"
                    TextWrapping="Wrap" Canvas.Left="161" Canvas.Top="165" Height="87" Width="372" FontSize="60"
                    RenderTransformOrigin="0.492,0.483" Visibility="Collapsed" />
         <Rectangle Canvas.Top="55" Fill="Silver" Width="{StaticResource AppWidth}" Height="50" />
@@ -30,9 +31,9 @@
         <Rectangle Canvas.Top="55" Canvas.Left="450" Fill="Black" Width="50" Height="50" />
         <Rectangle Canvas.Top="55" Canvas.Left="600" Fill="Black" Width="50" Height="50" />
         <TextBlock x:Name="timeRemainingTextBlock" Canvas.Left="10" Text="Time: 20" TextWrapping="Wrap"
-            Height="35" Width="114" FontSize="26" FontWeight="Bold" Foreground="White" Canvas.Top="8" />
+                   Height="35" Width="114" FontSize="26" FontWeight="Bold" Foreground="White" Canvas.Top="8" />
         <TextBlock Canvas.Left="278" Text="Tree" TextWrapping="Wrap" Height="33" Width="49" FontSize="24"
-            RenderTransformOrigin="0.544,0.383" FontFamily="Bauhaus 93" FocusVisualPrimaryBrush="Lime"
-            Foreground="Lime" Canvas.Top="4" />
+                   RenderTransformOrigin="0.544,0.383" FontFamily="Bauhaus 93" FocusVisualPrimaryBrush="Lime"
+                   Foreground="Lime" Canvas.Top="4" />
     </Canvas>
 </Page>

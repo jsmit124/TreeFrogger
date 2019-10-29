@@ -6,11 +6,12 @@
     public enum LaneDirection
     {
         /// <summary>
-        /// The left direction
+        ///     The left direction
         /// </summary>
         Left,
+
         /// <summary>
-        /// The right direction
+        ///     The right direction
         /// </summary>
         Right
     }

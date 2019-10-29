@@ -1,17 +1,23 @@
-﻿using FroggerStarter.View.Sprites;
-using System;
+﻿using System;
 using System.Drawing;
 using Windows.UI.Xaml.Media;
+using FroggerStarter.View.Sprites;
 using Point = Windows.Foundation.Point;
 
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Stores information for basic objects within the game
+    ///     Stores information for basic objects within the game
     /// </summary>
     public abstract class BaseObject
     {
+        #region Data members
+
         private Point location;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///     Gets or sets the x location of the game object.
@@ -69,6 +75,10 @@ namespace FroggerStarter.Model
         /// </value>
         public BaseSprite Sprite { get; protected set; }
 
+        #endregion
+
+        #region Methods
+
         private void render()
         {
             this.Sprite.RenderAt(this.X, this.Y);
@@ -88,9 +98,9 @@ namespace FroggerStarter.Model
                 throw new ArgumentNullException();
             }
 
-            var collisionArea = new Rectangle((int)otherObject.X, (int)otherObject.Y,
-                (int)otherObject.Width, (int)otherObject.Height);
-            var currentArea = new Rectangle((int)this.X, (int)this.Y, (int)this.Width, (int)this.Height);
+            var collisionArea = new Rectangle((int) otherObject.X, (int) otherObject.Y,
+                (int) otherObject.Width, (int) otherObject.Height);
+            var currentArea = new Rectangle((int) this.X, (int) this.Y, (int) this.Width, (int) this.Height);
 
             return currentArea.IntersectsWith(collisionArea);
         }
@@ -103,7 +113,9 @@ namespace FroggerStarter.Model
         public void FlipSpriteHorizontal()
         {
             this.Sprite.RenderTransformOrigin = new Point(0.5, 0.5);
-            this.Sprite.RenderTransform = new ScaleTransform { ScaleX = -1 };
+            this.Sprite.RenderTransform = new ScaleTransform {ScaleX = -1};
         }
+
+        #endregion
     }
 }

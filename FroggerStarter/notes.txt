@@ -1,8 +1,0 @@
-﻿Could not find any bugs
-All functionality implemented
-
-Cleaned and built before submission
-
-Warnings shown are some methods hiding inherited members of BaseSprite, but when I resolve them by adding the
-	'new' keyword, it removes the 'new' keyword after runtime. Do not know how to resolve these errors.
-Sometimes these warnings show up, other times they do not. Weird...

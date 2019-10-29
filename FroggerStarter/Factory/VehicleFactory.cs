@@ -1,19 +1,23 @@
-﻿using FroggerStarter.Enums;
+﻿using System;
+using FroggerStarter.Enums;
 using FroggerStarter.View.Sprites;
-using System;
 
 namespace FroggerStarter.Factory
 {
     /// <summary>
-    /// Factory class for building sprites for the Vehicle class
+    ///     Factory class for building sprites for the Vehicle class
     /// </summary>
     public static class VehicleFactory
     {
+        #region Methods
+
         /// <summary>
-        /// Builds the vehicle sprite.
+        ///     Builds the vehicle sprite.
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         /// <param name="typeOfVehicle">The type of vehicle.</param>
-        /// <returns></returns>
+        /// <returns>Returns the specified vehicle sprite</returns>
         public static BaseSprite BuildVehicleSprite(VehicleType typeOfVehicle)
         {
             switch (typeOfVehicle)
@@ -25,6 +29,8 @@ namespace FroggerStarter.Factory
                 default:
                     throw new NotImplementedException();
             }
-        } 
+        }
+
+        #endregion
     }
 }

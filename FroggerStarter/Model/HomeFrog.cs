@@ -3,17 +3,21 @@
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Stores information about the home frog object
+    ///     Stores information about the home frog object
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.BaseObject" />
     public class HomeFrog : BaseObject
     {
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeFrog"/> class.
+        ///     Initializes a new instance of the <see cref="HomeFrog" /> class.
         /// </summary>
         public HomeFrog()
         {
             Sprite = new HomeSprite();
         }
+
+        #endregion
     }
 }

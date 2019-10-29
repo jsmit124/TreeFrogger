@@ -1,7 +1,7 @@
-﻿using FroggerStarter.Constants;
+﻿using System;
+using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Factory;
-using System;
 
 namespace FroggerStarter.Model
 {
@@ -54,7 +54,7 @@ namespace FroggerStarter.Model
 
             if (X > LaneSettings.LaneLength)
             {
-                X = 0 - base.Width;
+                X = 0 - Width;
             }
         }
 
@@ -67,14 +67,16 @@ namespace FroggerStarter.Model
         {
             base.MoveLeft();
 
-            if (X < 0 - base.Width)
+            if (X < 0 - Width)
             {
                 X = LaneSettings.LaneLength;
             }
         }
 
         /// <summary>
-        /// Moves the vehicle forward.
+        ///     Moves the vehicle forward.
+        ///     Precondition: None
+        ///     Postcondition: vehicle is moved forward
         /// </summary>
         /// <param name="direction">The direction.</param>
         public void MoveForward(LaneDirection direction)
@@ -87,16 +89,6 @@ namespace FroggerStarter.Model
             {
                 this.MoveRight();
             }
-        }
-
-        /// <summary>
-        ///     Resets the speed to default.
-        ///     Precondition: None
-        ///     Postcondition: base.SpeedX == this.defaultSpeed
-        /// </summary>
-        public void ResetSpeedToDefault()
-        {
-            SetSpeed(this.defaultSpeed, 0);
         }
 
         #endregion

@@ -7,7 +7,6 @@ namespace FroggerStarter.Model
     /// </summary>
     public abstract class GameObject : BaseObject
     {
-
         #region Properties
 
         /// <summary>
@@ -72,12 +71,12 @@ namespace FroggerStarter.Model
 
         private void moveX(double x)
         {
-            base.X += x;
+            X += x;
         }
 
         private void moveY(double y)
         {
-            base.Y += y;
+            Y += y;
         }
 
         /// <summary>

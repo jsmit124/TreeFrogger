@@ -1,22 +1,29 @@
-﻿using FroggerStarter.Constants;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI.Xaml;
+using FroggerStarter.Constants;
+using FroggerStarter.Model;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Controller
 {
     /// <summary>
-    /// Stores information for the homefrog manager
+    ///     Stores information for the homefrog manager
     /// </summary>
     /// <seealso cref="System.Collections.Generic.IEnumerable{FroggerStarter.Model.HomeFrog}" />
     public class HomeFrogManager : IEnumerable<HomeFrog>
     {
+        #region Data members
 
-        private IList<HomeFrog> homeFrogs;
-        private double homeYLocations;
+        private readonly IList<HomeFrog> homeFrogs;
+        private readonly double homeYLocations;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeFrogManager"/> class.
+        ///     Initializes a new instance of the <see cref="HomeFrogManager" /> class.
         /// </summary>
         public HomeFrogManager(double topLaneLocation)
         {
@@ -24,6 +31,36 @@ namespace FroggerStarter.Model
             this.homeYLocations = topLaneLocation;
             this.createHomeFrogs();
             this.makeHomeFrogsCollapsed();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through the collection.
+        ///     Precondition: None
+        ///     Postcondition: None
+        /// </summary>
+        /// <returns>
+        ///     An enumerator that can be used to iterate through the collection.
+        /// </returns>
+        public IEnumerator<HomeFrog> GetEnumerator()
+        {
+            return this.homeFrogs.GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through a collection.
+        ///     Precondition: None
+        ///     Postcondition: None
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.homeFrogs.GetEnumerator();
         }
 
         private void createHomeFrogs()
@@ -44,29 +81,9 @@ namespace FroggerStarter.Model
 
         private void makeHomeFrogsCollapsed()
         {
-            this.homeFrogs.ToList().ForEach(homeFrog => homeFrog.Sprite.Visibility = Windows.UI.Xaml.Visibility.Collapsed);
+            this.homeFrogs.ToList().ForEach(homeFrog => homeFrog.Sprite.Visibility = Visibility.Collapsed);
         }
 
-        /// <summary>
-        /// Returns an enumerator that iterates through the collection.
-        /// </summary>
-        /// <returns>
-        /// An enumerator that can be used to iterate through the collection.
-        /// </returns>
-        public IEnumerator<HomeFrog> GetEnumerator()
-        {
-            return this.homeFrogs.GetEnumerator();
-        }
-
-        /// <summary>
-        /// Returns an enumerator that iterates through a collection.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
-        /// </returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.homeFrogs.GetEnumerator();
-        }
+        #endregion
     }
 }

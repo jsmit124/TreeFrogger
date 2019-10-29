@@ -1,23 +1,22 @@
-﻿using FroggerStarter.View.Sprites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Factory
 {
     /// <summary>
-    /// Builds and returns the specified animation sprite
+    ///     Builds and returns the specified animation sprite
     /// </summary>
     public static class DeathAnimationFactory
     {
+        #region Methods
 
         /// <summary>
-        /// Builds the animation sprite.
+        ///     Builds the animation sprite.
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         /// <param name="frameNumber">The frame number.</param>
-        /// <returns></returns>
+        /// <returns>Returns the specified death animation sprite</returns>
         /// <exception cref="NotImplementedException"></exception>
         public static BaseSprite BuildAnimationSprite(int frameNumber)
         {
@@ -35,5 +34,7 @@ namespace FroggerStarter.Factory
                     throw new NotImplementedException();
             }
         }
+
+        #endregion
     }
 }

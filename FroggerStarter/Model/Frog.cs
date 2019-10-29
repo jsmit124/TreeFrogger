@@ -45,7 +45,9 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Enables movement.
+        ///     Enables movement.
+        ///     Precondition: None
+        ///     Postcondition: base.speedX = SpeedXDirection, base.speedY = SpeedYDirection
         /// </summary>
         public void EnableMovement()
         {
@@ -74,7 +76,7 @@ namespace FroggerStarter.Model
         {
             if (Y > topBoundary)
             {
-                base.MoveUp();
+                MoveUp();
             }
         }
 
@@ -87,7 +89,7 @@ namespace FroggerStarter.Model
         {
             if (Y + SpeedY < bottomBoundary - LaneSettings.BottomLaneOffset)
             {
-                base.MoveDown();
+                MoveDown();
             }
         }
 

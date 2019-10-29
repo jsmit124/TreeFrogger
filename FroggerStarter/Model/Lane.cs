@@ -1,17 +1,24 @@
-﻿using FroggerStarter.Enums;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FroggerStarter.Enums;
 
 namespace FroggerStarter.Model
 {
-
     /// <summary>
-    /// 
+    ///     Stores basic information for the Lane class
     /// </summary>
     /// <seealso cref="System.Collections.Generic.IEnumerable{FroggerStarter.Model.Vehicle}" />
     public class Lane : IEnumerable<Vehicle>
     {
+        #region Data members
+
+        private readonly LaneDirection direction;
+
+        private readonly ICollection<Vehicle> vehicles;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -29,10 +36,6 @@ namespace FroggerStarter.Model
         ///     The y location.
         /// </value>
         public double YLocation { get; }
-
-        private LaneDirection direction;
-
-        private ICollection<Vehicle> vehicles;
 
         #endregion
 
@@ -75,6 +78,8 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Returns an enumerator that iterates through the collection.
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         /// <returns>
         ///     An enumerator that can be used to iterate through the collection.
@@ -86,6 +91,8 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Returns an enumerator that iterates through a collection.
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         /// <returns>
         ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
@@ -111,7 +118,9 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Moves the vehicles forward.
+        ///     Moves the vehicles forward.
+        ///     Precondition: None
+        ///     Postcondition: all vehicles in the lane are moved forward
         /// </summary>
         public void MoveVehiclesForward()
         {

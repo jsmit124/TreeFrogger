@@ -1,11 +1,9 @@
-﻿using FroggerStarter.Constants;
-using FroggerStarter.Enums;
-using FroggerStarter.Model;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Xaml;
+using FroggerStarter.Constants;
+using FroggerStarter.Enums;
+using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
 {
@@ -14,13 +12,13 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class LaneManager : IEnumerable<Vehicle>
     {
-        #region Properties
+        #region Data members
 
-        private ICollection<Lane> Lanes;
+        private readonly ICollection<Lane> Lanes;
+
+        private readonly double topLaneYLocation;
 
         #endregion
-
-        private double topLaneYLocation;
 
         #region Constructors
 
@@ -38,6 +36,32 @@ namespace FroggerStarter.Controller
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through the collection
+        ///     Precondition: None
+        ///     Postcondition: None
+        /// </summary>
+        /// <returns>
+        ///     An enumerator that can be used to iterate through the collection.
+        /// </returns>
+        public IEnumerator<Vehicle> GetEnumerator()
+        {
+            return this.Lanes.SelectMany(lane => lane).GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through a collection.
+        ///     Precondition: None
+        ///     Postcondition: None
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.Lanes.SelectMany(lane => lane).GetEnumerator();
+        }
 
         private void createLanes()
         {
@@ -103,28 +127,6 @@ namespace FroggerStarter.Controller
         public void StopAllVehicleMovement()
         {
             this.Lanes.SelectMany(lane => lane).ToList().ForEach(vehicle => vehicle.StopMovement());
-        }
-
-        /// <summary>
-        /// Returns an enumerator that iterates through the collection.
-        /// </summary>
-        /// <returns>
-        /// An enumerator that can be used to iterate through the collection.
-        /// </returns>
-        public IEnumerator<Vehicle> GetEnumerator()
-        {
-            return this.Lanes.SelectMany(lane => lane).GetEnumerator();
-        }
-
-        /// <summary>
-        /// Returns an enumerator that iterates through a collection.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
-        /// </returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.Lanes.SelectMany(lane => lane).GetEnumerator();
         }
 
         #endregion

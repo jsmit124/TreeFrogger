@@ -1,8 +1,8 @@
-﻿using FroggerStarter.Constants;
-using FroggerStarter.Model;
-using System;
+﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using FroggerStarter.Constants;
+using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
 {
@@ -12,68 +12,24 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class GameManager
     {
-        #region Types and Delegates
-
-        /// <summary>
-        /// Handles the event arguments for the Lives Lost event
-        /// </summary>
-        /// <seealso cref="System.EventArgs" />
-        public class LivesLostEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Gets or sets the lives.
-            /// </summary>
-            /// <value>
-            /// The lives.
-            /// </value>
-            public int Lives { get; set; }
-        }
-        /// <summary>
-        /// Handles the event arguments for the Time Remaining event
-        /// </summary>
-        /// <seealso cref="System.EventArgs" />
-        public class TimeRemainingEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Gets or sets the time remaining.
-            /// </summary>
-            /// <value>
-            /// The time remaining.
-            /// </value>
-            public int TimeRemaining { get; set; }
-        }
-        /// <summary>
-        /// Handles the event arguments for the Score Increased event
-        /// </summary>
-        /// <seealso cref="System.EventArgs" />
-        public class ScoreIncreasedEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Gets or sets the score.
-            /// </summary>
-            /// <value>
-            /// The score.
-            /// </value>
-            public int Score { get; set; }
-        }
-
-        #endregion
-
         #region Data members
 
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
-        private bool gameIsOver = false;
+        private bool gameIsOver;
+        private readonly double topLaneYLocation = (double) Application.Current.Resources["HighRoadYLocation"];
+
         private Canvas gameCanvas;
         private Frog player;
-        private readonly double topLaneYLocation = (Double)Application.Current.Resources["HighRoadYLocation"];
         private readonly PlayerStatistics playerStats;
+
+        private readonly LaneManager laneManager;
+        private readonly HomeFrogManager homeManager;
+        private readonly DeathAnimationManager deathAnimationManager;
+
         private DispatcherTimer gameTimer;
         private DispatcherTimer timeRemainingTimer;
         private DispatcherTimer deathAnimationTimer;
-        private readonly LaneManager laneManager;
-        private readonly HomeFrogManager homeManager;
-        private DeathAnimationManager deathAnimationManager;
 
         #endregion
 
@@ -117,26 +73,6 @@ namespace FroggerStarter.Controller
 
         #region Methods
 
-        /// <summary>
-        /// The game over event handler
-        /// </summary>
-        public EventHandler<EventArgs> GameOver;
-
-        /// <summary>
-        /// The life lost event handler
-        /// </summary>
-        public EventHandler<LivesLostEventArgs> LifeLost;
-
-        /// <summary>
-        /// The time remaining count event handler
-        /// </summary>
-        public EventHandler<TimeRemainingEventArgs> TimeRemainingCount;
-
-        /// <summary>
-        /// The score increased event handler
-        /// </summary>
-        public EventHandler<ScoreIncreasedEventArgs> ScoreIncreased;
-
         private void setupGameTimer()
         {
             this.gameTimer = new DispatcherTimer();
@@ -158,6 +94,38 @@ namespace FroggerStarter.Controller
             this.deathAnimationTimer = new DispatcherTimer();
             this.deathAnimationTimer.Tick += this.deathAnimationTimerOnTick;
             this.deathAnimationTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+        }
+
+        private void gameTimerOnTick(object sender, object e)
+        {
+            this.laneManager.MoveVehicles();
+            this.checkForPlayerCollisionWithObjects();
+            this.checkForPlayerHitTopWall();
+        }
+
+        private void timeRemainingTimerOnTick(object sender, object e)
+        {
+            this.playerStats.DecrementTimeRemaining();
+
+            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerStats.TimeRemaining};
+            this.TimeRemainingCount?.Invoke(this, timeRemaining);
+
+            if (this.playerStats.TimeRemaining == 0)
+            {
+                this.handleTimeRemainingIsZero();
+            }
+        }
+
+        private void deathAnimationTimerOnTick(object sender, object e)
+        {
+            if (this.deathAnimationManager.CurrentAnimationFrameIndex > GameSettings.AnimationCount - 1)
+            {
+                this.handleDeathAnimationHasEnded();
+            }
+            else
+            {
+                this.deathAnimationManager.ShowNextFrame();
+            }
         }
 
         /// <summary>
@@ -219,45 +187,20 @@ namespace FroggerStarter.Controller
             this.player.Y = this.backgroundHeight - this.player.Height - LaneSettings.BottomLaneOffset;
         }
 
-        private void gameTimerOnTick(object sender, object e)
+        private void resetTimeRemainingTimer()
         {
-            this.laneManager.MoveVehicles();
-            this.checkForPlayerCollisionWithObjects();
-            this.checkForPlayerHitTopWall();
-        }
+            this.timeRemainingTimer.Stop();
+            this.playerStats.ResetTimeRemaining();
 
-        private void timeRemainingTimerOnTick(object sender, object e)
-        {
-            this.playerStats.DecrementTimeRemaining();
-
-            var timeRemaining = new TimeRemainingEventArgs { TimeRemaining = this.playerStats.TimeRemaining };
+            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerStats.TimeRemaining};
             this.TimeRemainingCount?.Invoke(this, timeRemaining);
 
-            if (this.playerStats.TimeRemaining == 0)
-            {
-                this.handleTimeRemainingIsZero();
-            }
+            this.timeRemainingTimer.Start();
         }
 
-        private void deathAnimationTimerOnTick(object sender, object e)
+        private void playDeathAnimation()
         {
-            if (this.deathAnimationManager.CurrentAnimationFrameIndex > GameSettings.AnimationCount - 1)
-            {
-                this.deathAnimationManager.CollapseAllAnimationFrames();
-                this.deathAnimationTimer.Stop();
-                this.deathAnimationManager.ResetFrameCount();
-            if (!this.gameIsOver)
-            {
-                this.player.Sprite.Visibility = Visibility.Visible;
-                this.player.EnableMovement();
-                this.resetTimeRemainingTimer();
-            }
-            }
-            else
-            {
-                this.deathAnimationManager.ShowNextFrame();
-            }
-
+            this.deathAnimationTimer.Start();
         }
 
         /// <summary>
@@ -297,25 +240,53 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            this.player.MoveDownWithBoundaryCheck((int)Math.Floor(this.backgroundHeight));
+            this.player.MoveDownWithBoundaryCheck((int) Math.Floor(this.backgroundHeight));
         }
 
         private void checkForPlayerCollisionWithObjects()
         {
+            this.checkForPlayerCollisionWithVehicles();
+            this.checkForPlayerCollisionWithHome();
+        }
+
+        private void checkForPlayerCollisionWithVehicles()
+        {
             foreach (var vehicle in this.laneManager)
             {
-                if (player.CollisionDetected(vehicle))
+                if (this.player.CollisionDetected(vehicle))
                 {
                     this.handleLifeLost();
                 }
             }
+        }
 
+        private void checkForPlayerCollisionWithHome()
+        {
             foreach (var frogHome in this.homeManager)
             {
-                if (player.CollisionDetected(frogHome))
+                if (this.player.CollisionDetected(frogHome))
                 {
                     this.handleFrogMadeItHome(frogHome);
                 }
+            }
+        }
+
+        private bool checkForGameOver()
+        {
+            if (this.playerStats.Lives != 0 && this.playerStats.AmountOfFrogsInHome != GameSettings.FrogHomeCount)
+            {
+                return false;
+            }
+
+            this.handleGameOver();
+            return true;
+        }
+
+        private void checkForPlayerHitTopWall()
+        {
+            if (this.player.Y <= this.topLaneYLocation)
+            {
+                this.handleLifeLost();
             }
         }
 
@@ -324,12 +295,12 @@ namespace FroggerStarter.Controller
             this.player.Sprite.Visibility = Visibility.Collapsed;
             this.playerStats.DecrementLives();
 
-            var lives = new LivesLostEventArgs() { Lives = this.playerStats.Lives };
+            var lives = new LivesLostEventArgs {Lives = this.playerStats.Lives};
             this.LifeLost?.Invoke(this, lives);
 
             this.timeRemainingTimer.Stop();
             this.handleDeathAnimation();
-            
+
             if (!this.checkForGameOver())
             {
                 this.setPlayerToCenterOfBottomLane();
@@ -342,38 +313,19 @@ namespace FroggerStarter.Controller
             this.player.Sprite.Visibility = Visibility.Collapsed;
 
             this.setDeathAnimationToPlayerLocation();
-            this.PlayDeathAnimation();
-        }
-
-        private void checkForPlayerHitTopWall()
-        {
-            if (this.player.Y <= this.topLaneYLocation)
-            {
-                this.handleLifeLost();
-            }
+            this.playDeathAnimation();
         }
 
         private void handlePlayerScored()
         {
             this.playerStats.IncrementScore(this.playerStats.TimeRemaining);
 
-            var score = new ScoreIncreasedEventArgs() { Score = this.playerStats.Score };
+            var score = new ScoreIncreasedEventArgs {Score = this.playerStats.Score};
             this.ScoreIncreased?.Invoke(this, score);
 
             this.checkForGameOver();
             this.resetTimeRemainingTimer();
             this.setPlayerToCenterOfBottomLane();
-        }
-
-        private bool checkForGameOver()
-        {
-            if (this.playerStats.Lives == 0 || this.playerStats.AmountOfFrogsInHome == GameSettings.FrogHomeCount)
-            {
-                this.handleGameOver();
-                return true;
-            }
-
-            return false;
         }
 
         private void handleGameOver()
@@ -391,24 +343,13 @@ namespace FroggerStarter.Controller
         {
             this.playerStats.DecrementLives();
 
-            var lives = new LivesLostEventArgs() { Lives = this.playerStats.Lives };
+            var lives = new LivesLostEventArgs {Lives = this.playerStats.Lives};
             this.LifeLost?.Invoke(this, lives);
 
             if (!this.checkForGameOver())
             {
                 this.resetTimeRemainingTimer();
             }
-        }
-
-        private void resetTimeRemainingTimer()
-        {
-            this.timeRemainingTimer.Stop();
-            this.playerStats.ResetTimeRemaining();
-
-            var timeRemaining = new TimeRemainingEventArgs { TimeRemaining = this.playerStats.TimeRemaining };
-            this.TimeRemainingCount?.Invoke(this, timeRemaining);
-
-            this.timeRemainingTimer.Start();
         }
 
         private void handleFrogMadeItHome(HomeFrog frogHome)
@@ -424,14 +365,106 @@ namespace FroggerStarter.Controller
                 this.playerStats.IncrementFrogsInHomes();
                 this.checkForGameOver();
             }
-
         }
 
-        private void PlayDeathAnimation()
+        private void handleDeathAnimationHasEnded()
         {
-
-            this.deathAnimationTimer.Start();
+            this.deathAnimationManager.CollapseAllAnimationFrames();
+            this.deathAnimationTimer.Stop();
+            this.deathAnimationManager.ResetFrameCount();
+            if (!this.gameIsOver)
+            {
+                this.player.Sprite.Visibility = Visibility.Visible;
+                this.player.EnableMovement();
+                this.resetTimeRemainingTimer();
+            }
         }
+
+        #endregion
+
+        #region Event Handlers
+
+        /// <summary>
+        ///     The game over event handler
+        /// </summary>
+        public EventHandler<EventArgs> GameOver;
+
+        /// <summary>
+        ///     The life lost event handler
+        /// </summary>
+        public EventHandler<LivesLostEventArgs> LifeLost;
+
+        /// <summary>
+        ///     The time remaining count event handler
+        /// </summary>
+        public EventHandler<TimeRemainingEventArgs> TimeRemainingCount;
+
+        /// <summary>
+        ///     The score increased event handler
+        /// </summary>
+        public EventHandler<ScoreIncreasedEventArgs> ScoreIncreased;
+
+        #endregion
+
+        #region EventArgs Classes
+
+        /// <summary>
+        ///     Handles the event arguments for the Lives Lost event
+        /// </summary>
+        /// <seealso cref="System.EventArgs" />
+        public class LivesLostEventArgs : EventArgs
+        {
+            #region Properties
+
+            /// <summary>
+            ///     Gets or sets the lives.
+            /// </summary>
+            /// <value>
+            ///     The lives.
+            /// </value>
+            public int Lives { get; set; }
+
+            #endregion
+        }
+
+        /// <summary>
+        ///     Handles the event arguments for the Time Remaining event
+        /// </summary>
+        /// <seealso cref="System.EventArgs" />
+        public class TimeRemainingEventArgs : EventArgs
+        {
+            #region Properties
+
+            /// <summary>
+            ///     Gets or sets the time remaining.
+            /// </summary>
+            /// <value>
+            ///     The time remaining.
+            /// </value>
+            public int TimeRemaining { get; set; }
+
+            #endregion
+        }
+
+        /// <summary>
+        ///     Handles the event arguments for the Score Increased event
+        /// </summary>
+        /// <seealso cref="System.EventArgs" />
+        public class ScoreIncreasedEventArgs : EventArgs
+        {
+            #region Properties
+
+            /// <summary>
+            ///     Gets or sets the score.
+            /// </summary>
+            /// <value>
+            ///     The score.
+            /// </value>
+            public int Score { get; set; }
+
+            #endregion
+        }
+
         #endregion
     }
 }
