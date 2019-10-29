@@ -28,6 +28,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         ///     Initializes a new instance of the <see cref="LaneManager" /> class.
         /// </summary>
+        /// <param name="topLaneYLocation">The top lane y location.</param>
         public LaneManager(double topLaneYLocation)
         {
             this.lanes = new List<Lane>();

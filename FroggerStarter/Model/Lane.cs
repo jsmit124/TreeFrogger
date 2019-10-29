@@ -118,9 +118,9 @@ namespace FroggerStarter.Model
                     vehicleToAdd.X = 0 - vehicleToAdd.Width;
                 }
 
-                if (this.vehicles.Count > 0)
+                if (this.vehicles.Count == 0)
                 {
-                    vehicleToAdd.StopMovement();
+                    vehicleToAdd.StartMovement();
                 }
 
                 this.vehicles.Add(vehicleToAdd);
@@ -134,10 +134,67 @@ namespace FroggerStarter.Model
         /// </summary>
         public void MoveVehiclesForward()
         {
-            foreach (var vehicle in this.vehicles)
+            var movingVehicles = (from vehicle in this.vehicles where vehicle.IsMoving select vehicle).ToList();
+            foreach (var vehicle in movingVehicles)
             {
                 vehicle.MoveForward(this.direction);
+                this.checkForVehicleCollisions(vehicle, movingVehicles);
             }
+        }
+
+        private void checkForVehicleCollisions(Vehicle currentVehicle, IEnumerable<Vehicle> otherVehicles)
+        {
+            var vehiclesToCheck = new List<Vehicle>(otherVehicles);
+            vehiclesToCheck.Remove(currentVehicle);
+
+            foreach (var vehicle in vehiclesToCheck.Where(vehicle => vehicle.CollisionDetected(currentVehicle)))
+            {
+                if (this.direction == LaneDirection.Left)
+                {
+                    this.handleLeftDirectionCollision(currentVehicle, vehicle);
+                }
+                else
+                {
+                    this.handleRightDirectionCollision(currentVehicle, vehicle);
+                }
+            }
+        }
+
+        private void handleLeftDirectionCollision(BaseObject currentVehicle, BaseObject otherVehicle)
+        {
+            if (otherVehicle.X > currentVehicle.X)
+            {
+                otherVehicle.X = this.findNewXValueToAvoidCollision(otherVehicle);
+            }
+            else
+            {
+                currentVehicle.X = this.findNewXValueToAvoidCollision(currentVehicle);
+            }
+        }
+
+        private void handleRightDirectionCollision(BaseObject currentVehicle, BaseObject otherVehicle)
+        {
+            if (otherVehicle.X < currentVehicle.X)
+            {
+                otherVehicle.X = this.findNewXValueToAvoidCollision(otherVehicle);
+            }
+            else
+            {
+                currentVehicle.X = this.findNewXValueToAvoidCollision(currentVehicle);
+            }
+        }
+
+        private double findNewXValueToAvoidCollision(BaseObject vehicle)
+        {
+            var output = vehicle.X - vehicle.Width;
+            ;
+
+            if (this.direction == LaneDirection.Left)
+            {
+                output = vehicle.X + vehicle.Width;
+            }
+
+            return output;
         }
 
         /// <summary>

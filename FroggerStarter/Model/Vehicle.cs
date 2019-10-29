@@ -130,8 +130,8 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Resets this vehicle to no movement and default Y location
-        ///     Precondition:
-        ///     Postcondition: thi
+        ///     Precondition: None
+        ///     Postcondition: this.speed == 0, this.IsMoving = false, base.X = xLocation
         /// </summary>
         public void Reset(double xLocation)
         {
