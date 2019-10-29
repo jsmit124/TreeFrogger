@@ -1,5 +1,6 @@
 ﻿using System;
 using FroggerStarter.View.Sprites;
+using FroggerStarter.View.Sprites.DeathAnimation;
 
 namespace FroggerStarter.Factory
 {
@@ -23,13 +24,13 @@ namespace FroggerStarter.Factory
             switch (frameNumber)
             {
                 case 1:
-                    return new DeathAnimationFrame1();
+                    return new FirstDeathAnimationFrame();
                 case 2:
-                    return new DeathAnimationFrame2();
+                    return new SecondDeathAnimationFrame();
                 case 3:
-                    return new DeathAnimationFrame3();
+                    return new ThirdDeathAnimationFrame();
                 case 4:
-                    return new DeathAnimationFrame4();
+                    return new FourthDeathAnimationFrame();
                 default:
                     throw new NotImplementedException();
             }

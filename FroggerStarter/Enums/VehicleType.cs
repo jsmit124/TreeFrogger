@@ -8,11 +8,11 @@
         /// <summary>
         ///     The semi-truck enum
         /// </summary>
-        Semi,
+        Bus,
 
         /// <summary>
         ///     The sports car enum
         /// </summary>
-        SportsCar
+        PoliceCar
     }
 }

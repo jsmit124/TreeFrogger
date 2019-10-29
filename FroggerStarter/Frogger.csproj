@@ -145,20 +145,20 @@
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\CarSprite.xaml.cs">
+    <Compile Include="View\Sprites\Vehicles\CarSprite.xaml.cs">
       <DependentUpon>CarSprite.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\DeathAnimationFrame4.xaml.cs">
-      <DependentUpon>DeathAnimationFrame4.xaml</DependentUpon>
+    <Compile Include="View\Sprites\DeathAnimation\FourthDeathAnimationFrame.xaml.cs">
+      <DependentUpon>FourthDeathAnimationFrame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\DeathAnimationFrame3.xaml.cs">
-      <DependentUpon>DeathAnimationFrame3.xaml</DependentUpon>
+    <Compile Include="View\Sprites\DeathAnimation\ThirdDeathAnimationFrame.xaml.cs">
+      <DependentUpon>ThirdDeathAnimationFrame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\DeathAnimationFrame2.xaml.cs">
-      <DependentUpon>DeathAnimationFrame2.xaml</DependentUpon>
+    <Compile Include="View\Sprites\DeathAnimation\SecondDeathAnimationFrame.xaml.cs">
+      <DependentUpon>SecondDeathAnimationFrame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\DeathAnimationFrame1.xaml.cs">
-      <DependentUpon>DeathAnimationFrame1.xaml</DependentUpon>
+    <Compile Include="View\Sprites\DeathAnimation\FirstDeathAnimationFrame.xaml.cs">
+      <DependentUpon>FirstDeathAnimationFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\FrogSprite.xaml.cs">
       <DependentUpon>FrogSprite.xaml</DependentUpon>
@@ -167,7 +167,7 @@
       <DependentUpon>HomeSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\ISpriteRenderer.cs" />
-    <Compile Include="View\Sprites\BusSprite.xaml.cs">
+    <Compile Include="View\Sprites\Vehicles\BusSprite.xaml.cs">
       <DependentUpon>BusSprite.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -199,23 +199,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\CarSprite.xaml">
+    <Page Include="View\Sprites\Vehicles\CarSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\DeathAnimationFrame4.xaml">
+    <Page Include="View\Sprites\DeathAnimation\FourthDeathAnimationFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Sprites\DeathAnimationFrame3.xaml">
+    <Page Include="View\Sprites\DeathAnimation\ThirdDeathAnimationFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Sprites\DeathAnimationFrame2.xaml">
+    <Page Include="View\Sprites\DeathAnimation\SecondDeathAnimationFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Sprites\DeathAnimationFrame1.xaml">
+    <Page Include="View\Sprites\DeathAnimation\FirstDeathAnimationFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,7 +223,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\BusSprite.xaml">
+    <Page Include="View\Sprites\Vehicles\BusSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,7 +8,7 @@ namespace FroggerStarter.Model
     /// <summary>
     ///     Stores basic information for the Lane class
     /// </summary>
-    /// <seealso cref="System.Collections.Generic.IEnumerable{FroggerStarter.Model.Vehicle}" />
+    /// <seealso cref="Vehicle" />
     public class Lane : IEnumerable<Vehicle>
     {
         #region Data members

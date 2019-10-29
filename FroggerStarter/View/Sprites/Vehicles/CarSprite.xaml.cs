@@ -1,6 +1,6 @@
 ﻿// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace FroggerStarter.View.Sprites
+namespace FroggerStarter.View.Sprites.Vehicles
 {
     /// <summary>
     ///     Stores information for the CarSprite class

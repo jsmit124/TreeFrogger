@@ -9,7 +9,7 @@ namespace FroggerStarter.Controller
     /// <summary>
     ///     Stores information for the default animation manager class
     /// </summary>
-    /// <seealso cref="System.Collections.Generic.IEnumerable{FroggerStarter.Model.DeathAnimation}" />
+    /// <seealso cref="DeathAnimation" />
     public class DeathAnimationManager : IEnumerable<DeathAnimation>
     {
         #region Data members
@@ -86,7 +86,7 @@ namespace FroggerStarter.Controller
         private void buildAnimationCollection()
         {
             var count = 1;
-            while (count <= GameSettings.AnimationCount)
+            while (count <= GameSettings.DeathAnimationCount)
             {
                 this.animations.Add(new DeathAnimation(count));
                 count++;
@@ -121,7 +121,7 @@ namespace FroggerStarter.Controller
                 previousFrame.Sprite.Visibility = Visibility.Collapsed;
             }
 
-            if (this.CurrentAnimationFrameIndex <= GameSettings.AnimationCount - 1)
+            if (this.CurrentAnimationFrameIndex <= GameSettings.DeathAnimationCount - 1)
             {
                 var nextFrame = this.animations[this.CurrentAnimationFrameIndex];
                 nextFrame.Sprite.Visibility = Visibility.Visible;

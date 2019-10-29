@@ -10,7 +10,7 @@ namespace FroggerStarter.Controller
     /// <summary>
     ///     Stores information for the homefrog manager
     /// </summary>
-    /// <seealso cref="System.Collections.Generic.IEnumerable{FroggerStarter.Model.HomeFrog}" />
+    /// <seealso cref="HomeFrog" />
     public class HomeFrogManager : IEnumerable<HomeFrog>
     {
         #region Data members

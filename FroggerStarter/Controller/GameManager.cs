@@ -118,7 +118,7 @@ namespace FroggerStarter.Controller
 
         private void deathAnimationTimerOnTick(object sender, object e)
         {
-            if (this.deathAnimationManager.CurrentAnimationFrameIndex > GameSettings.AnimationCount - 1)
+            if (this.deathAnimationManager.CurrentAnimationFrameIndex > GameSettings.DeathAnimationCount - 1)
             {
                 this.handleDeathAnimationHasEnded();
             }

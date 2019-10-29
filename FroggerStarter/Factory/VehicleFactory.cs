@@ -1,6 +1,7 @@
 ﻿using System;
 using FroggerStarter.Enums;
 using FroggerStarter.View.Sprites;
+using FroggerStarter.View.Sprites.Vehicles;
 
 namespace FroggerStarter.Factory
 {
@@ -22,9 +23,9 @@ namespace FroggerStarter.Factory
         {
             switch (typeOfVehicle)
             {
-                case VehicleType.SportsCar:
+                case VehicleType.PoliceCar:
                     return new CarSprite();
-                case VehicleType.Semi:
+                case VehicleType.Bus:
                     return new SemiSprite();
                 default:
                     throw new NotImplementedException();

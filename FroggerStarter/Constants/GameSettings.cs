@@ -13,11 +13,6 @@
         public static int PlayerLives = 4;
 
         /// <summary>
-        ///     The winning score
-        /// </summary>
-        public static int WinningScore = 5;
-
-        /// <summary>
         ///     The frog home count
         /// </summary>
         public static int FrogHomeCount = 5;
@@ -30,7 +25,7 @@
         /// <summary>
         ///     The animation count
         /// </summary>
-        public static int AnimationCount = 4;
+        public static int DeathAnimationCount = 4;
 
         /// <summary>
         ///     The player movement speed
