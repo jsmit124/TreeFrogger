@@ -122,16 +122,19 @@
     </Compile>
     <Compile Include="Constants\LaneSettings.cs" />
     <Compile Include="Constants\GameSettings.cs" />
+    <Compile Include="Controller\DeathAnimationManager.cs" />
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Enums\LaneDirection.cs" />
     <Compile Include="Enums\VehicleType.cs" />
+    <Compile Include="Factory\DeathAnimationFactory.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Model\BaseObject.cs" />
+    <Compile Include="Model\DeathAnimation.cs" />
     <Compile Include="Model\Frog.cs" />
     <Compile Include="Controller\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\HomeFrog.cs" />
-    <Compile Include="Model\HomeFrogManager.cs" />
+    <Compile Include="Controller\HomeFrogManager.cs" />
     <Compile Include="Model\Lane.cs" />
     <Compile Include="Model\PlayerStatistics.cs" />
     <Compile Include="Model\Vehicle.cs" />
@@ -144,6 +147,18 @@
     </Compile>
     <Compile Include="View\Sprites\CarSprite.xaml.cs">
       <DependentUpon>CarSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\DeathAnimationFrame4.xaml.cs">
+      <DependentUpon>DeathAnimationFrame4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\DeathAnimationFrame3.xaml.cs">
+      <DependentUpon>DeathAnimationFrame3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\DeathAnimationFrame2.xaml.cs">
+      <DependentUpon>DeathAnimationFrame2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\DeathAnimationFrame1.xaml.cs">
+      <DependentUpon>DeathAnimationFrame1.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\FrogSprite.xaml.cs">
       <DependentUpon>FrogSprite.xaml</DependentUpon>
@@ -186,6 +201,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\CarSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\DeathAnimationFrame4.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sprites\DeathAnimationFrame3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sprites\DeathAnimationFrame2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sprites\DeathAnimationFrame1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

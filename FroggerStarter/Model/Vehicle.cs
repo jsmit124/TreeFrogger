@@ -1,7 +1,6 @@
 ﻿using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Factory;
-using FroggerStarter.View.Sprites;
 using System;
 
 namespace FroggerStarter.Model
@@ -88,22 +87,6 @@ namespace FroggerStarter.Model
             {
                 this.MoveRight();
             }
-        }
-
-        /// <summary>
-        ///     Increments the speed.
-        ///     Precondition: amountToIncrement > 0
-        ///     Postcondition: base.SpeedX == base.SpeedX + amountToIncrement
-        /// </summary>
-        /// <param name="amountToIncrement">The amount to increment.</param>
-        public void IncrementSpeed(double amountToIncrement)
-        {
-            if (amountToIncrement <= 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            SetSpeed(SpeedX + amountToIncrement, 0);
         }
 
         /// <summary>

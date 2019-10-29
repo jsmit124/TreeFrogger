@@ -111,24 +111,6 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        ///     Increments the speed.
-        /// </summary>
-        /// <param name="increment">The increment.</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void IncrementSpeed(double increment)
-        {
-            if (increment <= 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            foreach (var vehicle in this.vehicles)
-            {
-                vehicle.IncrementSpeed(increment);
-            }
-        }
-
-        /// <summary>
         /// Moves the vehicles forward.
         /// </summary>
         public void MoveVehiclesForward()

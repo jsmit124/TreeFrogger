@@ -50,6 +50,7 @@ namespace FroggerStarter.Controller
         private DispatcherTimer timeRemainingTimer;
         private readonly LaneManager laneManager;
         private readonly HomeFrogManager homeManager;
+        private DeathAnimationManager deathAnimationManager;
 
         #endregion
 
@@ -81,6 +82,7 @@ namespace FroggerStarter.Controller
             this.backgroundWidth = backgroundWidth;
             this.laneManager = new LaneManager(this.topLaneYLocation);
             this.homeManager = new HomeFrogManager(this.topLaneYLocation);
+            this.deathAnimationManager = new DeathAnimationManager();
             this.playerStats = new PlayerStatistics();
 
             this.setupGameTimer();
@@ -140,6 +142,7 @@ namespace FroggerStarter.Controller
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createAndPlacePlayer();
             this.addVehiclesToView();
+            this.addAnimationsToView();
             this.placeHomeFrogs();
         }
 
@@ -158,11 +161,24 @@ namespace FroggerStarter.Controller
             }
         }
 
+        private void setDeathAnimationToPlayerLocation()
+        {
+            this.deathAnimationManager.SetAnimationLocation(this.player.X, this.player.Y);
+        }
+
         private void addVehiclesToView()
         {
             foreach (var vehicle in this.laneManager)
             {
                 this.gameCanvas.Children.Add(vehicle.Sprite);
+            }
+        }
+
+        private void addAnimationsToView()
+        {
+            foreach (var deathAnimation in this.deathAnimationManager)
+            {
+                this.gameCanvas.Children.Add(deathAnimation.Sprite);
             }
         }
 
@@ -174,9 +190,10 @@ namespace FroggerStarter.Controller
 
         private void gameTimerOnTick(object sender, object e)
         {
+            this.checkIfDeathAnimationIsRunning();
             this.laneManager.MoveVehicles();
             this.checkForPlayerCollisionWithObjects();
-            this.checkForPlayerDidntMakeItHome();
+            this.checkForPlayerHitTopWall();
         }
 
         private void timeRemainingTimerOnTick(object sender, object e)
@@ -236,7 +253,7 @@ namespace FroggerStarter.Controller
             {
                 if (player.CollisionDetected(vehicle))
                 {
-                    this.handleCollision();
+                    this.handleLifeLost();
                 }
             }
 
@@ -249,12 +266,14 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void handleCollision()
+        private void handleLifeLost()
         {
-            this.laneManager.ResetVehicleSpeedsToDefault();
+            this.player.Sprite.Visibility = Visibility.Collapsed;
             this.playerStats.DecrementLives();
             this.LifeLost?.Invoke(this.playerStats.Lives);
 
+            this.handleDeathAnimation();
+            
             if (!this.checkForGameOver())
             {
                 this.setPlayerToCenterOfBottomLane();
@@ -262,11 +281,32 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void checkForPlayerDidntMakeItHome()
+        private void checkIfDeathAnimationIsRunning()
+        {
+            if (this.deathAnimationManager.IsRunning)
+            {
+                this.player.StopMovement();
+                this.player.Sprite.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.player.Sprite.Visibility = Visibility.Visible;
+                this.player.EnableMovement();
+            }
+
+        }
+
+        private void handleDeathAnimation()
+        {
+            this.setDeathAnimationToPlayerLocation();
+            this.deathAnimationManager.PlayDeathAnimation();
+        }
+
+        private void checkForPlayerHitTopWall()
         {
             if (this.player.Y <= this.topLaneYLocation)
             {
-                this.handleCollision();
+                this.handleLifeLost();
             }
         }
 
@@ -293,9 +333,9 @@ namespace FroggerStarter.Controller
         private void handleGameOver()
         {
             this.gameTimer.Stop();
-            this.timeRemainingTimer.Stop();
-            this.laneManager.StopSpeedTimer();
+            this.player.Sprite.Visibility = Visibility.Collapsed;
             this.player.StopMovement();
+            this.timeRemainingTimer.Stop();
             this.laneManager.StopAllVehicleMovement();
             this.GameOver?.Invoke();
         }
@@ -322,7 +362,7 @@ namespace FroggerStarter.Controller
         {
             if (frogHome.Sprite.Visibility == Visibility.Visible)
             {
-                this.handleCollision();
+                this.handleLifeLost();
             }
             else
             {

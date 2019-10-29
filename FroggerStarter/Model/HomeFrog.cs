@@ -3,7 +3,7 @@
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// 
+    /// Stores information about the home frog object
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.BaseObject" />
     public class HomeFrog : BaseObject

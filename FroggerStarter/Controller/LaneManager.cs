@@ -16,17 +16,10 @@ namespace FroggerStarter.Controller
     {
         #region Properties
 
-        /// <summary>
-        ///     Gets the lanes.
-        /// </summary>
-        /// <value>
-        ///     The lanes.
-        /// </value>
-        public IList<Lane> Lanes { get; }
+        private ICollection<Lane> Lanes;
 
         #endregion
 
-        private DispatcherTimer speedTimer;
         private double topLaneYLocation;
 
         #region Constructors
@@ -40,7 +33,6 @@ namespace FroggerStarter.Controller
             this.topLaneYLocation = topLaneYLocation;
             this.createLanes();
             this.setVehicleLocations();
-            this.setupSpeedTimer();
         }
 
         #endregion
@@ -62,25 +54,6 @@ namespace FroggerStarter.Controller
         private double calculateNextLaneYLocation()
         {
             return this.topLaneYLocation + (this.Lanes.Count + 1) * LaneSettings.LaneWidth;
-        }
-
-        /// <summary>
-        ///     Increments the speed.
-        ///     Precondition: increment > 0
-        ///     Postcondition: speed is increased for each vehicle in this.Lanes
-        /// </summary>
-        /// <param name="increment">The increment.</param>
-        public void IncrementSpeed(double increment)
-        {
-            if (increment <= 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            foreach (var lane in this.Lanes)
-            {
-                lane.IncrementSpeed(increment);
-            }
         }
 
         private void setVehicleLocations()
@@ -123,16 +96,6 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        ///     Resets the vehicle speeds to default.
-        ///     Precondition: None
-        ///     Postcondition: each vehicle.SpeedX in this.AllVehicles == default speed for their lane
-        /// </summary>
-        public void ResetVehicleSpeedsToDefault()
-        {
-            this.Lanes.SelectMany(lane => lane).ToList().ForEach(vehicle => vehicle.ResetSpeedToDefault());
-        }
-
-        /// <summary>
         ///     Stops all vehicle movement.
         ///     Precondition: None
         ///     Postcondition: All vehicles in this.AllVehicles speed set to zero
@@ -140,29 +103,6 @@ namespace FroggerStarter.Controller
         public void StopAllVehicleMovement()
         {
             this.Lanes.SelectMany(lane => lane).ToList().ForEach(vehicle => vehicle.StopMovement());
-        }
-
-        private void setupSpeedTimer()
-        {
-            this.speedTimer = new DispatcherTimer();
-            this.speedTimer.Tick += this.speedTimerOnTick;
-            this.speedTimer.Interval = new TimeSpan(0, 0, 1);
-            this.speedTimer.Start();
-        }
-
-        private void speedTimerOnTick(object sender, object e)
-        {
-            this.IncrementSpeed(0.1);
-        }
-
-        /// <summary>
-        /// Stops the speed timer.
-        /// Precondition: None
-        /// Postcondition: this.speedTimer is stopped
-        /// </summary>
-        public void StopSpeedTimer()
-        {
-            this.speedTimer.Stop();
         }
 
         /// <summary>

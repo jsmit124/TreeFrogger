@@ -26,5 +26,15 @@
         /// </summary>
         public static int TimeRemainingAtStart = 20;
 
+        /// <summary>
+        /// The animation count
+        /// </summary>
+        public static int AnimationCount = 4;
+
+        /// <summary>
+        /// The player movement speed
+        /// </summary>
+        public const int PlayerMovementSpeed = 50;
+
     }
 }

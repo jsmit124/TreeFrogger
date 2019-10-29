@@ -11,8 +11,8 @@ namespace FroggerStarter.Model
     {
         #region Data members
 
-        private const int SpeedXDirection = 50;
-        private const int SpeedYDirection = 50;
+        private const int SpeedXDirection = GameSettings.PlayerMovementSpeed;
+        private const int SpeedYDirection = GameSettings.PlayerMovementSpeed;
 
         #endregion
 
@@ -42,6 +42,14 @@ namespace FroggerStarter.Model
             {
                 base.MoveRight();
             }
+        }
+
+        /// <summary>
+        /// Enables movement.
+        /// </summary>
+        public void EnableMovement()
+        {
+            SetSpeed(SpeedXDirection, SpeedYDirection);
         }
 
         /// <summary>
