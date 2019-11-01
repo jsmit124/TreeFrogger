@@ -85,7 +85,7 @@ namespace FroggerStarter.Model
             }
         }
 
-        /// <summary>
+        /// <summary> 
         ///     Moves the vehicle forward.
         ///     Precondition: None
         ///     Postcondition: vehicle is moved forward
