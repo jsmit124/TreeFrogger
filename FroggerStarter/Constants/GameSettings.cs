@@ -32,6 +32,11 @@
         /// </summary>
         public const int PlayerMovementSpeed = 50;
 
+        /// <summary>
+        ///     The timer power ups
+        /// </summary>
+        public const int TimerPowerUps = 3;
+
         #endregion
     }
 }

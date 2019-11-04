@@ -112,6 +112,16 @@ namespace FroggerStarter.Model
             this.AmountOfFrogsInHome += 1;
         }
 
+        /// <summary>
+        /// Increments the time remaining.
+        /// Precondition: None
+        /// Postcondition: this.TimeRemaining += 5
+        /// </summary>
+        public void TimerPowerUp()
+        {
+            this.TimeRemaining += 5;
+        }
+
         #endregion
     }
 }
