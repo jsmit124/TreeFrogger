@@ -1,7 +1,6 @@
 ﻿using System;
 using FroggerStarter.Enums;
-using FroggerStarter.View.Sprites;
-using FroggerStarter.View.Sprites.Vehicles;
+using FroggerStarter.Model;
 
 namespace FroggerStarter.Factory
 {
@@ -13,20 +12,27 @@ namespace FroggerStarter.Factory
         #region Methods
 
         /// <summary>
-        ///     Builds the vehicle sprite.
-        ///     Precondition: None
+        ///     Builds the vehicle.
+        ///     Precondition: speed > 0
         ///     Postcondition: None
         /// </summary>
         /// <param name="typeOfVehicle">The type of vehicle.</param>
+        /// <param name="direction">The direction of vehicle.</param>
+        /// <param name="speed">The speed of vehicle.</param>
         /// <returns>Returns the specified vehicle sprite</returns>
-        public static BaseSprite BuildVehicleSprite(VehicleType typeOfVehicle)
+        public static Vehicle BuildVehicleSprite(VehicleType typeOfVehicle, LaneDirection direction, double speed)
         {
+            if (speed < 0)
+            {
+                throw new ArgumentException("speed cannot be less than 0");
+            }
+
             switch (typeOfVehicle)
             {
                 case VehicleType.PoliceCar:
-                    return new CarSprite();
+                    return new PoliceCar(speed, direction);
                 case VehicleType.Bus:
-                    return new SemiSprite();
+                    return new Bus(speed, direction);
                 default:
                     throw new NotImplementedException();
             }

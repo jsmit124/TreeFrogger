@@ -111,9 +111,8 @@ namespace FroggerStarter.Model
             var nextVehicleX = 0;
             for (var i = 0; i < this.NumberOfVehicles; i++)
             {
-                var vehicleToAdd = new Vehicle(vehicleType, defaultSpeed, direction) {
-                    X = nextVehicleX
-                };
+                var vehicleToAdd = VehicleFactory.BuildVehicleSprite(vehicleType, direction, defaultSpeed);
+                vehicleToAdd.X = nextVehicleX;
                 nextVehicleX += (int) LaneSettings.LaneLength / this.NumberOfVehicles;
                 if (this.laneDirection == LaneDirection.Right)
                 {
