@@ -19,7 +19,7 @@ namespace FroggerStarter.Controller
         private readonly ICollection<Lane> lanes;
         private readonly double topLaneYLocation;
 
-        private DispatcherTimer addCarsTimer;
+        private DispatcherTimer timer;
 
         #endregion
 
@@ -35,7 +35,7 @@ namespace FroggerStarter.Controller
             this.topLaneYLocation = topLaneYLocation;
             this.createLanes();
             this.setVehicleLocations();
-            this.setupAddCarsTimer();
+            this.setupTimer();
         }
 
         #endregion
@@ -70,13 +70,13 @@ namespace FroggerStarter.Controller
 
         private void createLanes()
         {
-            this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.PoliceCar, 3, 3.6,
+            this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.PoliceCar, 5, 3.5,
                 this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.Bus, 2, 3.2, this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 4, 2.8,
+            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.Bus, 3, 2.5, this.calculateNextLaneYLocation()));
+            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 4, 2,
                 this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.Bus, 3, 2.4, this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 5, 2,
+            this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.Bus, 2, 1.5, this.calculateNextLaneYLocation()));
+            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 3, 1,
                 this.calculateNextLaneYLocation()));
         }
 
@@ -111,52 +111,29 @@ namespace FroggerStarter.Controller
             this.lanes.ToList().ForEach(lane => lane.MoveVehiclesForward());
         }
 
-        /// <summary>
-        ///     Stops all vehicle movement.
-        ///     Precondition: None
-        ///     Postcondition: All vehicles in this.AllVehicles speed set to zero
-        /// </summary>
-        public void StopAllVehicleMovement()
-        {
-            this.lanes.SelectMany(lane => lane).ToList().ForEach(vehicle => vehicle.StopMovement());
-        }
-
-        private void setupAddCarsTimer()
-        {
-            this.addCarsTimer = new DispatcherTimer();
-            this.addCarsTimer.Tick += this.addCarsTimerOnTick;
-            this.addCarsTimer.Interval = new TimeSpan(0, 0, 0, 3, 0);
-            this.addCarsTimer.Start();
-        }
-
-        private void addCarsTimerOnTick(object sender, object e)
-        {
-            this.startMovingAnotherCarInEachLane();
-        }
-
-        private void startMovingAnotherCarInEachLane()
+        /// <summary>Hides the vehicles.</summary>
+        public void HideVehicles()
         {
             foreach (var lane in this.lanes)
             {
-                lane.MoveNextAvailableVehicle();
+                lane.OnlyShowFirstVehicle();
             }
         }
 
-        /// <summary>
-        ///     Resets the lanes to one vehicle.
-        ///     Precondition: None
-        ///     Postcondition: All lanes are reset to one moving vehicle
-        /// </summary>
-        public void ResetLanesToOneVehicle()
+        private void setupTimer()
         {
-            this.lanes.ToList().ForEach(lane => lane.ResetToOneVehicle());
-            this.resetAddCarsTimer();
+            this.timer = new DispatcherTimer();
+            this.timer.Tick += this.timerOnTick;
+            this.timer.Interval = new TimeSpan(0, 0, 0, 0, 15);
+            this.timer.Start();
         }
 
-        private void resetAddCarsTimer()
+        private void timerOnTick(object sender, object e)
         {
-            this.addCarsTimer.Stop();
-            this.addCarsTimer.Start();
+            foreach (var lane in this.lanes)
+            {
+                lane.ShowAnotherVehicle();
+            }
         }
 
         #endregion

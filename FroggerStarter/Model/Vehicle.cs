@@ -11,34 +11,22 @@ namespace FroggerStarter.Model
     /// <seealso cref="FroggerStarter.Model.GameObject" />
     public class Vehicle : GameObject
     {
-        #region Data members
-
-        private readonly double defaultSpeed;
-
-        #endregion
-
         #region Properties
 
-        /// <summary>
-        ///     Gets a value indicating whether this instance is moving.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if this instance is moving; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsMoving { get; private set; }
+        /// <summary>Gets the direction.</summary>
+        /// <value>The direction.</value>
+        public LaneDirection Direction { get; set; }
 
         #endregion
 
         #region Constructors
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Vehicle" /> class.
-        ///     Precondition: defaultSpeed > 0
-        ///     Postcondition: this.defaultSpeed == defaultSpeed AND base.SpeedX == default speed
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="Vehicle" /> class.</summary>
         /// <param name="vehicleType">Type of the vehicle.</param>
         /// <param name="defaultSpeed">The default speed.</param>
-        public Vehicle(VehicleType vehicleType, double defaultSpeed)
+        /// <param name="direction">The direction.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public Vehicle(VehicleType vehicleType, double defaultSpeed, LaneDirection direction)
         {
             if (defaultSpeed < 0)
             {
@@ -47,7 +35,7 @@ namespace FroggerStarter.Model
 
             Sprite = VehicleFactory.BuildVehicleSprite(vehicleType);
 
-            this.defaultSpeed = defaultSpeed;
+            this.Direction = direction;
             SetSpeed(defaultSpeed, 0);
         }
 
@@ -85,15 +73,14 @@ namespace FroggerStarter.Model
             }
         }
 
-        /// <summary> 
+        /// <summary>
         ///     Moves the vehicle forward.
         ///     Precondition: None
         ///     Postcondition: vehicle is moved forward
         /// </summary>
-        /// <param name="direction">The direction.</param>
-        public void MoveForward(LaneDirection direction)
+        public void MoveForward()
         {
-            switch (direction)
+            switch (this.Direction)
             {
                 case LaneDirection.Left:
                     this.MoveLeft();
@@ -104,39 +91,6 @@ namespace FroggerStarter.Model
                 default:
                     throw new NotImplementedException();
             }
-        }
-
-        /// <summary>
-        ///     Stops the movement.
-        ///     Precondition: None
-        ///     Postcondition: SpeedX and SpeedY set to zero and this.IsMoving = false
-        /// </summary>
-        public override void StopMovement()
-        {
-            base.StopMovement();
-            this.IsMoving = false;
-        }
-
-        /// <summary>
-        ///     Starts the vehicle movement.
-        ///     Precondition: None
-        ///     Postcondition: SpeedX set to this.defaultSpeed and this.IsMoving = true
-        /// </summary>
-        public void StartMovement()
-        {
-            SetSpeed(this.defaultSpeed, 0);
-            this.IsMoving = true;
-        }
-
-        /// <summary>
-        ///     Resets this vehicle to no movement and default Y location
-        ///     Precondition: None
-        ///     Postcondition: this.speed == 0, this.IsMoving = false, base.X = xLocation
-        /// </summary>
-        public void Reset(double xLocation)
-        {
-            this.StopMovement();
-            X = xLocation;
         }
 
         #endregion

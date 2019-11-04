@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 
@@ -15,9 +17,8 @@ namespace FroggerStarter.Model
     {
         #region Data members
 
-        private readonly LaneDirection direction;
-
-        private readonly ICollection<Vehicle> vehicles;
+        private readonly LaneDirection laneDirection;
+        private readonly IList<Vehicle> vehicles;
 
         #endregion
 
@@ -46,14 +47,14 @@ namespace FroggerStarter.Model
         /// <summary>
         ///     Initializes a new instance of the <see cref="Lane" /> class.
         /// </summary>
-        /// <param name="direction">The direction.</param>
+        /// <param name="laneDirection">The laneDirection.</param>
         /// <param name="vehicleType">Type of the vehicle.</param>
         /// <param name="numberOfVehicles">The number of vehicles.</param>
         /// <param name="defaultSpeed">The default speed.</param>
         /// <param name="yLocation">The y location.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// </exception>
-        public Lane(LaneDirection direction, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
+        public Lane(LaneDirection laneDirection, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
             double yLocation)
         {
             if (numberOfVehicles <= 0)
@@ -68,10 +69,10 @@ namespace FroggerStarter.Model
 
             this.vehicles = new List<Vehicle>();
             this.NumberOfVehicles = numberOfVehicles;
-            this.direction = direction;
+            this.laneDirection = laneDirection;
             this.YLocation = yLocation;
 
-            this.populateLane(vehicleType, defaultSpeed);
+            this.populateLane(vehicleType, defaultSpeed, laneDirection);
         }
 
         #endregion
@@ -104,23 +105,18 @@ namespace FroggerStarter.Model
             return this.vehicles.GetEnumerator();
         }
 
-        private void populateLane(VehicleType vehicleType, double defaultSpeed)
+        private void populateLane(VehicleType vehicleType, double defaultSpeed, LaneDirection direction)
         {
+            var nextVehicleX = 0;
             for (var i = 0; i < this.NumberOfVehicles; i++)
             {
-                var vehicleToAdd = new Vehicle(vehicleType, defaultSpeed) {
-                    X = LaneSettings.LaneLength
+                var vehicleToAdd = new Vehicle(vehicleType, defaultSpeed, direction) {
+                    X = nextVehicleX
                 };
-
-                if (this.direction == LaneDirection.Right)
+                nextVehicleX += (int) LaneSettings.LaneLength / this.NumberOfVehicles;
+                if (this.laneDirection == LaneDirection.Right)
                 {
                     vehicleToAdd.FlipSpriteHorizontal();
-                    vehicleToAdd.X = 0 - vehicleToAdd.Width;
-                }
-
-                if (this.vehicles.Count == 0)
-                {
-                    vehicleToAdd.StartMovement();
                 }
 
                 this.vehicles.Add(vehicleToAdd);
@@ -134,103 +130,70 @@ namespace FroggerStarter.Model
         /// </summary>
         public void MoveVehiclesForward()
         {
-            var movingVehicles = (from vehicle in this.vehicles where vehicle.IsMoving select vehicle).ToList();
+            var movingVehicles = (from vehicle in this.vehicles select vehicle).ToList();
             foreach (var vehicle in movingVehicles)
             {
-                vehicle.MoveForward(this.direction);
-                this.checkForVehicleCollisions(vehicle, movingVehicles);
+                vehicle.MoveForward();
             }
         }
 
-        private void checkForVehicleCollisions(Vehicle currentVehicle, IEnumerable<Vehicle> otherVehicles)
+        /// <summary>Hide all the vehicles except the first vehicle.</summary>
+        public void OnlyShowFirstVehicle()
         {
-            var vehiclesToCheck = new List<Vehicle>(otherVehicles);
-            vehiclesToCheck.Remove(currentVehicle);
-
-            foreach (var vehicle in vehiclesToCheck.Where(vehicle => vehicle.CollisionDetected(currentVehicle)))
-            {
-                if (this.direction == LaneDirection.Left)
-                {
-                    this.handleLeftDirectionCollision(currentVehicle, vehicle);
-                }
-                else
-                {
-                    this.handleRightDirectionCollision(currentVehicle, vehicle);
-                }
-            }
-        }
-
-        private void handleLeftDirectionCollision(BaseObject currentVehicle, BaseObject otherVehicle)
-        {
-            if (otherVehicle.X > currentVehicle.X)
-            {
-                otherVehicle.X = this.findNewXValueToAvoidCollision(otherVehicle);
-            }
-            else
-            {
-                currentVehicle.X = this.findNewXValueToAvoidCollision(currentVehicle);
-            }
-        }
-
-        private void handleRightDirectionCollision(BaseObject currentVehicle, BaseObject otherVehicle)
-        {
-            if (otherVehicle.X < currentVehicle.X)
-            {
-                otherVehicle.X = this.findNewXValueToAvoidCollision(otherVehicle);
-            }
-            else
-            {
-                currentVehicle.X = this.findNewXValueToAvoidCollision(currentVehicle);
-            }
-        }
-
-        private double findNewXValueToAvoidCollision(BaseObject vehicle)
-        {
-            var output = vehicle.X - vehicle.Width;
-            ;
-
-            if (this.direction == LaneDirection.Left)
-            {
-                output = vehicle.X + vehicle.Width;
-            }
-
-            return output;
-        }
-
-        /// <summary>
-        ///     Moves the next available vehicle.
-        ///     Precondition: None
-        ///     Postcondition: Next available vehicle beings moving
-        /// </summary>
-        public void MoveNextAvailableVehicle()
-        {
-            var nextVehicle = this.vehicles.FirstOrDefault(vehicle => !vehicle.IsMoving);
-            nextVehicle?.StartMovement();
-        }
-
-        /// <summary>
-        ///     Resets to one vehicle.
-        ///     Precondition: None
-        ///     Postcondition: Lane is reset to only one moving vehicle
-        /// </summary>
-        public void ResetToOneVehicle()
-        {
-            this.resetAllVehiclesToStart();
-            this.vehicles.ToList()[0].StartMovement();
-        }
-
-        private void resetAllVehiclesToStart()
-        {
-            var xLocation = LaneSettings.LaneLength;
-            if (this.direction == LaneDirection.Right)
-            {
-                xLocation = 0 - this.vehicles.ToList()[0].Width;
-            }
-
             foreach (var vehicle in this.vehicles)
             {
-                vehicle.Reset(xLocation);
+                vehicle.Sprite.Visibility = Visibility.Collapsed;
             }
+
+            this.vehicles[0].Sprite.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>Shows another vehicle.</summary>
+        public async void ShowAnotherVehicle()
+        {
+            for (var index = 0; index < this.vehicles.Count; index++)
+            {
+                await this.showVehicle(index);
+            }
+        }
+
+        private async Task showVehicle(int index)
+        {
+            if (this.nextVehicleIsReadyToBeVisible(index))
+            {
+                if (this.vehicleCrossedLeftBoundary(index))
+                {
+                    this.makeNextVehicleVisible(index);
+                    await Task.Delay(1000);
+                }
+                else if (this.vehicleCrossedRightBoundary(index))
+                {
+                    this.makeNextVehicleVisible(index);
+                    await Task.Delay(1000);
+                }
+            }
+        }
+
+        private void makeNextVehicleVisible(int index)
+        {
+            this.vehicles[index + 1].Sprite.Visibility = Visibility.Visible;
+        }
+
+        private bool nextVehicleIsReadyToBeVisible(int i)
+        {
+            return this.vehicles[i].Sprite.Visibility == Visibility.Visible && i + 1 != this.vehicles.Count;
+        }
+
+        private bool vehicleCrossedLeftBoundary(int i)
+        {
+            return this.vehicles[i + 1].Direction == LaneDirection.Left &&
+                   Math.Abs(this.vehicles[i + 1].X - (0.0 - this.vehicles[i + 1].Width)) <= 0;
+        }
+
+        private bool vehicleCrossedRightBoundary(int i)
+        {
+            return this.vehicles[i + 1].Direction == LaneDirection.Right &&
+                   this.vehicles[i + 1].X >= LaneSettings.LaneLength;
         }
 
         #endregion

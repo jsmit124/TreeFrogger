@@ -143,6 +143,7 @@ namespace FroggerStarter.Controller
             this.addVehiclesToView();
             this.addDeathAnimationsToView();
             this.placeHomeFrogs();
+            this.laneManager.HideVehicles();
         }
 
         private void createAndPlacePlayer()
@@ -253,7 +254,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var vehicle in this.laneManager)
             {
-                if (this.player.CollisionDetected(vehicle))
+                if (this.player.CollisionDetected(vehicle) && vehicle.Sprite.Visibility != Visibility.Collapsed)
                 {
                     this.handleLifeLost();
                 }
@@ -335,7 +336,6 @@ namespace FroggerStarter.Controller
             this.player.Sprite.Visibility = Visibility.Collapsed;
             this.player.StopMovement();
             this.timeRemainingTimer.Stop();
-            this.laneManager.StopAllVehicleMovement();
             this.GameOver?.Invoke(this, EventArgs.Empty);
         }
 
@@ -377,7 +377,7 @@ namespace FroggerStarter.Controller
                 this.player.Sprite.Visibility = Visibility.Visible;
                 this.player.EnableMovement();
                 this.resetTimeRemainingTimer();
-                this.laneManager.ResetLanesToOneVehicle();
+                this.laneManager.HideVehicles();
             }
         }
 
