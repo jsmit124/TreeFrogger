@@ -341,10 +341,7 @@ namespace FroggerStarter.Controller
 
         private void handleTimeRemainingIsZero()
         {
-            this.playerStats.DecrementLives();
-
-            var lives = new LivesLostEventArgs {Lives = this.playerStats.Lives};
-            this.LifeLost?.Invoke(this, lives);
+            this.handleLifeLost();
 
             if (!this.checkForGameOver())
             {

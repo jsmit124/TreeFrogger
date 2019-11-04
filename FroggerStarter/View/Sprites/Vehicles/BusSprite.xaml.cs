@@ -11,7 +11,7 @@ namespace FroggerStarter.View.Sprites.Vehicles
         #region Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="SemiSprite" /> class.
+        ///     Initializes a new instance of the <see cref="BusSprite" /> class.
         /// </summary>
         public BusSprite()
         {
