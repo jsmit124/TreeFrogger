@@ -6,14 +6,14 @@ namespace FroggerStarter.Model
     ///     Stores information about the home frog object
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.BaseObject" />
-    public class HomeFrog : BaseObject
+    public class FrogHome : BaseObject
     {
         #region Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="HomeFrog" /> class.
+        ///     Initializes a new instance of the <see cref="FrogHome" /> class.
         /// </summary>
-        public HomeFrog()
+        public FrogHome()
         {
             Sprite = new HomeSprite();
         }

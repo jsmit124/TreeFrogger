@@ -24,7 +24,7 @@ namespace FroggerStarter.Controller
         private readonly PlayerStatistics playerStats;
 
         private readonly LaneManager laneManager;
-        private readonly HomeFrogManager homeManager;
+        private readonly FrogHomeManager homeManager;
         private readonly DeathAnimationManager deathAnimationManager;
 
         private DispatcherTimer gameTimer;
@@ -60,7 +60,7 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
             this.laneManager = new LaneManager(this.topLaneYLocation);
-            this.homeManager = new HomeFrogManager(this.topLaneYLocation);
+            this.homeManager = new FrogHomeManager(this.topLaneYLocation);
             this.deathAnimationManager = new DeathAnimationManager();
             this.playerStats = new PlayerStatistics();
 
@@ -352,7 +352,7 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void handleFrogMadeItHome(HomeFrog frogHome)
+        private void handleFrogMadeItHome(FrogHome frogHome)
         {
             if (frogHome.Sprite.Visibility == Visibility.Visible)
             {

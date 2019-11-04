@@ -10,12 +10,12 @@ namespace FroggerStarter.Controller
     /// <summary>
     ///     Stores information for the homefrog manager
     /// </summary>
-    /// <seealso cref="HomeFrog" />
-    public class HomeFrogManager : IEnumerable<HomeFrog>
+    /// <seealso cref="FrogHome" />
+    public class FrogHomeManager : IEnumerable<FrogHome>
     {
         #region Data members
 
-        private readonly IList<HomeFrog> homeFrogs;
+        private readonly IList<FrogHome> homeFrogs;
         private readonly double homeYLocations;
 
         #endregion
@@ -23,11 +23,11 @@ namespace FroggerStarter.Controller
         #region Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="HomeFrogManager" /> class.
+        ///     Initializes a new instance of the <see cref="FrogHomeManager" /> class.
         /// </summary>
-        public HomeFrogManager(double topLaneLocation)
+        public FrogHomeManager(double topLaneLocation)
         {
-            this.homeFrogs = new List<HomeFrog>();
+            this.homeFrogs = new List<FrogHome>();
             this.homeYLocations = topLaneLocation;
             this.createHomeFrogs();
             this.makeHomeFrogsCollapsed();
@@ -45,7 +45,7 @@ namespace FroggerStarter.Controller
         /// <returns>
         ///     An enumerator that can be used to iterate through the collection.
         /// </returns>
-        public IEnumerator<HomeFrog> GetEnumerator()
+        public IEnumerator<FrogHome> GetEnumerator()
         {
             return this.homeFrogs.GetEnumerator();
         }
@@ -68,7 +68,7 @@ namespace FroggerStarter.Controller
             var count = 0;
             while (count < GameSettings.FrogHomeCount)
             {
-                var homeFrog = new HomeFrog();
+                var homeFrog = new FrogHome();
                 var stepsBetweenHomes = 3;
 
                 this.homeFrogs.Add(homeFrog);

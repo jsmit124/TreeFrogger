@@ -134,8 +134,8 @@
     <Compile Include="Model\Frog.cs" />
     <Compile Include="Controller\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
-    <Compile Include="Model\HomeFrog.cs" />
-    <Compile Include="Controller\HomeFrogManager.cs" />
+    <Compile Include="Model\FrogHome.cs" />
+    <Compile Include="Controller\FrogHomeManager.cs" />
     <Compile Include="Model\Lane.cs" />
     <Compile Include="Model\PlayerStatistics.cs" />
     <Compile Include="Model\PoliceCar.cs" />
