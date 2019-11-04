@@ -115,18 +115,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void ShowNextFrame()
         {
-            if (this.CurrentAnimationFrameIndex > 0)
+            this.animations[this.CurrentAnimationFrameIndex].Sprite.Visibility = Visibility.Collapsed;
+            if (this.CurrentAnimationFrameIndex + 1 < GameSettings.DeathAnimationCount)
             {
-                var previousFrame = this.animations[this.CurrentAnimationFrameIndex];
-                previousFrame.Sprite.Visibility = Visibility.Collapsed;
+                this.animations[this.CurrentAnimationFrameIndex + 1].Sprite.Visibility = Visibility.Visible;
             }
-
-            if (this.CurrentAnimationFrameIndex <= GameSettings.DeathAnimationCount - 1)
-            {
-                var nextFrame = this.animations[this.CurrentAnimationFrameIndex];
-                nextFrame.Sprite.Visibility = Visibility.Visible;
-            }
-
             this.CurrentAnimationFrameIndex++;
         }
 
