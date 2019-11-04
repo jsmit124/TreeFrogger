@@ -85,11 +85,9 @@ namespace FroggerStarter.Controller
 
         private void buildAnimationCollection()
         {
-            var count = 1;
-            while (count <= GameSettings.DeathAnimationCount)
+            for (var i = 1; i <= GameSettings.DeathAnimationCount; i++)
             {
-                this.animations.Add(new DeathAnimation(count));
-                count++;
+                this.animations.Add(new DeathAnimation(i));
             }
         }
 
@@ -120,6 +118,7 @@ namespace FroggerStarter.Controller
             {
                 this.animations[this.CurrentAnimationFrameIndex + 1].Sprite.Visibility = Visibility.Visible;
             }
+
             this.CurrentAnimationFrameIndex++;
         }
 
