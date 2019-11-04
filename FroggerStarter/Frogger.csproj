@@ -139,6 +139,7 @@
     <Compile Include="Model\Lane.cs" />
     <Compile Include="Model\PlayerStatistics.cs" />
     <Compile Include="Model\PoliceCar.cs" />
+    <Compile Include="Model\SpeedCar.cs" />
     <Compile Include="Model\Vehicle.cs" />
     <Compile Include="View\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
@@ -171,6 +172,9 @@
     <Compile Include="View\Sprites\ISpriteRenderer.cs" />
     <Compile Include="View\Sprites\Vehicles\BusSprite.xaml.cs">
       <DependentUpon>BusSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\Vehicles\SpeedCarSprite.xaml.cs">
+      <DependentUpon>SpeedCarSprite.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +234,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\HomeSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\Vehicles\SpeedCarSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -73,7 +73,7 @@ namespace FroggerStarter.Controller
             this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.PoliceCar, 5, 3.5,
                 this.calculateNextLaneYLocation()));
             this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.Bus, 3, 2.5, this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 4, 2,
+            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.SpeedCar, 2, 7,
                 this.calculateNextLaneYLocation()));
             this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.Bus, 2, 1.5, this.calculateNextLaneYLocation()));
             this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 3, 1,

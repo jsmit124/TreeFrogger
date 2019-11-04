@@ -13,6 +13,11 @@
         /// <summary>
         ///     The sports car enum
         /// </summary>
-        PoliceCar
+        PoliceCar,
+
+        /// <summary>
+        /// The speed car enum
+        /// </summary>
+        SpeedCar
     }
 }

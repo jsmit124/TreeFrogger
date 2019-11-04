@@ -33,6 +33,8 @@ namespace FroggerStarter.Factory
                     return new PoliceCar(speed, direction);
                 case VehicleType.Bus:
                     return new Bus(speed, direction);
+                case VehicleType.SpeedCar:
+                    return new SpeedCar(speed, direction);
                 default:
                     throw new NotImplementedException();
             }
