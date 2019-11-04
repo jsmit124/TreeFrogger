@@ -2,7 +2,7 @@
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.Vehicles
 {
     /// <summary>
     ///     Stores information for the Vehicle GameObject class

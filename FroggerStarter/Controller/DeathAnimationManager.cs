@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using FroggerStarter.Constants;
@@ -15,6 +16,7 @@ namespace FroggerStarter.Controller
         #region Data members
 
         private readonly IList<DeathAnimation> animations;
+        private DispatcherTimer deathAnimationTimer;
 
         #endregion
 
@@ -41,6 +43,7 @@ namespace FroggerStarter.Controller
             this.buildAnimationCollection();
             this.ResetFrameCount();
             this.CollapseAllAnimationFrames();
+            this.setupDeathAnimationTimer();
         }
 
         #endregion
@@ -134,6 +137,41 @@ namespace FroggerStarter.Controller
                 frame.Sprite.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void setupDeathAnimationTimer()
+        {
+            this.deathAnimationTimer = new DispatcherTimer();
+            this.deathAnimationTimer.Tick += this.deathAnimationTimerOnTick;
+            this.deathAnimationTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+        }
+
+        private void deathAnimationTimerOnTick(object sender, object e)
+        {
+            if (this.CurrentAnimationFrameIndex > GameSettings.DeathAnimationCount - 1)
+            {
+                this.AnimationOver?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                this.ShowNextFrame();
+            }
+        }
+
+        public void PlayDeathAnimation()
+        {
+            this.deathAnimationTimer.Start();
+        }
+
+        public void StopAnimationTimer()
+        {
+            this.deathAnimationTimer.Stop();
+        }
+
+        /// <summary>
+        /// The animation over
+        /// </summary>
+        public EventHandler<EventArgs> AnimationOver;
+
 
         #endregion
     }

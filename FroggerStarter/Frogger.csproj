@@ -129,7 +129,7 @@
     <Compile Include="Factory\DeathAnimationFactory.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Model\BaseObject.cs" />
-    <Compile Include="Model\Bus.cs" />
+    <Compile Include="Model\Vehicles\Bus.cs" />
     <Compile Include="Model\DeathAnimation.cs" />
     <Compile Include="Model\Frog.cs" />
     <Compile Include="Controller\GameManager.cs" />
@@ -138,9 +138,9 @@
     <Compile Include="Controller\FrogHomeManager.cs" />
     <Compile Include="Model\Lane.cs" />
     <Compile Include="Model\PlayerStatistics.cs" />
-    <Compile Include="Model\PoliceCar.cs" />
-    <Compile Include="Model\SpeedCar.cs" />
-    <Compile Include="Model\Vehicle.cs" />
+    <Compile Include="Model\Vehicles\PoliceCar.cs" />
+    <Compile Include="Model\Vehicles\SpeedCar.cs" />
+    <Compile Include="Model\Vehicles\Vehicle.cs" />
     <Compile Include="View\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>

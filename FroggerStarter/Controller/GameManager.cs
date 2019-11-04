@@ -29,7 +29,6 @@ namespace FroggerStarter.Controller
 
         private DispatcherTimer gameTimer;
         private DispatcherTimer timeRemainingTimer;
-        private DispatcherTimer deathAnimationTimer;
 
         #endregion
 
@@ -64,9 +63,10 @@ namespace FroggerStarter.Controller
             this.deathAnimationManager = new DeathAnimationManager();
             this.playerStats = new PlayerStatistics();
 
+            this.deathAnimationManager.AnimationOver += this.handleDeathAnimationHasEnded;
+
             this.setupGameTimer();
             this.setupTimeRemainingTimer();
-            this.setupDeathAnimationTimer();
         }
 
         #endregion
@@ -89,13 +89,6 @@ namespace FroggerStarter.Controller
             this.timeRemainingTimer.Start();
         }
 
-        private void setupDeathAnimationTimer()
-        {
-            this.deathAnimationTimer = new DispatcherTimer();
-            this.deathAnimationTimer.Tick += this.deathAnimationTimerOnTick;
-            this.deathAnimationTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-        }
-
         private void gameTimerOnTick(object sender, object e)
         {
             this.laneManager.MoveVehicles();
@@ -113,18 +106,6 @@ namespace FroggerStarter.Controller
             if (this.playerStats.TimeRemaining == 0)
             {
                 this.handleTimeRemainingIsZero();
-            }
-        }
-
-        private void deathAnimationTimerOnTick(object sender, object e)
-        {
-            if (this.deathAnimationManager.CurrentAnimationFrameIndex > GameSettings.DeathAnimationCount - 1)
-            {
-                this.handleDeathAnimationHasEnded();
-            }
-            else
-            {
-                this.deathAnimationManager.ShowNextFrame();
             }
         }
 
@@ -197,11 +178,6 @@ namespace FroggerStarter.Controller
             this.TimeRemainingCount?.Invoke(this, timeRemaining);
 
             this.timeRemainingTimer.Start();
-        }
-
-        private void playDeathAnimation()
-        {
-            this.deathAnimationTimer.Start();
         }
 
         /// <summary>
@@ -314,7 +290,7 @@ namespace FroggerStarter.Controller
             this.player.Sprite.Visibility = Visibility.Collapsed;
 
             this.setDeathAnimationToPlayerLocation();
-            this.playDeathAnimation();
+            this.deathAnimationManager.PlayDeathAnimation();
         }
 
         private void handlePlayerScored()
@@ -364,18 +340,21 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void handleDeathAnimationHasEnded()
+        private void handleDeathAnimationHasEnded(object sender, EventArgs e)
         {
             this.deathAnimationManager.CollapseAllAnimationFrames();
-            this.deathAnimationTimer.Stop();
+            this.deathAnimationManager.StopAnimationTimer();
             this.deathAnimationManager.ResetFrameCount();
-            if (!this.gameIsOver)
+
+            if (this.gameIsOver)
             {
-                this.player.Sprite.Visibility = Visibility.Visible;
-                this.player.EnableMovement();
-                this.resetTimeRemainingTimer();
-                this.laneManager.HideVehicles();
+                return;
             }
+
+            this.player.Sprite.Visibility = Visibility.Visible;
+            this.player.EnableMovement();
+            this.resetTimeRemainingTimer();
+            this.laneManager.HideVehicles();
         }
 
         #endregion

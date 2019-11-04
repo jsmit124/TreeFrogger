@@ -1,10 +1,10 @@
 ﻿using FroggerStarter.Enums;
 using FroggerStarter.View.Sprites.Vehicles;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.Vehicles
 {
     /// <summary>Stores information for the bus object class.</summary>
-    /// <seealso cref="FroggerStarter.Model.Vehicle" />
+    /// <seealso cref="Vehicle" />
     public class Bus : Vehicle
     {
         #region Constructors

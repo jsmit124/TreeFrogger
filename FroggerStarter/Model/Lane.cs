@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Factory;
+using FroggerStarter.Model.Vehicles;
 
 namespace FroggerStarter.Model
 {

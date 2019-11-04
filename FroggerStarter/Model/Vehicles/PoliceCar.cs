@@ -1,7 +1,7 @@
 ﻿using FroggerStarter.Enums;
 using FroggerStarter.View.Sprites.Vehicles;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.Vehicles
 {
     /// <summary>Stores information for the police car object class.</summary>
     public class PoliceCar : Vehicle
