@@ -3,17 +3,17 @@
 namespace FroggerStarter.View.Sprites.Vehicles
 {
     /// <summary>
-    ///     Stores information for the SemiSprite class
+    ///     Stores information for the BusSprite class
     /// </summary>
     /// <seealso cref="FroggerStarter.View.Sprites.BaseSprite" />
-    public sealed partial class SemiSprite
+    public sealed partial class BusSprite
     {
         #region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SemiSprite" /> class.
         /// </summary>
-        public SemiSprite()
+        public BusSprite()
         {
             this.InitializeComponent();
         }

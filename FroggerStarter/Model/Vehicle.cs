@@ -1,7 +1,6 @@
 ﻿using System;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
-using FroggerStarter.Factory;
 
 namespace FroggerStarter.Model
 {
@@ -9,7 +8,7 @@ namespace FroggerStarter.Model
     ///     Stores information for the Vehicle GameObject class
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.GameObject" />
-    public class Vehicle : GameObject
+    public abstract class Vehicle : GameObject
     {
         #region Properties
 
@@ -22,18 +21,15 @@ namespace FroggerStarter.Model
         #region Constructors
 
         /// <summary>Initializes a new instance of the <see cref="Vehicle" /> class.</summary>
-        /// <param name="vehicleType">Type of the vehicle.</param>
         /// <param name="defaultSpeed">The default speed.</param>
         /// <param name="direction">The direction.</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public Vehicle(VehicleType vehicleType, double defaultSpeed, LaneDirection direction)
+        protected Vehicle(double defaultSpeed, LaneDirection direction)
         {
             if (defaultSpeed < 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
-
-            Sprite = VehicleFactory.BuildVehicleSprite(vehicleType);
 
             this.Direction = direction;
             SetSpeed(defaultSpeed, 0);

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
+using FroggerStarter.Factory;
 
 namespace FroggerStarter.Model
 {
