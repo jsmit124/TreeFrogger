@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
@@ -70,7 +70,7 @@ namespace FroggerStarter.Controller
             for (var i = 0; i < GameSettings.TimerPowerUps; i++)
             {
                 var powerUp = new TimerPowerUp();
-                var maxX = (int) (LaneSettings.LaneLength - powerUp.Width);
+                var maxX = (int)(LaneSettings.LaneLength - powerUp.Width);
                 powerUp.X = random.Next(0, maxX);
                 powerUp.Y = random.Next(55, 305);
                 powerUp.Sprite.Visibility = Visibility.Collapsed;

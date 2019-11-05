@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Constants;
 using FroggerStarter.Model;
+using FroggerStarter.View;
 
 namespace FroggerStarter.Controller
 {
@@ -64,11 +66,9 @@ namespace FroggerStarter.Controller
             this.deathAnimationManager = new DeathAnimationManager();
             this.playerStats = new PlayerStatistics();
             this.powerUpManager = new TimerPowerUpManager();
-
             this.deathAnimationManager.AnimationOver += this.handleDeathAnimationHasEnded;
 
-            this.setupGameTimer();
-            this.setupTimeRemainingTimer();
+            this.handleStartup();
         }
 
         #endregion
@@ -81,6 +81,23 @@ namespace FroggerStarter.Controller
             this.gameTimer.Tick += this.gameTimerOnTick;
             this.gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 15);
             this.gameTimer.Start();
+        }
+
+        private async void handleStartup()
+        {
+            var startDialog = new StartScreenDialog();
+            var result = await startDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                this.setupGameTimer();
+                this.setupTimeRemainingTimer();
+            }
+            else
+            {
+                //TODO SHOW HIGH SCORE SCREEN
+            }
+
         }
 
         private void setupTimeRemainingTimer()

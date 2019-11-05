@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using FroggerStarter.Controller;
 using static FroggerStarter.Controller.GameManager;
 
@@ -82,14 +85,49 @@ namespace FroggerStarter.View
             this.livesTextBlock.Text = "Lives: " + lives.Lives;
         }
 
-        private void onGameOver(object sender, EventArgs e)
+        private async void onGameOver(object sender, EventArgs e)
         {
             this.gameOverTextBlock.Visibility = Visibility.Visible;
+
+            var result = await showGameEndContentDialog();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                restart();
+            }
+            else
+            {
+                closeGame();
+            }
         }
 
         private void onTimeRemainingUpdate(object sender, TimeRemainingEventArgs timeRemaining)
         {
             this.timeRemainingTextBlock.Text = "Time: " + timeRemaining.TimeRemaining;
+        }
+
+        private static async Task<ContentDialogResult> showGameEndContentDialog()
+        {
+            var gameEndDialog = new ContentDialog
+            {
+                Title = "GAME OVER",
+                Content = "Play again?",
+                PrimaryButtonText = "Play Again",
+                CloseButtonText = "Close"
+            };
+            var result = await gameEndDialog.ShowAsync();
+
+            return result;
+        }
+
+        private static async void restart()
+        {
+            await CoreApplication.RequestRestartAsync("");
+        }
+
+        private static void closeGame()
+        {
+            Application.Current.Exit();
         }
 
         #endregion

@@ -124,11 +124,13 @@
     <Compile Include="Constants\GameSettings.cs" />
     <Compile Include="Controller\DeathAnimationManager.cs" />
     <Compile Include="Controller\LaneManager.cs" />
+    <Compile Include="Controller\TimerPowerUpManager.cs" />
     <Compile Include="Enums\LaneDirection.cs" />
     <Compile Include="Enums\VehicleType.cs" />
     <Compile Include="Factory\DeathAnimationFactory.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Model\BaseObject.cs" />
+    <Compile Include="Model\TimerPowerUp.cs" />
     <Compile Include="Model\Vehicles\Bus.cs" />
     <Compile Include="Model\DeathAnimation.cs" />
     <Compile Include="Model\Frog.cs" />
@@ -147,6 +149,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\TimerPowerUpSprite.xaml.cs">
+      <DependentUpon>TimerPowerUpSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\Vehicles\CarSprite.xaml.cs">
       <DependentUpon>CarSprite.xaml</DependentUpon>
@@ -176,6 +181,9 @@
     <Compile Include="View\Sprites\Vehicles\SpeedCarSprite.xaml.cs">
       <DependentUpon>SpeedCarSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\StartScreenDialog.xaml.cs">
+      <DependentUpon>StartScreenDialog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -204,6 +212,10 @@
     <Page Include="View\Sprites\BaseSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\TimerPowerUpSprite.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Sprites\Vehicles\CarSprite.xaml">
       <SubType>Designer</SubType>
@@ -238,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\Vehicles\SpeedCarSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StartScreenDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

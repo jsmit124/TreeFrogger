@@ -157,11 +157,21 @@ namespace FroggerStarter.Controller
             }
         }
 
+        /// <summary>
+        /// Plays the death animation.
+        /// Precondition: None
+        /// Postcondition: None
+        /// </summary>
         public void PlayDeathAnimation()
         {
             this.deathAnimationTimer.Start();
         }
 
+        /// <summary>
+        /// Stops the animation timer.
+        /// Precondition: None
+        /// Postcondition: None
+        /// </summary>
         public void StopAnimationTimer()
         {
             this.deathAnimationTimer.Stop();
@@ -171,7 +181,6 @@ namespace FroggerStarter.Controller
         /// The animation over
         /// </summary>
         public EventHandler<EventArgs> AnimationOver;
-
 
         #endregion
     }
