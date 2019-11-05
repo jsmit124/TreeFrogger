@@ -14,6 +14,10 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
+        private const int MaxPositionY = 305;
+        private const int MinPositionY = 105;
+        private const int MinPositionX = 0;
+
         private int currentPowerUpIndex;
 
         private readonly IList<TimerPowerUp> timerPowerUps;
@@ -64,9 +68,9 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Starts the power up timer.
-        /// Precondition: none
-        /// Postcondition: power up timer started
+        ///     Starts the power up timer.
+        ///     Precondition: none
+        ///     Postcondition: power up timer started
         /// </summary>
         public void startPowerUpTimer()
         {
@@ -74,9 +78,9 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Stops the power up timer.
-        /// Precondition: none
-        /// Postcondition: power up timer stopped
+        ///     Stops the power up timer.
+        ///     Precondition: none
+        ///     Postcondition: power up timer stopped
         /// </summary>
         public void stopPowerUpTimer()
         {
@@ -89,9 +93,9 @@ namespace FroggerStarter.Controller
             for (var i = 0; i < GameSettings.TimerPowerUps; i++)
             {
                 var powerUp = new TimerPowerUp();
-                var maxX = (int)(LaneSettings.LaneLength - powerUp.Width);
-                powerUp.X = random.Next(0, maxX);
-                powerUp.Y = random.Next(55, 305);
+                var maxX = (int) (LaneSettings.LaneLength - powerUp.Width);
+                powerUp.X = random.Next(MinPositionX, maxX);
+                powerUp.Y = random.Next(MinPositionY, MaxPositionY);
                 powerUp.Sprite.Visibility = Visibility.Collapsed;
                 this.timerPowerUps.Add(powerUp);
             }
