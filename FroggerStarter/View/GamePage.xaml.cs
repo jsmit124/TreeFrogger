@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
+using Windows.Media.Playback;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Controller;
+using FroggerStarter.Model;
+using FroggerStarter.View.Sprites;
 using static FroggerStarter.Controller.GameManager;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -23,7 +27,7 @@ namespace FroggerStarter.View
 
         private readonly double applicationHeight = (double) Application.Current.Resources["AppHeight"];
         private readonly double applicationWidth = (double) Application.Current.Resources["AppWidth"];
-        private readonly GameManager gameManager;
+        private GameManager gameManager;
 
         #endregion
 
@@ -43,13 +47,7 @@ namespace FroggerStarter.View
                            .SetPreferredMinSize(new Size(this.applicationWidth, this.applicationHeight));
 
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
-            this.gameManager = new GameManager(this.applicationHeight, this.applicationWidth);
-            this.gameManager.InitializeGame(this.canvas);
-
-            this.gameManager.ScoreIncreased += this.onScoreCountUpdated;
-            this.gameManager.LifeLost += this.onLivesCountUpdated;
-            this.gameManager.GameOver += this.onGameOver;
-            this.gameManager.TimeRemainingCount += this.onTimeRemainingUpdate;
+            this.setupNewGame();
         }
 
         #endregion
@@ -120,14 +118,27 @@ namespace FroggerStarter.View
             return result;
         }
 
-        private static async void restart()
+        private void restart()
         {
-            await CoreApplication.RequestRestartAsync("");
+            this.gameManager.RemoveSprites();
+            this.gameOverTextBlock.Visibility = Visibility.Collapsed;
+            this.setupNewGame();
         }
 
         private static void closeGame()
         {
             Application.Current.Exit();
+        }
+
+        private void setupNewGame()
+        {
+            this.gameManager = new GameManager(this.applicationHeight, this.applicationWidth);
+            this.gameManager.InitializeGame(this.canvas);
+
+            this.gameManager.ScoreIncreased += this.onScoreCountUpdated;
+            this.gameManager.LifeLost += this.onLivesCountUpdated;
+            this.gameManager.GameOver += this.onGameOver;
+            this.gameManager.TimeRemainingCount += this.onTimeRemainingUpdate;
         }
 
         #endregion

@@ -92,6 +92,8 @@ namespace FroggerStarter.Controller
             {
                 this.setupGameTimer();
                 this.setupTimeRemainingTimer();
+                this.powerUpManager.startPowerUpTimer();
+                this.player.EnableMovement();
             }
             else
             {
@@ -152,6 +154,7 @@ namespace FroggerStarter.Controller
             this.player = new Frog();
             this.gameCanvas.Children.Add(this.player.Sprite);
             this.setPlayerToCenterOfBottomLane();
+            this.player.DisableMovement();
         }
 
         private void placeHomeFrogs()
@@ -350,8 +353,10 @@ namespace FroggerStarter.Controller
             this.gameIsOver = true;
             this.gameTimer.Stop();
             this.player.Sprite.Visibility = Visibility.Collapsed;
+            this.removePowerUpSprites();
             this.player.StopMovement();
             this.timeRemainingTimer.Stop();
+            this.powerUpManager.stopPowerUpTimer();
             this.GameOver?.Invoke(this, EventArgs.Empty);
         }
 
@@ -403,6 +408,44 @@ namespace FroggerStarter.Controller
             powerUp.Sprite.Visibility = Visibility.Collapsed;
             var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerStats.TimeRemaining};
             this.TimeRemainingCount?.Invoke(this, timeRemaining);
+        }
+
+        /// <summary>
+        /// Removes the sprites.
+        /// Precondition: None
+        /// Postcondition: Sprites removed from canvas children
+        /// </summary>
+        public void RemoveSprites()
+        {
+            this.gameCanvas.Children.Remove(this.player.Sprite);
+            this.removePowerUpSprites();
+            this.removeVehicleSprites();
+            this.removeHomeFrogSprites();
+
+        }
+
+        private void removeHomeFrogSprites()
+        {
+            foreach (var homeFrog in this.homeManager)
+            {
+                this.gameCanvas.Children.Remove(homeFrog.Sprite);
+            }
+        }
+
+        private void removeVehicleSprites()
+        {
+            foreach (var vehicle in this.laneManager)
+            {
+                this.gameCanvas.Children.Remove(vehicle.Sprite);
+            }
+        }
+
+        private void removePowerUpSprites()
+        {
+            foreach (var powerUp in this.powerUpManager)
+            {
+                this.gameCanvas.Children.Remove(powerUp.Sprite);
+            }
         }
 
         #endregion

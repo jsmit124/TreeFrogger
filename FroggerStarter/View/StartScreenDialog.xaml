@@ -11,5 +11,4 @@
     SecondaryButtonText="HIGH SCORES"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
-    <StackPanel Width ="650" Height="410"/>
 </ContentDialog>

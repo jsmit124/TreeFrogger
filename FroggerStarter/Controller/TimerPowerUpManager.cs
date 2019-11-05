@@ -52,7 +52,6 @@ namespace FroggerStarter.Controller
             this.timer = new DispatcherTimer();
             this.timer.Tick += this.timerOnTick;
             this.timer.Interval = new TimeSpan(0, 0, 0, 10);
-            this.timer.Start();
         }
 
         private void timerOnTick(object sender, object e)
@@ -62,6 +61,26 @@ namespace FroggerStarter.Controller
                 this.timerPowerUps[this.currentPowerUpIndex].Sprite.Visibility = Visibility.Visible;
                 this.currentPowerUpIndex++;
             }
+        }
+
+        /// <summary>
+        /// Starts the power up timer.
+        /// Precondition: none
+        /// Postcondition: power up timer started
+        /// </summary>
+        public void startPowerUpTimer()
+        {
+            this.timer.Start();
+        }
+
+        /// <summary>
+        /// Stops the power up timer.
+        /// Precondition: none
+        /// Postcondition: power up timer stopped
+        /// </summary>
+        public void stopPowerUpTimer()
+        {
+            this.timer.Stop();
         }
 
         private void createTimerPowerUps()

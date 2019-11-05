@@ -55,6 +55,16 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
+        ///     Disables movement.
+        ///     Precondition: None
+        ///     Postcondition: base.speedX = 0, base.speedY = 0
+        /// </summary>
+        public void DisableMovement()
+        {
+            SetSpeed(0, 0);
+        }
+
+        /// <summary>
         ///     Moves the game object left.
         ///     Precondition: None
         ///     Postcondition: X == X@prev + SpeedX
