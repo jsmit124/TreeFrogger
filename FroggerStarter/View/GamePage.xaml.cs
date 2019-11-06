@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation;
-using Windows.Media.Playback;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Controller;
-using FroggerStarter.Model;
-using FroggerStarter.View.Sprites;
 using static FroggerStarter.Controller.GameManager;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -83,6 +78,11 @@ namespace FroggerStarter.View
             this.livesTextBlock.Text = "Lives: " + lives.Lives;
         }
 
+        private void onLevelUpdated(object sender, LevelIncreasedEventArgs level)
+        {
+            this.levelTextBlock.Text = "Level: " + level.Level;
+        }
+
         private async void onGameOver(object sender, EventArgs e)
         {
             this.gameOverTextBlock.Visibility = Visibility.Visible;
@@ -91,7 +91,7 @@ namespace FroggerStarter.View
 
             if (result == ContentDialogResult.Primary)
             {
-                restart();
+                this.restart();
             }
             else
             {
@@ -106,8 +106,7 @@ namespace FroggerStarter.View
 
         private static async Task<ContentDialogResult> showGameEndContentDialog()
         {
-            var gameEndDialog = new ContentDialog
-            {
+            var gameEndDialog = new ContentDialog {
                 Title = "GAME OVER",
                 Content = "Play again?",
                 PrimaryButtonText = "Play Again",
@@ -139,6 +138,7 @@ namespace FroggerStarter.View
             this.gameManager.LifeLost += this.onLivesCountUpdated;
             this.gameManager.GameOver += this.onGameOver;
             this.gameManager.TimeRemainingCount += this.onTimeRemainingUpdate;
+            this.gameManager.LevelIncreased += this.onLevelUpdated;
         }
 
         #endregion

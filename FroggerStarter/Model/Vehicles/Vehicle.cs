@@ -89,6 +89,16 @@ namespace FroggerStarter.Model.Vehicles
             }
         }
 
+        /// <summary>
+        ///     Increases the speed.
+        ///     Precondition: None.
+        ///     PostCondition: SpeedX == SpeedX@prev + speed AND SpeedY == SpeedY@prev + speed
+        /// </summary>
+        public void IncreaseSpeed(double speed)
+        {
+            SetSpeed(SpeedX + speed, SpeedY + speed);
+        }
+
         #endregion
     }
 }

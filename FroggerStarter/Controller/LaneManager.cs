@@ -17,7 +17,7 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
-        private readonly ICollection<Lane> lanes;
+        private readonly IList<Lane> lanes;
         private readonly double topLaneYLocation;
 
         private DispatcherTimer timer;
@@ -74,10 +74,10 @@ namespace FroggerStarter.Controller
             this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.PoliceCar, 5, 3.5,
                 this.calculateNextLaneYLocation()));
             this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.Bus, 3, 2.5, this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.SpeedCar, 2, 7,
+            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.SpeedCar, 3, 5,
                 this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.Bus, 2, 1.5, this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 3, 1,
+            this.lanes.Add(new Lane(LaneDirection.Right, VehicleType.Bus, 3, 1.5, this.calculateNextLaneYLocation()));
+            this.lanes.Add(new Lane(LaneDirection.Left, VehicleType.PoliceCar, 4, 1,
                 this.calculateNextLaneYLocation()));
         }
 
@@ -112,12 +112,43 @@ namespace FroggerStarter.Controller
             this.lanes.ToList().ForEach(lane => lane.MoveVehiclesForward());
         }
 
-        /// <summary>Hides the vehicles.</summary>
+        /// <summary>
+        ///     Increases all vehicle speed.
+        ///     Precondition: None
+        ///     Postcondition: Increases all vehicle speeds by speed param
+        /// </summary>
+        /// <param name="speed">The speed.</param>
+        public void IncreaseAllVehicleSpeed(double speed)
+        {
+            foreach (var lane in this.lanes)
+            {
+                lane.IncreaseVehicleSpeeds(speed);
+            }
+        }
+
+        /// <summary>
+        ///     Hides the vehicles.
+        ///     Precondition: None
+        ///     Postcondition: Hides all vehicles except first one in each lane
+        /// </summary>
         public void HideVehicles()
         {
             foreach (var lane in this.lanes)
             {
                 lane.OnlyShowFirstVehicle();
+            }
+        }
+
+        /// <summary>
+        ///     Increments the maximum amount of vehicles per lane.
+        ///     Precondition: None
+        ///     Postcondition: Max amount of vehicles per lane increased by one
+        /// </summary>
+        public void IncrementMaxAmountOfVehiclesPerLane()
+        {
+            foreach (var lane in this.lanes)
+            {
+                lane.IncrementMaxCarsPerLane();
             }
         }
 

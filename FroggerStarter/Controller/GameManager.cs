@@ -18,6 +18,9 @@ namespace FroggerStarter.Controller
 
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
+        private bool roundOneOver;
+        private bool roundTwoOver;
+        private bool roundThreeOver;
         private bool gameIsOver;
         private readonly double topLaneYLocation = (double) Application.Current.Resources["HighRoadYLocation"];
 
@@ -61,8 +64,8 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
 
-            this.laneManager = new LaneManager(this.topLaneYLocation);
-            this.homeManager = new FrogHomeManager(this.topLaneYLocation);
+            this.laneManager = new LaneManager(LaneSettings.TopLaneYLocation);
+            this.homeManager = new FrogHomeManager(LaneSettings.TopLaneYLocation);
             this.deathAnimationManager = new DeathAnimationManager();
             this.powerUpManager = new TimerPowerUpManager();
             this.playerManager = new PlayerManager();
@@ -131,13 +134,13 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            this.playerManager.MovePlayerDown((int)Math.Floor(this.backgroundHeight));
+            this.playerManager.MovePlayerDown((int) Math.Floor(this.backgroundHeight));
         }
 
         /// <summary>
-        /// Removes the sprites.
-        /// Precondition: None
-        /// Postcondition: Sprites removed from canvas children
+        ///     Removes the sprites.
+        ///     Precondition: None
+        ///     Postcondition: Sprites removed from canvas children
         /// </summary>
         public void RemoveSprites()
         {
@@ -145,26 +148,6 @@ namespace FroggerStarter.Controller
             this.removePowerUpSprites();
             this.removeVehicleSprites();
             this.removeHomeFrogSprites();
-        }
-
-        #endregion
-
-        #region Timer Setups
-
-        private void setupGameTimer()
-        {
-            this.gameTimer = new DispatcherTimer();
-            this.gameTimer.Tick += this.gameTimerOnTick;
-            this.gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 15);
-            this.gameTimer.Start();
-        }
-
-        private void setupTimeRemainingTimer()
-        {
-            this.timeRemainingTimer = new DispatcherTimer();
-            this.timeRemainingTimer.Tick += this.timeRemainingTimerOnTick;
-            this.timeRemainingTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
-            this.timeRemainingTimer.Start();
         }
 
         #endregion
@@ -182,7 +165,7 @@ namespace FroggerStarter.Controller
         {
             this.playerManager.DecrementTimeRemaining();
 
-            var timeRemaining = new TimeRemainingEventArgs { TimeRemaining = this.playerManager.TimeRemaining };
+            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerManager.TimeRemaining};
             this.TimeRemainingCount?.Invoke(this, timeRemaining);
 
             if (this.playerManager.TimeRemaining == 0)
@@ -235,9 +218,19 @@ namespace FroggerStarter.Controller
             }
         }
 
+        private void checkForLevelOver()
+        {
+            if (this.playerManager.AmountOfFrogsInHome != GameSettings.FrogHomeCount)
+            {
+                return;
+            }
+
+            this.handleLevelOver();
+        }
+
         private bool checkForGameOver()
         {
-            if (this.playerManager.Lives != 0 && this.playerManager.AmountOfFrogsInHome != GameSettings.FrogHomeCount)
+            if (this.playerManager.Lives != 0 && !this.roundThreeOver)
             {
                 return false;
             }
@@ -270,11 +263,28 @@ namespace FroggerStarter.Controller
                 this.powerUpManager.startPowerUpTimer();
                 this.playerManager.EnableMovement();
             }
-            else
-            {
-                //TODO SHOW HIGH SCORE SCREEN
-            }
+        }
 
+        private void handleLevelOver()
+        {
+            if (!this.roundOneOver)
+            {
+                this.roundOneOver = true;
+                this.enableNextLevel();
+            }
+            else if (!this.roundTwoOver)
+            {
+                this.roundTwoOver = true;
+                this.enableNextLevel();
+            }
+            else if (!this.roundThreeOver)
+            {
+                this.roundThreeOver = true;
+                this.handleGameOver();
+            }
+            this.playerManager.IncrementLevel();
+            var level = new LevelIncreasedEventArgs { Level = this.playerManager.Level };
+            this.LevelIncreased?.Invoke(this, level);
         }
 
         private void handleLifeLost()
@@ -282,7 +292,7 @@ namespace FroggerStarter.Controller
             this.playerManager.Sprite.Visibility = Visibility.Collapsed;
             this.playerManager.DecrementLives();
 
-            var lives = new LivesLostEventArgs { Lives = this.playerManager.Lives };
+            var lives = new LivesLostEventArgs {Lives = this.playerManager.Lives};
             this.LifeLost?.Invoke(this, lives);
 
             this.timeRemainingTimer.Stop();
@@ -307,10 +317,9 @@ namespace FroggerStarter.Controller
         {
             this.playerManager.IncrementScore(this.playerManager.TimeRemaining);
 
-            var score = new ScoreIncreasedEventArgs { Score = this.playerManager.Score };
+            var score = new ScoreIncreasedEventArgs {Score = this.playerManager.Score};
             this.ScoreIncreased?.Invoke(this, score);
 
-            this.checkForGameOver();
             this.resetTimeRemainingTimer();
             this.setPlayerToCenterOfBottomLane();
         }
@@ -349,6 +358,7 @@ namespace FroggerStarter.Controller
                 frogHome.Sprite.Visibility = Visibility.Visible;
                 this.playerManager.IncrementFrogsInHomes();
                 this.checkForGameOver();
+                this.checkForLevelOver();
             }
         }
 
@@ -373,7 +383,7 @@ namespace FroggerStarter.Controller
         {
             this.playerManager.TimerPowerUp();
             powerUp.Sprite.Visibility = Visibility.Collapsed;
-            var timeRemaining = new TimeRemainingEventArgs { TimeRemaining = this.playerManager.TimeRemaining };
+            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerManager.TimeRemaining};
             this.TimeRemainingCount?.Invoke(this, timeRemaining);
         }
 
@@ -438,8 +448,7 @@ namespace FroggerStarter.Controller
 
         private void setPlayerToCenterOfBottomLane()
         {
-            this.playerManager.X = this.backgroundWidth / 2 - this.playerManager.Sprite.Width / 2;
-            this.playerManager.Y = this.backgroundHeight - this.playerManager.Sprite.Height - LaneSettings.BottomLaneOffset;
+            this.playerManager.SetPlayerToCenterOfBottomLane();
         }
 
         private void resetTimeRemainingTimer()
@@ -447,9 +456,37 @@ namespace FroggerStarter.Controller
             this.timeRemainingTimer.Stop();
             this.playerManager.ResetTimeRemaining();
 
-            var timeRemaining = new TimeRemainingEventArgs { TimeRemaining = this.playerManager.TimeRemaining };
+            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerManager.TimeRemaining};
             this.TimeRemainingCount?.Invoke(this, timeRemaining);
 
+            this.timeRemainingTimer.Start();
+        }
+
+        private void enableNextLevel()
+        {
+            this.homeManager.makeHomeFrogsCollapsed();
+            this.playerManager.ResetFrogsInHome();
+            this.laneManager.IncreaseAllVehicleSpeed(.4);
+            this.laneManager.IncrementMaxAmountOfVehiclesPerLane();
+        }
+
+        #endregion
+
+        #region Timer Setups
+
+        private void setupGameTimer()
+        {
+            this.gameTimer = new DispatcherTimer();
+            this.gameTimer.Tick += this.gameTimerOnTick;
+            this.gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 15);
+            this.gameTimer.Start();
+        }
+
+        private void setupTimeRemainingTimer()
+        {
+            this.timeRemainingTimer = new DispatcherTimer();
+            this.timeRemainingTimer.Tick += this.timeRemainingTimerOnTick;
+            this.timeRemainingTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             this.timeRemainingTimer.Start();
         }
 
@@ -477,6 +514,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public EventHandler<ScoreIncreasedEventArgs> ScoreIncreased;
 
+        /// <summary>
+        ///     The level increased event handler
+        /// </summary>
+        public EventHandler<LevelIncreasedEventArgs> LevelIncreased;
+
         #endregion
 
         #region EventArgs Classes
@@ -496,6 +538,25 @@ namespace FroggerStarter.Controller
             ///     The lives.
             /// </value>
             public int Lives { get; set; }
+
+            #endregion
+        }
+
+        /// <summary>
+        ///     Handles the event arguments for the level increased event
+        /// </summary>
+        /// <seealso cref="System.EventArgs" />
+        public class LevelIncreasedEventArgs : EventArgs
+        {
+            #region Properties
+
+            /// <summary>
+            ///     Gets or sets the level.
+            /// </summary>
+            /// <value>
+            ///     The level.
+            /// </value>
+            public int Level { get; set; }
 
             #endregion
         }
@@ -539,7 +600,5 @@ namespace FroggerStarter.Controller
         }
 
         #endregion
-
     }
-
 }

@@ -37,6 +37,11 @@
         /// </summary>
         public const int TimerPowerUps = 3;
 
+        /// <summary>
+        ///     The final level
+        /// </summary>
+        public const int FinalLevel = 3;
+
         #endregion
     }
 }

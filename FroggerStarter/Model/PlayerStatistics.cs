@@ -41,6 +41,14 @@ namespace FroggerStarter.Model
         /// </value>
         public int AmountOfFrogsInHome { get; private set; }
 
+        /// <summary>
+        ///     Gets the level.
+        /// </summary>
+        /// <value>
+        ///     The level.
+        /// </value>
+        public int Level { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -56,6 +64,7 @@ namespace FroggerStarter.Model
             this.Score = 0;
             this.TimeRemaining = GameSettings.TimeRemainingAtStart;
             this.AmountOfFrogsInHome = 0;
+            this.Level = 1;
         }
 
         #endregion
@@ -70,6 +79,19 @@ namespace FroggerStarter.Model
         public void IncrementScore(int amountToIncrease)
         {
             this.Score += amountToIncrease;
+        }
+
+        /// <summary>
+        ///     Increments the level.
+        ///     Precondition: None
+        ///     Postcondition: this.Level == this.Level + 1
+        /// </summary>
+        public void IncrementLevel()
+        {
+            if (this.Level != GameSettings.FinalLevel)
+            {
+                this.Level += 1;
+            }
         }
 
         /// <summary>
@@ -113,9 +135,19 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Increments the time remaining.
-        /// Precondition: None
-        /// Postcondition: this.TimeRemaining += 5
+        ///     Resets the amount of frogs in homes.
+        ///     Preconditon: None.
+        ///     Postcondition: this.AmountOfFrogsInHome = 0
+        /// </summary>
+        public void ResetFrogsInHomes()
+        {
+            this.AmountOfFrogsInHome = 0;
+        }
+
+        /// <summary>
+        ///     Increments the time remaining.
+        ///     Precondition: None
+        ///     Postcondition: this.TimeRemaining += 5
         /// </summary>
         public void TimerPowerUp()
         {

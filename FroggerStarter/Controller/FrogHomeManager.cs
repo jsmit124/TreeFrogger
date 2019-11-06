@@ -63,6 +63,12 @@ namespace FroggerStarter.Controller
             return this.homeFrogs.GetEnumerator();
         }
 
+        /// <summary>Makes the home frogs collapsed.</summary>
+        public void makeHomeFrogsCollapsed()
+        {
+            this.homeFrogs.ToList().ForEach(homeFrog => homeFrog.Sprite.Visibility = Visibility.Collapsed);
+        }
+
         private void createHomeFrogs()
         {
             var count = 0;
@@ -77,11 +83,6 @@ namespace FroggerStarter.Controller
 
                 count++;
             }
-        }
-
-        private void makeHomeFrogsCollapsed()
-        {
-            this.homeFrogs.ToList().ForEach(homeFrog => homeFrog.Sprite.Visibility = Visibility.Collapsed);
         }
 
         #endregion

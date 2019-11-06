@@ -1,4 +1,6 @@
-﻿namespace FroggerStarter.Constants
+﻿using Windows.UI.Xaml;
+
+namespace FroggerStarter.Constants
 {
     /// <summary>
     ///     Stores information for the lane settings
@@ -6,6 +8,11 @@
     public static class LaneSettings
     {
         #region Data members
+
+        /// <summary>
+        ///     The top lane y location
+        /// </summary>
+        public static double TopLaneYLocation = (double)Application.Current.Resources["HighRoadYLocation"];
 
         /// <summary>
         ///     The bottom lane offset

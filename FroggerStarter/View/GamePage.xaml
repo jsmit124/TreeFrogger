@@ -20,10 +20,12 @@
         <TextBlock Canvas.Left="257" Text="Frogger" TextWrapping="Wrap" Height="47" Width="142" FontSize="40"
                    RenderTransformOrigin="0.544,0.383" FontFamily="Bauhaus 93" FocusVisualPrimaryBrush="Lime"
                    Foreground="Lime" Canvas.Top="10" />
-        <TextBlock x:Name="livesTextBlock" Canvas.Left="425" Canvas.Top="8" Text="Lives: 4" TextWrapping="Wrap"
+        <TextBlock x:Name="livesTextBlock" Canvas.Left="404" Canvas.Top="8" Text="Lives: 4" TextWrapping="Wrap"
                    Height="38" Width="95" FontSize="26" FontWeight="Bold" Foreground="White" />
-        <TextBlock x:Name="scoreTextBlock" Canvas.Left="533" Canvas.Top="8" Text="Score: 0" TextWrapping="Wrap"
-                   Height="36" Width="113" FontSize="26" FontWeight="Bold" Foreground="White" />
+        <TextBlock x:Name="scoreTextBlock" Canvas.Left="512" Canvas.Top="8" Text="Score: 0" TextWrapping="Wrap"
+                   Height="36" Width="156" FontSize="26" FontWeight="Bold" Foreground="White" />
+        <TextBlock x:Name="levelTextBlock" Canvas.Left="150" Canvas.Top="8" Text="Level: 1" TextWrapping="Wrap" 
+                   Height="36" Width="96" FontSize="26" FontWeight="Bold" Foreground="White" />
         <Rectangle Canvas.Top="52" Fill="Silver" Width="{StaticResource AppWidth}" Height="3" />
         <Rectangle Canvas.Top="55" Canvas.Left="0" Fill="Black" Width="50" Height="50" />
         <Rectangle Canvas.Top="55" Canvas.Left="150" Fill="Black" Width="50" Height="50" />

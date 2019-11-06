@@ -21,6 +21,7 @@ namespace FroggerStarter.Model
 
         private readonly LaneDirection laneDirection;
         private readonly IList<Vehicle> vehicles;
+        private int maxCarsInLane;
 
         #endregion
 
@@ -75,6 +76,7 @@ namespace FroggerStarter.Model
             this.YLocation = yLocation;
 
             this.populateLane(vehicleType, defaultSpeed, laneDirection);
+            this.setMaxCarsInLane();
         }
 
         #endregion
@@ -138,7 +140,11 @@ namespace FroggerStarter.Model
             }
         }
 
-        /// <summary>Hide all the vehicles except the first vehicle.</summary>
+        /// <summary>
+        ///     Hide all the vehicles except the first vehicle.
+        ///     Precondition: None.
+        ///     Postcondition: Collapses all sprites except first index
+        /// </summary>
         public void OnlyShowFirstVehicle()
         {
             foreach (var vehicle in this.vehicles)
@@ -149,12 +155,40 @@ namespace FroggerStarter.Model
             this.vehicles[0].Sprite.Visibility = Visibility.Visible;
         }
 
-        /// <summary>Shows another vehicle.</summary>
+        /// <summary>
+        ///     Shows another vehicle.
+        ///     Precondition: None.
+        ///     Postcondition: Makes next index visible
+        /// </summary>
         public async void ShowAnotherVehicle()
         {
-            for (var index = 0; index < this.vehicles.Count; index++)
+            for (var index = 0; index < this.maxCarsInLane; index++)
             {
                 await this.showVehicle(index);
+            }
+        }
+
+        /// <summary>
+        ///     Increments the maximum cars per lane.
+        ///     Precondition: None.
+        ///     Postcondition: this.maxCarsInLane == this.maxCarsInLane + 1
+        /// </summary>
+        public void IncrementMaxCarsPerLane()
+        {
+            this.maxCarsInLane += 1;
+        }
+
+        /// <summary>
+        ///     Increases the vehicle speeds.
+        ///     Precondition: None
+        ///     Postcondition: All vehicle speeds increased by <see param="speed" />
+        /// </summary>
+        /// <param name="speed">The speed.</param>
+        public void IncreaseVehicleSpeeds(double speed)
+        {
+            foreach (var vehicle in this.vehicles)
+            {
+                vehicle.IncreaseSpeed(speed);
             }
         }
 
@@ -178,6 +212,11 @@ namespace FroggerStarter.Model
         private void makeNextVehicleVisible(int index)
         {
             this.vehicles[index + 1].Sprite.Visibility = Visibility.Visible;
+        }
+
+        private void setMaxCarsInLane()
+        {
+            this.maxCarsInLane = this.vehicles.Count - 3;
         }
 
         private bool nextVehicleIsReadyToBeVisible(int i)
