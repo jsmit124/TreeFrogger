@@ -152,6 +152,12 @@
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sprites\RiverLogs\ShortLogSprite.xaml.cs">
+      <DependentUpon>ShortLogSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\RiverLogs\LongLogSprite.xaml.cs">
+      <DependentUpon>LongLogSprite.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sprites\TimerPowerUpSprite.xaml.cs">
       <DependentUpon>TimerPowerUpSprite.xaml</DependentUpon>
     </Compile>
@@ -212,6 +218,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Sprites\BaseSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\RiverLogs\ShortLogSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\RiverLogs\LongLogSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
