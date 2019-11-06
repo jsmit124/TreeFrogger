@@ -11,7 +11,7 @@ namespace FroggerStarter.Model.Vehicles
         /// <summary>Initializes a new instance of the <see cref="PoliceCar" /> class.</summary>
         /// <param name="defaultSpeed">The default speed.</param>
         /// <param name="direction">The direction.</param>
-        public PoliceCar(double defaultSpeed, LaneDirection direction) : base(defaultSpeed, direction)
+        public PoliceCar(double defaultSpeed, Direction direction) : base(defaultSpeed, direction)
         {
             Sprite = new CarSprite();
         }

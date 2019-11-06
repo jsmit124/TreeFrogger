@@ -270,12 +270,12 @@ namespace FroggerStarter.Controller
             if (!this.roundOneOver)
             {
                 this.roundOneOver = true;
-                this.enableNextLevel();
+                this.enableNextLevel(.5);
             }
             else if (!this.roundTwoOver)
             {
                 this.roundTwoOver = true;
-                this.enableNextLevel();
+                this.enableNextLevel(1);
             }
             else if (!this.roundThreeOver)
             {
@@ -462,11 +462,11 @@ namespace FroggerStarter.Controller
             this.timeRemainingTimer.Start();
         }
 
-        private void enableNextLevel()
+        private void enableNextLevel(double speed)
         {
             this.homeManager.makeHomeFrogsCollapsed();
             this.playerManager.ResetFrogsInHome();
-            this.laneManager.IncreaseAllVehicleSpeed(.4);
+            this.laneManager.IncreaseAllVehicleSpeed(speed);
             this.laneManager.IncrementMaxAmountOfVehiclesPerLane();
         }
 
