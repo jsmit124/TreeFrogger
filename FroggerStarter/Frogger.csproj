@@ -127,6 +127,7 @@
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\TimerPowerUpManager.cs" />
     <Compile Include="Enums\Direction.cs" />
+    <Compile Include="Enums\SoundEffectType.cs" />
     <Compile Include="Enums\VehicleType.cs" />
     <Compile Include="Factory\DeathAnimationFactory.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
