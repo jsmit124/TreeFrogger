@@ -6,6 +6,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using FroggerStarter.Constants;
 using FroggerStarter.Controller;
 using static FroggerStarter.Controller.GameManager;
 
@@ -139,6 +140,16 @@ namespace FroggerStarter.View
             this.gameManager.GameOver += this.onGameOver;
             this.gameManager.TimeRemainingCount += this.onTimeRemainingUpdate;
             this.gameManager.LevelIncreased += this.onLevelUpdated;
+
+            this.resetTextBlocks();
+        }
+
+        private void resetTextBlocks()
+        {
+            this.scoreTextBlock.Text = "Score: 0";
+            this.livesTextBlock.Text = "Lives: " + GameSettings.PlayerLives;
+            this.levelTextBlock.Text = "Level: 1";
+            this.timeRemainingTextBlock.Text = "Time: " + GameSettings.TimeRemainingAtStart;
         }
 
         #endregion
