@@ -5,7 +5,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
-using FroggerStarter.Model;
+using FroggerStarter.Model.Lanes;
 using FroggerStarter.Model.Vehicles;
 
 namespace FroggerStarter.Controller
@@ -17,7 +17,7 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
-        private readonly IList<Lane> lanes;
+        private readonly IList<RoadLane> lanes;
         private readonly double topLaneYLocation;
 
         private DispatcherTimer timer;
@@ -32,7 +32,7 @@ namespace FroggerStarter.Controller
         /// <param name="topLaneYLocation">The top lane y location.</param>
         public LaneManager(double topLaneYLocation)
         {
-            this.lanes = new List<Lane>();
+            this.lanes = new List<RoadLane>();
             this.topLaneYLocation = topLaneYLocation;
             this.createLanes();
             this.setVehicleLocations();
@@ -71,13 +71,13 @@ namespace FroggerStarter.Controller
 
         private void createLanes()
         {
-            this.lanes.Add(new Lane(Direction.Right, VehicleType.PoliceCar, 5, 3.5,
+            this.lanes.Add(new RoadLane(Direction.Right, VehicleType.PoliceCar, 5, 3.5,
                 this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(Direction.Left, VehicleType.Bus, 3, 2.5, this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(Direction.Left, VehicleType.SpeedCar, 3, 5,
+            this.lanes.Add(new RoadLane(Direction.Left, VehicleType.Bus, 3, 2.5, this.calculateNextLaneYLocation()));
+            this.lanes.Add(new RoadLane(Direction.Left, VehicleType.SpeedCar, 3, 5,
                 this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(Direction.Right, VehicleType.Bus, 3, 1.5, this.calculateNextLaneYLocation()));
-            this.lanes.Add(new Lane(Direction.Left, VehicleType.PoliceCar, 4, 1,
+            this.lanes.Add(new RoadLane(Direction.Right, VehicleType.Bus, 3, 1.5, this.calculateNextLaneYLocation()));
+            this.lanes.Add(new RoadLane(Direction.Left, VehicleType.PoliceCar, 4, 1,
                 this.calculateNextLaneYLocation()));
         }
 
@@ -148,7 +148,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.lanes)
             {
-                lane.IncrementMaxCarsPerLane();
+                lane.UpdateMaxCarsPerLane();
             }
         }
 
@@ -164,7 +164,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.lanes)
             {
-                lane.ShowAnotherVehicle();
+                lane.HideAnotherLog();
             }
         }
 

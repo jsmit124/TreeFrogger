@@ -2,26 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Factory;
 using FroggerStarter.Model.Vehicles;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.Lanes
 {
     /// <summary>
     ///     Stores basic information for the Lane class
     /// </summary>
     /// <seealso cref="Vehicle" />
-    public class Lane : IEnumerable<Vehicle>
+    public abstract class Lane : IEnumerable<Vehicle>
     {
         #region Data members
 
-        private readonly Direction laneDirection;
-        private readonly IList<Vehicle> vehicles;
-        private int maxCarsInLane;
+        /// <summary>The lane direction</summary>
+        protected readonly Direction LaneDirection;
+
+        /// <summary>The vehicles</summary>
+        protected readonly IList<Vehicle> Vehicles;
 
         #endregion
 
@@ -57,7 +57,7 @@ namespace FroggerStarter.Model
         /// <param name="yLocation">The y location.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// </exception>
-        public Lane(Direction laneDirection, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
+        protected Lane(Direction laneDirection, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
             double yLocation)
         {
             if (numberOfVehicles <= 0)
@@ -70,13 +70,12 @@ namespace FroggerStarter.Model
                 throw new ArgumentOutOfRangeException();
             }
 
-            this.vehicles = new List<Vehicle>();
+            this.Vehicles = new List<Vehicle>();
             this.NumberOfVehicles = numberOfVehicles;
-            this.laneDirection = laneDirection;
+            this.LaneDirection = laneDirection;
             this.YLocation = yLocation;
 
             this.populateLane(vehicleType, defaultSpeed, laneDirection);
-            this.setMaxCarsInLane();
         }
 
         #endregion
@@ -93,7 +92,7 @@ namespace FroggerStarter.Model
         /// </returns>
         public IEnumerator<Vehicle> GetEnumerator()
         {
-            return this.vehicles.GetEnumerator();
+            return this.Vehicles.GetEnumerator();
         }
 
         /// <summary>
@@ -106,10 +105,14 @@ namespace FroggerStarter.Model
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.vehicles.GetEnumerator();
+            return this.Vehicles.GetEnumerator();
         }
 
-        private void populateLane(VehicleType vehicleType, double defaultSpeed, Direction direction)
+        /// <summary>Populates the lane.</summary>
+        /// <param name="vehicleType">Type of the vehicle.</param>
+        /// <param name="defaultSpeed">The default speed.</param>
+        /// <param name="direction">The direction.</param>
+        protected void populateLane(VehicleType vehicleType, double defaultSpeed, Direction direction)
         {
             var nextVehicleX = 0;
             for (var i = 0; i < this.NumberOfVehicles; i++)
@@ -117,12 +120,12 @@ namespace FroggerStarter.Model
                 var vehicleToAdd = VehicleFactory.BuildVehicleSprite(vehicleType, direction, defaultSpeed);
                 vehicleToAdd.X = nextVehicleX;
                 nextVehicleX += (int) LaneSettings.LaneLength / this.NumberOfVehicles;
-                if (this.laneDirection == Direction.Right)
+                if (this.LaneDirection == Direction.Right)
                 {
                     vehicleToAdd.FlipSpriteHorizontal();
                 }
 
-                this.vehicles.Add(vehicleToAdd);
+                this.Vehicles.Add(vehicleToAdd);
             }
         }
 
@@ -133,7 +136,7 @@ namespace FroggerStarter.Model
         /// </summary>
         public void MoveVehiclesForward()
         {
-            var movingVehicles = (from vehicle in this.vehicles select vehicle).ToList();
+            var movingVehicles = (from vehicle in this.Vehicles select vehicle).ToList();
             foreach (var vehicle in movingVehicles)
             {
                 vehicle.MoveForward();
@@ -141,42 +144,9 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        ///     Hide all the vehicles except the first vehicle.
-        ///     Precondition: None.
-        ///     Postcondition: Collapses all sprites except first index
+        ///     Updates the maximum cars per lane.
         /// </summary>
-        public void OnlyShowFirstVehicle()
-        {
-            foreach (var vehicle in this.vehicles)
-            {
-                vehicle.Sprite.Visibility = Visibility.Collapsed;
-            }
-
-            this.vehicles[0].Sprite.Visibility = Visibility.Visible;
-        }
-
-        /// <summary>
-        ///     Shows another vehicle.
-        ///     Precondition: None.
-        ///     Postcondition: Makes next index visible
-        /// </summary>
-        public async void ShowAnotherVehicle()
-        {
-            for (var index = 0; index < this.maxCarsInLane; index++)
-            {
-                await this.showVehicle(index);
-            }
-        }
-
-        /// <summary>
-        ///     Increments the maximum cars per lane.
-        ///     Precondition: None.
-        ///     Postcondition: this.maxCarsInLane == this.maxCarsInLane + 1
-        /// </summary>
-        public void IncrementMaxCarsPerLane()
-        {
-            this.maxCarsInLane += 1;
-        }
+        public abstract void UpdateMaxCarsPerLane();
 
         /// <summary>
         ///     Increases the vehicle speeds.
@@ -186,54 +156,10 @@ namespace FroggerStarter.Model
         /// <param name="speed">The speed.</param>
         public void IncreaseVehicleSpeeds(double speed)
         {
-            foreach (var vehicle in this.vehicles)
+            foreach (var vehicle in this.Vehicles)
             {
                 vehicle.IncreaseSpeed(speed);
             }
-        }
-
-        private async Task showVehicle(int index)
-        {
-            if (this.nextVehicleIsReadyToBeVisible(index))
-            {
-                if (this.vehicleCrossedLeftBoundary(index))
-                {
-                    this.makeNextVehicleVisible(index);
-                    await Task.Delay(850);
-                }
-                else if (this.vehicleCrossedRightBoundary(index))
-                {
-                    this.makeNextVehicleVisible(index);
-                    await Task.Delay(850);
-                }
-            }
-        }
-
-        private void makeNextVehicleVisible(int index)
-        {
-            this.vehicles[index + 1].Sprite.Visibility = Visibility.Visible;
-        }
-
-        private void setMaxCarsInLane()
-        {
-            this.maxCarsInLane = this.vehicles.Count - 3;
-        }
-
-        private bool nextVehicleIsReadyToBeVisible(int i)
-        {
-            return this.vehicles[i].Sprite.Visibility == Visibility.Visible && i + 1 != this.vehicles.Count;
-        }
-
-        private bool vehicleCrossedLeftBoundary(int i)
-        {
-            return this.vehicles[i + 1].Direction == Direction.Left &&
-                   Math.Abs(this.vehicles[i + 1].X - (0.0 - this.vehicles[i + 1].Width)) <= 0;
-        }
-
-        private bool vehicleCrossedRightBoundary(int i)
-        {
-            return this.vehicles[i + 1].Direction == Direction.Right &&
-                   this.vehicles[i + 1].X >= LaneSettings.LaneLength;
         }
 
         #endregion

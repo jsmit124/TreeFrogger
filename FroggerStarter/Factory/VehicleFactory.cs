@@ -36,6 +36,10 @@ namespace FroggerStarter.Factory
                     return new Bus(speed, direction);
                 case VehicleType.SpeedCar:
                     return new SpeedCar(speed, direction);
+                case VehicleType.LongLog:
+                    return new LongLog(speed, direction);
+                case VehicleType.ShortLog:
+                    return new ShortLog(speed, direction);
                 default:
                     throw new NotImplementedException();
             }

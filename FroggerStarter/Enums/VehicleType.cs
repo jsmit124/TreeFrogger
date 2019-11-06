@@ -16,8 +16,18 @@
         PoliceCar,
 
         /// <summary>
-        /// The speed car enum
+        ///     The speed car enum
         /// </summary>
-        SpeedCar
+        SpeedCar,
+
+        /// <summary>
+        ///     The short log
+        /// </summary>
+        ShortLog,
+
+        /// <summary>
+        ///     The long log
+        /// </summary>
+        LongLog
     }
 }
