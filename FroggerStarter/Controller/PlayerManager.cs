@@ -87,6 +87,17 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
+        ///     Sets the player to center of bottom lane.
+        /// </summary>
+        public void SetPlayerToCenterOfBottomLane()
+        {
+            this.player.X = (double)Application.Current.Resources["AppWidth"] / 2 - this.player.Sprite.Width / 2;
+            this.player.Y =
+                (double)Application.Current.Resources["AppHeight"] - this.player.Sprite.Height -
+                LaneSettings.BottomLaneOffset;
+        }
+
+        /// <summary>
         /// Decrements the time remaining.
         /// </summary>
         public void DecrementTimeRemaining()
