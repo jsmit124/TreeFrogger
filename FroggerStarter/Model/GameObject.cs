@@ -1,4 +1,7 @@
 ﻿using System;
+using Windows.Foundation;
+using Windows.UI.Xaml.Media;
+using FroggerStarter.Enums;
 
 namespace FroggerStarter.Model
 {
@@ -110,6 +113,34 @@ namespace FroggerStarter.Model
         public virtual void StopMovement()
         {
             this.SetSpeed(0, 0);
+        }
+
+        /// <summary>
+        /// Rotates the sprite.
+        /// @Precondition: None
+        /// @Postcondition: Sprite is rotated
+        /// </summary>
+        public void RotateSprite(Direction direction)
+        {
+            this.Sprite.RenderTransformOrigin = new Point(0.5, 0.5);
+                
+            switch (direction)
+            {
+                case Direction.Down:
+                    this.Sprite.RenderTransform = new CompositeTransform { Rotation = 180 };
+                    break;
+                case Direction.Up:
+                    this.Sprite.RenderTransform = new CompositeTransform { Rotation = 0 };
+                    break;
+                case Direction.Left:
+                    this.Sprite.RenderTransform = new CompositeTransform { Rotation = 270 };
+                    break;
+                case Direction.Right:
+                    this.Sprite.RenderTransform = new CompositeTransform { Rotation = 90 };
+                    break;
+            }
+            
+            
         }
 
         #endregion

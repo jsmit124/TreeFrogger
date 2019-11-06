@@ -3,7 +3,7 @@
     /// <summary>
     ///     Stores enumerators for the LaneDirection enumerator
     /// </summary>
-    public enum LaneDirection
+    public enum Direction
     {
         /// <summary>
         ///     The left direction
@@ -13,6 +13,16 @@
         /// <summary>
         ///     The right direction
         /// </summary>
-        Right
+        Right,
+
+        /// <summary>
+        ///   the up direction
+        /// </summary>
+        Up,
+
+        /// <summary>
+        ///  The down direction
+        /// </summary>
+        Down
     }
 }

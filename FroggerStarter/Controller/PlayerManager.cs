@@ -1,4 +1,5 @@
 using System;
+using FroggerStarter.Enums;
 using FroggerStarter.Model;
 using FroggerStarter.View.Sprites;
 
@@ -140,6 +141,7 @@ namespace FroggerStarter.Controller
         /// <param name="boundary">The boundary.</param>
         public void MovePlayerRight(double boundary)
         {
+            this.player.RotateSprite(Direction.Right);
             this.player.MoveRightWithBoundaryCheck(boundary);
         }
 
@@ -150,6 +152,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp(double boundary)
         {
+            this.player.RotateSprite(Direction.Up);
             this.player.MoveUpWithBoundaryCheck(boundary);
         }
 
@@ -160,6 +163,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown(double boundary)
         {
+            this.player.RotateSprite(Direction.Down);
             this.player.MoveDownWithBoundaryCheck((int)Math.Floor(boundary));
         }
 
@@ -170,6 +174,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft(double boundary)
         {
+            this.player.RotateSprite(Direction.Left);
             this.player.MoveLeftWithBoundaryCheck(boundary);
         }
 

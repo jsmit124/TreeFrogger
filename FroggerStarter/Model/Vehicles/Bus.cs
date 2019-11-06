@@ -12,7 +12,7 @@ namespace FroggerStarter.Model.Vehicles
         /// <summary>Initializes a new instance of the <see cref="Bus" /> class.</summary>
         /// <param name="defaultSpeed">The default speed.</param>
         /// <param name="direction">The direction.</param>
-        public Bus(double defaultSpeed, LaneDirection direction) : base(defaultSpeed, direction)
+        public Bus(double defaultSpeed, Direction direction) : base(defaultSpeed, direction)
         {
             Sprite = new BusSprite();
         }

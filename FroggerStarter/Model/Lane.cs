@@ -19,7 +19,7 @@ namespace FroggerStarter.Model
     {
         #region Data members
 
-        private readonly LaneDirection laneDirection;
+        private readonly Direction laneDirection;
         private readonly IList<Vehicle> vehicles;
 
         #endregion
@@ -56,7 +56,7 @@ namespace FroggerStarter.Model
         /// <param name="yLocation">The y location.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// </exception>
-        public Lane(LaneDirection laneDirection, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
+        public Lane(Direction laneDirection, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
             double yLocation)
         {
             if (numberOfVehicles <= 0)
@@ -107,7 +107,7 @@ namespace FroggerStarter.Model
             return this.vehicles.GetEnumerator();
         }
 
-        private void populateLane(VehicleType vehicleType, double defaultSpeed, LaneDirection direction)
+        private void populateLane(VehicleType vehicleType, double defaultSpeed, Direction direction)
         {
             var nextVehicleX = 0;
             for (var i = 0; i < this.NumberOfVehicles; i++)
@@ -115,7 +115,7 @@ namespace FroggerStarter.Model
                 var vehicleToAdd = VehicleFactory.BuildVehicleSprite(vehicleType, direction, defaultSpeed);
                 vehicleToAdd.X = nextVehicleX;
                 nextVehicleX += (int) LaneSettings.LaneLength / this.NumberOfVehicles;
-                if (this.laneDirection == LaneDirection.Right)
+                if (this.laneDirection == Direction.Right)
                 {
                     vehicleToAdd.FlipSpriteHorizontal();
                 }
@@ -187,13 +187,13 @@ namespace FroggerStarter.Model
 
         private bool vehicleCrossedLeftBoundary(int i)
         {
-            return this.vehicles[i + 1].Direction == LaneDirection.Left &&
+            return this.vehicles[i + 1].Direction == Direction.Left &&
                    Math.Abs(this.vehicles[i + 1].X - (0.0 - this.vehicles[i + 1].Width)) <= 0;
         }
 
         private bool vehicleCrossedRightBoundary(int i)
         {
-            return this.vehicles[i + 1].Direction == LaneDirection.Right &&
+            return this.vehicles[i + 1].Direction == Direction.Right &&
                    this.vehicles[i + 1].X >= LaneSettings.LaneLength;
         }
 

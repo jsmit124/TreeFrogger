@@ -126,7 +126,7 @@
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\TimerPowerUpManager.cs" />
-    <Compile Include="Enums\LaneDirection.cs" />
+    <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\VehicleType.cs" />
     <Compile Include="Factory\DeathAnimationFactory.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />

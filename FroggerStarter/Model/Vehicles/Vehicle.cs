@@ -14,7 +14,7 @@ namespace FroggerStarter.Model.Vehicles
 
         /// <summary>Gets the direction.</summary>
         /// <value>The direction.</value>
-        public LaneDirection Direction { get; set; }
+        public Direction Direction { get; set; }
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace FroggerStarter.Model.Vehicles
         /// <param name="defaultSpeed">The default speed.</param>
         /// <param name="direction">The direction.</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        protected Vehicle(double defaultSpeed, LaneDirection direction)
+        protected Vehicle(double defaultSpeed, Direction direction)
         {
             if (defaultSpeed < 0)
             {
@@ -78,10 +78,10 @@ namespace FroggerStarter.Model.Vehicles
         {
             switch (this.Direction)
             {
-                case LaneDirection.Left:
+                case Direction.Left:
                     this.MoveLeft();
                     break;
-                case LaneDirection.Right:
+                case Direction.Right:
                     this.MoveRight();
                     break;
                 default:
