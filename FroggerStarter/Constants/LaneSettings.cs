@@ -9,10 +9,11 @@ namespace FroggerStarter.Constants
     {
         #region Data members
 
-        /// <summary>
-        ///     The top lane y location
-        /// </summary>
+        /// <summary>The top lane y location</summary>
         public static double TopLaneYLocation = (double)Application.Current.Resources["HighRoadYLocation"];
+
+        /// <summary>The middle safe lane location</summary>
+        public static double MiddleSafeLaneLocation = 355;
 
         /// <summary>
         ///     The bottom lane offset

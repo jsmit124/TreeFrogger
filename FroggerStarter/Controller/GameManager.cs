@@ -22,7 +22,6 @@ namespace FroggerStarter.Controller
         private bool roundTwoOver;
         private bool roundThreeOver;
         private bool gameIsOver;
-        private readonly double topLaneYLocation = (double) Application.Current.Resources["HighRoadYLocation"];
 
         private Canvas gameCanvas;
 
@@ -64,7 +63,7 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
 
-            this.laneManager = new LaneManager(LaneSettings.TopLaneYLocation);
+            this.laneManager = new LaneManager(LaneSettings.MiddleSafeLaneLocation);
             this.homeManager = new FrogHomeManager(LaneSettings.TopLaneYLocation);
             this.deathAnimationManager = new DeathAnimationManager();
             this.powerUpManager = new TimerPowerUpManager();
@@ -124,7 +123,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            this.playerManager.MovePlayerUp(this.topLaneYLocation);
+            this.playerManager.MovePlayerUp(LaneSettings.TopLaneYLocation);
         }
 
         /// <summary>
@@ -241,7 +240,7 @@ namespace FroggerStarter.Controller
 
         private void checkForPlayerHitTopWall()
         {
-            if (this.playerManager.Y <= this.topLaneYLocation)
+            if (this.playerManager.Y <= LaneSettings.TopLaneYLocation)
             {
                 this.handleLifeLost();
             }

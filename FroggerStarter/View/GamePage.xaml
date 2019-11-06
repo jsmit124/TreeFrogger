@@ -6,17 +6,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Height="410"
+    Height="705"
     Width="650">
 
-    <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}" Background="Black">
+    <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="Auto" Background="Black" Margin="0,-5,0,0">
         <TextBlock x:Name="gameOverTextBlock" Canvas.ZIndex="100" Text="GAME OVER" Foreground="White"
                    LineStackingStrategy="MaxHeight"
                    TextWrapping="Wrap" Canvas.Left="161" Canvas.Top="165" Height="87" Width="372" FontSize="60"
                    RenderTransformOrigin="0.492,0.483" Visibility="Collapsed" />
         <Rectangle Canvas.Top="55" Fill="Silver" Width="{StaticResource AppWidth}" Height="50" />
 
-        <Rectangle Canvas.Top="355" Fill="Silver" Width="{StaticResource AppWidth}" Height="55" />
+        <Rectangle Canvas.Top="655" Fill="Silver" Width="{StaticResource AppWidth}" Height="55" />
         <TextBlock Canvas.Left="257" Text="Frogger" TextWrapping="Wrap" Height="47" Width="142" FontSize="40"
                    RenderTransformOrigin="0.544,0.383" FontFamily="Bauhaus 93" FocusVisualPrimaryBrush="Lime"
                    Foreground="Lime" Canvas.Top="10" />
@@ -37,5 +37,7 @@
         <TextBlock Canvas.Left="278" Text="Tree" TextWrapping="Wrap" Height="33" Width="49" FontSize="24"
                    RenderTransformOrigin="0.544,0.383" FontFamily="Bauhaus 93" FocusVisualPrimaryBrush="Lime"
                    Foreground="Lime" Canvas.Top="4" />
+        <Rectangle Canvas.Top="355" Fill="Silver" Width="{StaticResource AppWidth}" Height="50" />
+        <Rectangle Canvas.Top="105" Fill="MidnightBlue" Width="{StaticResource AppWidth}" Height="250" />
     </Canvas>
 </Page>

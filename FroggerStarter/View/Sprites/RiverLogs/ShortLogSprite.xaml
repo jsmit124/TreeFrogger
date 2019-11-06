@@ -14,7 +14,7 @@
         <SolidColorBrush x:Key="LogColor" Color="SandyBrown" />
         <SolidColorBrush x:Key="LogSecondaryColor" Color="SaddleBrown" />
         <SolidColorBrush x:Key="LogHighlight" Color="White" />
-        <SolidColorBrush x:Key="WaterColor" Color="Blue" />
+        <SolidColorBrush x:Key="WaterColor" Color="MidnightBlue" />
     </UserControl.Resources>
 
     <Canvas Height="50" Background="Transparent">

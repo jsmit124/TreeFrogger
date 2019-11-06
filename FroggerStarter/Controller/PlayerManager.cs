@@ -1,6 +1,5 @@
 using System;
 using Windows.UI.Xaml;
-using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Model;
 using FroggerStarter.View.Sprites;
@@ -85,7 +84,7 @@ namespace FroggerStarter.Controller
         /// <value>
         /// The level.
         /// </value>
-        public int Level { get; set; }
+        public int Level => this.playerStats.Level;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="PlayerManager" /> class.
@@ -102,9 +101,7 @@ namespace FroggerStarter.Controller
         public void SetPlayerToCenterOfBottomLane()
         {
             this.player.X = (double)Application.Current.Resources["AppWidth"] / 2 - this.player.Sprite.Width / 2;
-            this.player.Y =
-                (double)Application.Current.Resources["AppHeight"] - this.player.Sprite.Height -
-                LaneSettings.BottomLaneOffset;
+            this.player.Y = (double) Application.Current.Resources["PlayerStartYLocation"];
         }
 
         /// <summary>
