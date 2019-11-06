@@ -96,8 +96,23 @@ namespace FroggerStarter.Controller
                 var maxX = (int) (LaneSettings.LaneLength - powerUp.Width);
                 powerUp.X = random.Next(MinPositionX, maxX);
                 powerUp.Y = random.Next(MinPositionY, MaxPositionY);
+                this.checkCollisionWithTimerPowerUp(powerUp);
                 powerUp.Sprite.Visibility = Visibility.Collapsed;
                 this.timerPowerUps.Add(powerUp);
+            }
+        }
+
+        private void checkCollisionWithTimerPowerUp(TimerPowerUp powerUp)
+        {
+            var random = new Random();
+            foreach (var timerPowerUp in this.timerPowerUps)
+            {
+                while (timerPowerUp.CollisionDetected(powerUp))
+                {
+                    var maxX = (int) (LaneSettings.LaneLength - timerPowerUp.Width);
+                    timerPowerUp.X = random.Next(MinPositionX, maxX);
+                    timerPowerUp.Y = random.Next(MinPositionY, MaxPositionY);
+                }
             }
         }
 
