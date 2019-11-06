@@ -1,4 +1,6 @@
 using System;
+using Windows.UI.Xaml;
+using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Model;
 using FroggerStarter.View.Sprites;
@@ -78,6 +80,14 @@ namespace FroggerStarter.Controller
         public int AmountOfFrogsInHome => this.playerStats.AmountOfFrogsInHome;
 
         /// <summary>
+        /// Gets or sets the level.
+        /// </summary>
+        /// <value>
+        /// The level.
+        /// </value>
+        public int Level { get; set; }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="PlayerManager" /> class.
         /// </summary>
         public PlayerManager()
@@ -119,6 +129,14 @@ namespace FroggerStarter.Controller
         public void IncrementFrogsInHomes()
         {
             this.playerStats.IncrementFrogsInHomes();
+        }
+
+        /// <summary>
+        /// Increments the level.
+        /// </summary>
+        public void IncrementLevel()
+        {
+            this.playerStats.IncrementLevel();
         }
 
         /// <summary>
@@ -215,5 +233,12 @@ namespace FroggerStarter.Controller
             this.player.StopMovement();
         }
 
+        /// <summary>
+        /// Resets the frogs in home.
+        /// </summary>
+        public void ResetFrogsInHome()
+        {
+            this.playerStats.ResetFrogsInHomes();
+        }
     }
 }
