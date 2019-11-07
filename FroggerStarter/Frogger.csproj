@@ -126,12 +126,14 @@
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\PowerUpManager.cs" />
+    <Compile Include="Controller\SoundEffectManager.cs" />
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="Enums\SoundEffectType.cs" />
     <Compile Include="Enums\VehicleType.cs" />
     <Compile Include="Factory\DeathAnimationFactory.cs" />
     <Compile Include="Factory\PowerUpFactory.cs" />
+    <Compile Include="Factory\SoundEffectFactory.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Model\BaseObject.cs" />
     <Compile Include="Model\Lanes\RiverLane.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Model\PowerUps\ImmunityPowerUp.cs" />
     <Compile Include="Model\PowerUps\PowerUp.cs" />
     <Compile Include="Model\PowerUps\TimerPowerUp.cs" />
+    <Compile Include="Model\SoundEffect.cs" />
     <Compile Include="Model\Vehicles\Bus.cs" />
     <Compile Include="Model\DeathAnimation.cs" />
     <Compile Include="Model\Frog.cs" />
@@ -211,6 +214,11 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\SoundEffects\Dying.wav" />
+    <Content Include="Assets\SoundEffects\GameOver.wav" />
+    <Content Include="Assets\SoundEffects\LevelComplete.wav" />
+    <Content Include="Assets\SoundEffects\MadeItHome.wav" />
+    <Content Include="Assets\SoundEffects\PowerUpActivated.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

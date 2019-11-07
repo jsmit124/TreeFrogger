@@ -301,6 +301,11 @@ namespace FroggerStarter.Controller
             this.timeRemainingTimer.Stop();
             this.handleStartDeathAnimation();
 
+            //TODO remove - this is for testing sound effects
+            //Michael, if you see this, just remove it if you need to
+            //var sound = new SoundEffect(SoundEffectType.Death);
+            //sound.Play();
+
             if (!this.checkForGameOver())
             {
                 this.setPlayerToCenterOfBottomLane();
