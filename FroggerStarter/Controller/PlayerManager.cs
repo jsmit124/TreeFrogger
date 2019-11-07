@@ -1,5 +1,6 @@
 using System;
 using Windows.UI.Xaml;
+using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Model;
 using FroggerStarter.View.Sprites;
@@ -11,26 +12,32 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class PlayerManager
     {
+        #region Data members
+
         private readonly PlayerStatistics playerStats;
         private readonly Frog player;
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
-        /// Gets the y.
+        ///     Gets the y.
         /// </summary>
         /// <value>
-        /// The y.
+        ///     The y.
         /// </value>
         public double Y
         {
             get => this.player.Y;
-            set => this.player.Y = value; 
+            set => this.player.Y = value;
         }
 
         /// <summary>
-        /// Gets the x.
+        ///     Gets the x.
         /// </summary>
         /// <value>
-        /// The x.
+        ///     The x.
         /// </value>
         public double X
         {
@@ -39,52 +46,56 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Gets the sprite.
+        ///     Gets the sprite.
         /// </summary>
         /// <value>
-        /// The sprite.
+        ///     The sprite.
         /// </value>
         public BaseSprite Sprite => this.player.Sprite;
 
         /// <summary>
-        /// Gets the score.
+        ///     Gets the score.
         /// </summary>
         /// <value>
-        /// The score.
+        ///     The score.
         /// </value>
         public int Score => this.playerStats.Score;
 
         /// <summary>
-        /// Gets the time remaining.
+        ///     Gets the time remaining.
         /// </summary>
         /// <value>
-        /// The time remaining.
+        ///     The time remaining.
         /// </value>
         public int TimeRemaining => this.playerStats.TimeRemaining;
 
         /// <summary>
-        /// Gets the lives.
+        ///     Gets the lives.
         /// </summary>
         /// <value>
-        /// The lives.
+        ///     The lives.
         /// </value>
         public int Lives => this.playerStats.Lives;
 
         /// <summary>
-        /// Gets the amount of frogs in homes.
+        ///     Gets the amount of frogs in homes.
         /// </summary>
         /// <value>
-        /// The amount of frogs in homes.
+        ///     The amount of frogs in homes.
         /// </value>
         public int AmountOfFrogsInHome => this.playerStats.AmountOfFrogsInHome;
 
         /// <summary>
-        /// Gets or sets the level.
+        ///     Gets or sets the level.
         /// </summary>
         /// <value>
-        /// The level.
+        ///     The level.
         /// </value>
         public int Level => this.playerStats.Level;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="PlayerManager" /> class.
@@ -95,17 +106,21 @@ namespace FroggerStarter.Controller
             this.player = new Frog();
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         ///     Sets the player to center of bottom lane.
         /// </summary>
         public void SetPlayerToCenterOfBottomLane()
         {
-            this.player.X = (double)Application.Current.Resources["AppWidth"] / 2 - this.player.Sprite.Width / 2;
+            this.player.X = (double) Application.Current.Resources["AppWidth"] / 2 - this.player.Sprite.Width / 2;
             this.player.Y = (double) Application.Current.Resources["PlayerStartYLocation"];
         }
 
         /// <summary>
-        /// Decrements the time remaining.
+        ///     Decrements the time remaining.
         /// </summary>
         public void DecrementTimeRemaining()
         {
@@ -113,7 +128,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Decrements the lives.
+        ///     Decrements the lives.
         /// </summary>
         public void DecrementLives()
         {
@@ -121,7 +136,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Increments the frogs in homes.
+        ///     Increments the frogs in homes.
         /// </summary>
         public void IncrementFrogsInHomes()
         {
@@ -129,7 +144,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Increments the level.
+        ///     Increments the level.
         /// </summary>
         public void IncrementLevel()
         {
@@ -137,7 +152,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Resets the time remaining.
+        ///     Resets the time remaining.
         /// </summary>
         public void ResetTimeRemaining()
         {
@@ -145,7 +160,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Increments the score.
+        ///     Increments the score.
         /// </summary>
         /// <param name="amount">The amount.</param>
         public void IncrementScore(int amount)
@@ -154,7 +169,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Timers the power up.
+        ///     Timers the power up.
         /// </summary>
         public void TimerPowerUp()
         {
@@ -162,7 +177,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Moves the player right.
+        ///     Moves the player right.
         /// </summary>
         /// <param name="boundary">The boundary.</param>
         public void MovePlayerRight(double boundary)
@@ -190,7 +205,7 @@ namespace FroggerStarter.Controller
         public void MovePlayerDown(double boundary)
         {
             this.player.RotateSprite(Direction.Down);
-            this.player.MoveDownWithBoundaryCheck((int)Math.Floor(boundary));
+            this.player.MoveDownWithBoundaryCheck((int) Math.Floor(boundary));
         }
 
         /// <summary>
@@ -204,8 +219,16 @@ namespace FroggerStarter.Controller
             this.player.MoveLeftWithBoundaryCheck(boundary);
         }
 
+        /// <summary>Makes the player stay on log.</summary>
+        /// <param name="direction">The direction.</param>
+        /// <param name="speed">The speed.</param>
+        public void MakePlayerStayOnLog(Direction direction, double speed)
+        {
+            this.player.MoveWithLog(direction, speed);
+        }
+
         /// <summary>
-        /// Collisions the detected.
+        ///     Collisions the detected.
         /// </summary>
         /// <param name="otherObject">The other object.</param>
         /// <returns>True is collision is detected, false otherwise</returns>
@@ -215,7 +238,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Enables the player movement.
+        ///     Enables the player movement.
         /// </summary>
         public void EnableMovement()
         {
@@ -223,7 +246,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Disables the player movement.
+        ///     Disables the player movement.
         /// </summary>
         public void DisableMovement()
         {
@@ -231,11 +254,25 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Resets the frogs in home.
+        ///     Resets the frogs in home.
         /// </summary>
         public void ResetFrogsInHome()
         {
             this.playerStats.ResetFrogsInHomes();
         }
+
+        /// <summary>
+        ///     Has player crossed the road.
+        /// </summary>
+        /// <returns>
+        ///     True if player crossed road, false otherwise
+        /// </returns>
+        public bool HasCrossedRoad()
+        {
+            return this.player.Y < LaneSettings.MiddleSafeLaneLocation &&
+                   !this.player.Y.Equals(LaneSettings.TopLaneYLocation);
+        }
+
+        #endregion
     }
 }

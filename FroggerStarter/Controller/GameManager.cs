@@ -7,6 +7,7 @@ using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Model;
 using FroggerStarter.Model.PowerUps;
+using FroggerStarter.Model.Vehicles;
 using FroggerStarter.View;
 
 namespace FroggerStarter.Controller
@@ -26,10 +27,12 @@ namespace FroggerStarter.Controller
         private bool roundThreeOver;
         private bool gameIsOver;
         private bool playerIsImmune;
+        private bool playerOnMovingLog;
 
         private Canvas gameCanvas;
 
         private readonly LaneManager laneManager;
+        private readonly RiverManager riverManager;
         private readonly FrogHomeManager homeManager;
         private readonly DeathAnimationManager deathAnimationManager;
         private readonly PowerUpManager powerUpManager;
@@ -68,6 +71,7 @@ namespace FroggerStarter.Controller
             this.backgroundWidth = backgroundWidth;
 
             this.laneManager = new LaneManager(LaneSettings.MiddleSafeLaneLocation);
+            this.riverManager = new RiverManager(LaneSettings.TopLaneYLocation);
             this.homeManager = new FrogHomeManager(LaneSettings.TopLaneYLocation);
             this.deathAnimationManager = new DeathAnimationManager();
             this.powerUpManager = new PowerUpManager();
@@ -79,7 +83,7 @@ namespace FroggerStarter.Controller
 
         #endregion
 
-        #region Public Methods
+        #region Methods
 
         /// <summary>
         ///     Initializes the game working with appropriate classes to play frog
@@ -92,12 +96,13 @@ namespace FroggerStarter.Controller
         public void InitializeGame(Canvas gamePage)
         {
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
-            this.createAndPlacePlayer();
             this.addPowerUpsToView();
             this.addVehiclesToView();
+            this.addLogsToView();
             this.addDeathAnimationsToView();
             this.placeHomeFrogs();
             this.laneManager.HideVehicles();
+            this.createAndPlacePlayer();
         }
 
         /// <summary>
@@ -150,16 +155,14 @@ namespace FroggerStarter.Controller
             this.gameCanvas.Children.Remove(this.playerManager.Sprite);
             this.removePowerUpSprites();
             this.removeVehicleSprites();
+            this.removeLogSprites();
             this.removeHomeFrogSprites();
         }
-
-        #endregion
-
-        #region TimerOnTick Methods
 
         private void gameTimerOnTick(object sender, object e)
         {
             this.laneManager.MoveVehicles();
+            this.riverManager.MoveVehicles();
             this.checkForPlayerCollisionWithObjects();
             this.checkForPlayerHitTopWall();
         }
@@ -177,13 +180,11 @@ namespace FroggerStarter.Controller
             }
         }
 
-        #endregion
-
-        #region Checker Methods
-
         private void checkForPlayerCollisionWithObjects()
         {
             this.checkForPlayerCollisionWithVehicles();
+            this.checkForPlayerCollisionWithLogs();
+            this.checkForPlayerLeftLog();
             this.checkForPlayerCollisionWithHome();
             this.checkForPlayerCollisionWithTimerPowerUp();
         }
@@ -192,10 +193,32 @@ namespace FroggerStarter.Controller
         {
             foreach (var vehicle in this.laneManager)
             {
-                if (this.playerManager.CollisionDetected(vehicle) && vehicle.Sprite.Visibility != Visibility.Collapsed && !this.playerIsImmune)
+                if (this.playerManager.CollisionDetected(vehicle) &&
+                    vehicle.Sprite.Visibility != Visibility.Collapsed && !this.playerIsImmune)
                 {
                     this.handleLifeLost();
                 }
+            }
+        }
+
+        private void checkForPlayerCollisionWithLogs()
+        {
+            this.playerOnMovingLog = false;
+            foreach (var log in this.riverManager)
+            {
+                if (this.playerManager.CollisionDetected(log) && this.playerManager.HasCrossedRoad() &&
+                    log.Sprite.Visibility != Visibility.Collapsed)
+                {
+                    this.handlePlayerLandedOnLog(log);
+                }
+            }
+        }
+
+        private void checkForPlayerLeftLog()
+        {
+            if (!this.playerOnMovingLog && this.playerManager.HasCrossedRoad())
+            {
+                this.handleLifeLost();
             }
         }
 
@@ -250,10 +273,6 @@ namespace FroggerStarter.Controller
             }
         }
 
-        #endregion
-
-        #region Handler Methods
-
         private async void handleStartup()
         {
             var startDialog = new StartScreenDialog();
@@ -285,13 +304,15 @@ namespace FroggerStarter.Controller
                 this.roundThreeOver = true;
                 this.handleGameOver();
             }
+
             this.playerManager.IncrementLevel();
-            var level = new LevelIncreasedEventArgs { Level = this.playerManager.Level };
+            var level = new LevelIncreasedEventArgs {Level = this.playerManager.Level};
             this.LevelIncreased?.Invoke(this, level);
         }
 
         private void handleLifeLost()
         {
+            this.playerOnMovingLog = false;
             this.playerManager.Sprite.Visibility = Visibility.Collapsed;
             this.playerManager.DecrementLives();
 
@@ -307,6 +328,20 @@ namespace FroggerStarter.Controller
             }
         }
 
+        private void handlePlayerLandedOnLog(Vehicle log)
+        {
+            this.playerOnMovingLog = true;
+            switch (log.Direction)
+            {
+                case Direction.Left:
+                    this.playerManager.MakePlayerStayOnLog(Direction.Left, log.SpeedX);
+                    break;
+                case Direction.Right:
+                    this.playerManager.MakePlayerStayOnLog(Direction.Right, log.SpeedX);
+                    break;
+            }
+        }
+
         private void handleStartDeathAnimation()
         {
             this.playerManager.DisableMovement();
@@ -318,6 +353,7 @@ namespace FroggerStarter.Controller
 
         private void handlePlayerScored()
         {
+            this.playerOnMovingLog = false;
             this.playerManager.IncrementScore(this.playerManager.TimeRemaining);
 
             var score = new ScoreIncreasedEventArgs {Score = this.playerManager.Score};
@@ -357,6 +393,7 @@ namespace FroggerStarter.Controller
             }
             else
             {
+                this.playerOnMovingLog = false;
                 this.handlePlayerScored();
                 frogHome.Sprite.Visibility = Visibility.Visible;
                 this.playerManager.IncrementFrogsInHomes();
@@ -389,7 +426,7 @@ namespace FroggerStarter.Controller
             {
                 this.playerManager.TimerPowerUp();
                 powerUp.Sprite.Visibility = Visibility.Collapsed;
-                var timeRemaining = new TimeRemainingEventArgs { TimeRemaining = this.playerManager.TimeRemaining };
+                var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerManager.TimeRemaining};
                 this.TimeRemainingCount?.Invoke(this, timeRemaining);
             }
             else
@@ -400,10 +437,6 @@ namespace FroggerStarter.Controller
                 this.playerIsImmune = false;
             }
         }
-
-        #endregion
-
-        #region Add To View Methods
 
         private void createAndPlacePlayer()
         {
@@ -422,6 +455,11 @@ namespace FroggerStarter.Controller
             this.laneManager.ToList().ForEach(vehicle => this.gameCanvas.Children.Add(vehicle.Sprite));
         }
 
+        private void addLogsToView()
+        {
+            this.riverManager.ToList().ForEach(vehicle => this.gameCanvas.Children.Add(vehicle.Sprite));
+        }
+
         private void addDeathAnimationsToView()
         {
             this.deathAnimationManager.ToList().ForEach(animation => this.gameCanvas.Children.Add(animation.Sprite));
@@ -431,10 +469,6 @@ namespace FroggerStarter.Controller
         {
             this.powerUpManager.ToList().ForEach(powerUp => this.gameCanvas.Children.Add(powerUp.Sprite));
         }
-
-        #endregion
-
-        #region Remove From View Methods
 
         private void removeHomeFrogSprites()
         {
@@ -446,14 +480,15 @@ namespace FroggerStarter.Controller
             this.laneManager.ToList().ForEach(vehicle => this.gameCanvas.Children.Remove(vehicle.Sprite));
         }
 
+        private void removeLogSprites()
+        {
+            this.riverManager.ToList().ForEach(vehicle => this.gameCanvas.Children.Remove(vehicle.Sprite));
+        }
+
         private void removePowerUpSprites()
         {
             this.powerUpManager.ToList().ForEach(powerUp => this.gameCanvas.Children.Remove(powerUp.Sprite));
         }
-
-        #endregion
-
-        #region Private Helper Methods
 
         private void setDeathAnimationToPlayerLocation()
         {

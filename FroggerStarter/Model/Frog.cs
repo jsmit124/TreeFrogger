@@ -1,4 +1,5 @@
 ﻿using FroggerStarter.Constants;
+using FroggerStarter.Enums;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
@@ -90,6 +91,23 @@ namespace FroggerStarter.Model
             if (Y + SpeedY < bottomBoundary - LaneSettings.BottomLaneOffset)
             {
                 MoveDown();
+            }
+        }
+
+        /// <summary>
+        ///     Moves the with log.
+        /// </summary>
+        /// <param name="direction">The direction.</param>
+        /// <param name="speed">The speed.</param>
+        public void MoveWithLog(Direction direction, double speed)
+        {
+            if (direction == Direction.Left)
+            {
+                X -= speed;
+            }
+            else
+            {
+                X += speed;
             }
         }
 

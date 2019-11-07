@@ -126,6 +126,7 @@
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\PowerUpManager.cs" />
+    <Compile Include="Controller\RiverManager.cs" />
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="Enums\SoundEffectType.cs" />
