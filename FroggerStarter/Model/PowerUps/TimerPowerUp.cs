@@ -1,12 +1,13 @@
-﻿using FroggerStarter.View.Sprites;
+﻿using FroggerStarter.Enums;
+using FroggerStarter.View.Sprites.PowerUps;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.PowerUps
 {
     /// <summary>
     ///     Stores information about the timer power up object
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.BaseObject" />
-    public class TimerPowerUp : BaseObject
+    public class TimerPowerUp : PowerUp
     {
         #region Constructors
 
@@ -14,6 +15,7 @@ namespace FroggerStarter.Model
         public TimerPowerUp()
         {
             Sprite = new TimerPowerUpSprite();
+            this.PowerUpType = PowerUpType.Timer;
         }
 
         #endregion

@@ -19,13 +19,13 @@ namespace FroggerStarter.Model.Lanes
         #region Constructors
 
         /// <summary>Initializes a new instance of the <see cref="RoadLane" /> class.</summary>
-        /// <param name="laneDirection">The laneDirection.</param>
+        /// <param name="direction">The direction.</param>
         /// <param name="vehicleType">Type of the vehicle.</param>
         /// <param name="numberOfVehicles">The number of vehicles.</param>
         /// <param name="defaultSpeed">The default speed.</param>
         /// <param name="yLocation">The y location.</param>
-        public RoadLane(Direction laneDirection, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
-            double yLocation) : base(laneDirection, vehicleType, numberOfVehicles, defaultSpeed, yLocation)
+        public RoadLane(Direction direction, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
+            double yLocation) : base(direction, vehicleType, numberOfVehicles, defaultSpeed, yLocation)
         {
             this.setMaxCarsInLane();
         }
@@ -50,19 +50,6 @@ namespace FroggerStarter.Model.Lanes
         }
 
         /// <summary>
-        ///     Shows another vehicle.
-        ///     Precondition: None.
-        ///     Postcondition: Makes next index visible
-        /// </summary>
-        public async void HideAnotherLog()
-        {
-            for (var index = 0; index < this.maxCarsInLane; index++)
-            {
-                await this.hideLog(index);
-            }
-        }
-
-        /// <summary>
         ///     Updates the maximum cars per lane.
         /// </summary>
         public override void UpdateMaxCarsPerLane()
@@ -70,31 +57,44 @@ namespace FroggerStarter.Model.Lanes
             this.maxCarsInLane += 1;
         }
 
-        private async Task hideLog(int index)
+        /// <summary>
+        ///     Shows another vehicle.
+        ///     Precondition: None.
+        ///     Postcondition: Makes next index visible
+        /// </summary>
+        public async void ShowAnotherVehicle()
+        {
+            for (var index = 0; index < this.maxCarsInLane; index++)
+            {
+                await this.showVehicle(index);
+            }
+        }
+
+        private async Task showVehicle(int index)
         {
             if (this.nextVehicleIsReadyToBeVisible(index))
             {
                 if (this.vehicleCrossedLeftBoundary(index))
                 {
-                    this.makeNextLogCollapsed(index);
+                    this.makeNextVehicleVisible(index);
                     await Task.Delay(850);
                 }
                 else if (this.vehicleCrossedRightBoundary(index))
                 {
-                    this.makeNextLogCollapsed(index);
+                    this.makeNextVehicleVisible(index);
                     await Task.Delay(850);
                 }
             }
         }
 
-        private void makeNextLogCollapsed(int index)
-        {
-            Vehicles[index + 1].Sprite.Visibility = Visibility.Collapsed;
-        }
-
         private void setMaxCarsInLane()
         {
             this.maxCarsInLane = Vehicles.Count - 3;
+        }
+
+        private void makeNextVehicleVisible(int index)
+        {
+            Vehicles[index + 1].Sprite.Visibility = Visibility.Visible;
         }
 
         private bool nextVehicleIsReadyToBeVisible(int i)

@@ -38,6 +38,11 @@
         public const int TimerPowerUps = 3;
 
         /// <summary>
+        ///     The immunity power ups
+        /// </summary>
+        public const int ImmunityPowerUps = 2;
+
+        /// <summary>
         ///     The final level
         /// </summary>
         public const int FinalLevel = 3;

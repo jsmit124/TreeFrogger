@@ -125,16 +125,20 @@
     <Compile Include="Controller\DeathAnimationManager.cs" />
     <Compile Include="Controller\LaneManager.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
-    <Compile Include="Controller\TimerPowerUpManager.cs" />
+    <Compile Include="Controller\PowerUpManager.cs" />
     <Compile Include="Enums\Direction.cs" />
+    <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="Enums\SoundEffectType.cs" />
     <Compile Include="Enums\VehicleType.cs" />
     <Compile Include="Factory\DeathAnimationFactory.cs" />
+    <Compile Include="Factory\PowerUpFactory.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Model\BaseObject.cs" />
     <Compile Include="Model\Lanes\RiverLane.cs" />
     <Compile Include="Model\Lanes\RoadLane.cs" />
-    <Compile Include="Model\TimerPowerUp.cs" />
+    <Compile Include="Model\PowerUps\ImmunityPowerUp.cs" />
+    <Compile Include="Model\PowerUps\PowerUp.cs" />
+    <Compile Include="Model\PowerUps\TimerPowerUp.cs" />
     <Compile Include="Model\Vehicles\Bus.cs" />
     <Compile Include="Model\DeathAnimation.cs" />
     <Compile Include="Model\Frog.cs" />
@@ -156,13 +160,16 @@
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sprites\PowerUps\ImmunityPowerUpSprite.xaml.cs">
+      <DependentUpon>ImmunityPowerUpSprite.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sprites\RiverLogs\ShortLogSprite.xaml.cs">
       <DependentUpon>ShortLogSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\RiverLogs\LongLogSprite.xaml.cs">
       <DependentUpon>LongLogSprite.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\TimerPowerUpSprite.xaml.cs">
+    <Compile Include="View\Sprites\PowerUps\TimerPowerUpSprite.xaml.cs">
       <DependentUpon>TimerPowerUpSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\Vehicles\CarSprite.xaml.cs">
@@ -225,6 +232,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Sprites\PowerUps\ImmunityPowerUpSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Sprites\RiverLogs\ShortLogSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -233,7 +244,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\TimerPowerUpSprite.xaml">
+    <Page Include="View\Sprites\PowerUps\TimerPowerUpSprite.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

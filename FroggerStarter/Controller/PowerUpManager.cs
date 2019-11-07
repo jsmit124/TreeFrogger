@@ -3,35 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using FroggerStarter.Constants;
-using FroggerStarter.Model;
+using FroggerStarter.Enums;
+using FroggerStarter.Factory;
+using FroggerStarter.Model.PowerUps;
 
 namespace FroggerStarter.Controller
 {
     /// <summary>
     ///     Stores information about the power up manager.
     /// </summary>
-    public class TimerPowerUpManager : IEnumerable<TimerPowerUp>
+    public class PowerUpManager : IEnumerable<PowerUp>
     {
         #region Data members
 
-        private const int MaxPositionY = 305;
-        private const int MinPositionY = 105;
+        private const int MaxTimerPositionY = 305;
+        private const int MinTimerPositionY = 105;
+        private const int MaxImmunityPositionY = 605;
+        private const int MinImmunityPositionY = 405;
         private const int MinPositionX = 0;
 
         private int currentPowerUpIndex;
 
-        private readonly IList<TimerPowerUp> timerPowerUps;
+        private readonly IList<PowerUp> powerUps;
         private DispatcherTimer timer;
 
         #endregion
 
         #region Constructors
 
-        /// <summary>Initializes a new instance of the <see cref="TimerPowerUpManager" /> class.</summary>
-        public TimerPowerUpManager()
+        /// <summary>Initializes a new instance of the <see cref="PowerUpManager" /> class.</summary>
+        public PowerUpManager()
         {
-            this.timerPowerUps = new List<TimerPowerUp>();
-            this.createTimerPowerUps();
+            this.powerUps = new List<PowerUp>();
+            this.createAllPowerUps();
             this.setupTimer();
         }
 
@@ -41,9 +45,9 @@ namespace FroggerStarter.Controller
 
         /// <summary>Returns an enumerator that iterates through the collection.</summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public IEnumerator<TimerPowerUp> GetEnumerator()
+        public IEnumerator<PowerUp> GetEnumerator()
         {
-            return this.timerPowerUps.GetEnumerator();
+            return this.powerUps.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -60,9 +64,9 @@ namespace FroggerStarter.Controller
 
         private void timerOnTick(object sender, object e)
         {
-            if (this.currentPowerUpIndex < GameSettings.TimerPowerUps)
+            if (this.currentPowerUpIndex < this.powerUps.Count)
             {
-                this.timerPowerUps[this.currentPowerUpIndex].Sprite.Visibility = Visibility.Visible;
+                this.powerUps[this.currentPowerUpIndex].Sprite.Visibility = Visibility.Visible;
                 this.currentPowerUpIndex++;
             }
         }
@@ -87,31 +91,48 @@ namespace FroggerStarter.Controller
             this.timer.Stop();
         }
 
-        private void createTimerPowerUps()
+        private void createAllPowerUps()
         {
-            var random = new Random();
-            for (var i = 0; i < GameSettings.TimerPowerUps; i++)
+            this.createPowerUp(PowerUpType.Immunity, GameSettings.ImmunityPowerUps);
+            this.createPowerUp(PowerUpType.Timer, GameSettings.TimerPowerUps);
+        }
+
+        private void createPowerUp(PowerUpType typeOfPowerUp, int amount)
+        {
+            for (var i = 0; i < amount; i++)
             {
-                var powerUp = new TimerPowerUp();
+                var powerUp = PowerUpFactory.BuildPowerUp(typeOfPowerUp);
                 var maxX = (int) (LaneSettings.LaneLength - powerUp.Width);
-                powerUp.X = random.Next(MinPositionX, maxX);
-                powerUp.Y = random.Next(MinPositionY, MaxPositionY);
-                this.checkCollisionWithTimerPowerUp(powerUp);
+                setPowerUpPosition(powerUp, maxX);
+                this.checkCollisionWithPowerUp(powerUp);
                 powerUp.Sprite.Visibility = Visibility.Collapsed;
-                this.timerPowerUps.Add(powerUp);
+                this.powerUps.Add(powerUp);
             }
         }
 
-        private void checkCollisionWithTimerPowerUp(TimerPowerUp powerUp)
+        private static void setPowerUpPosition(PowerUp powerUp, int maxX)
         {
             var random = new Random();
-            foreach (var timerPowerUp in this.timerPowerUps)
+            if (powerUp.PowerUpType == PowerUpType.Timer)
+            {
+                powerUp.X = random.Next(MinPositionX, maxX);
+                powerUp.Y = random.Next(MinTimerPositionY, MaxTimerPositionY);
+            }
+            else
+            {
+                powerUp.X = random.Next(MinPositionX, maxX);
+                powerUp.Y = random.Next(MinImmunityPositionY, MaxImmunityPositionY);
+            }
+        }
+
+        private void checkCollisionWithPowerUp(PowerUp powerUp)
+        {
+            foreach (var timerPowerUp in this.powerUps)
             {
                 while (timerPowerUp.CollisionDetected(powerUp))
                 {
                     var maxX = (int) (LaneSettings.LaneLength - timerPowerUp.Width);
-                    timerPowerUp.X = random.Next(MinPositionX, maxX);
-                    timerPowerUp.Y = random.Next(MinPositionY, MaxPositionY);
+                    setPowerUpPosition(powerUp, maxX);
                 }
             }
         }

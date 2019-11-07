@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Constants;
+using FroggerStarter.Enums;
 using FroggerStarter.Model;
+using FroggerStarter.Model.PowerUps;
 using FroggerStarter.View;
 
 namespace FroggerStarter.Controller
@@ -22,13 +25,14 @@ namespace FroggerStarter.Controller
         private bool roundTwoOver;
         private bool roundThreeOver;
         private bool gameIsOver;
+        private bool playerIsImmune;
 
         private Canvas gameCanvas;
 
         private readonly LaneManager laneManager;
         private readonly FrogHomeManager homeManager;
         private readonly DeathAnimationManager deathAnimationManager;
-        private readonly TimerPowerUpManager powerUpManager;
+        private readonly PowerUpManager powerUpManager;
         private readonly PlayerManager playerManager;
 
         private DispatcherTimer gameTimer;
@@ -66,7 +70,7 @@ namespace FroggerStarter.Controller
             this.laneManager = new LaneManager(LaneSettings.MiddleSafeLaneLocation);
             this.homeManager = new FrogHomeManager(LaneSettings.TopLaneYLocation);
             this.deathAnimationManager = new DeathAnimationManager();
-            this.powerUpManager = new TimerPowerUpManager();
+            this.powerUpManager = new PowerUpManager();
             this.playerManager = new PlayerManager();
 
             this.deathAnimationManager.AnimationOver += this.handleDeathAnimationHasEnded;
@@ -188,7 +192,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var vehicle in this.laneManager)
             {
-                if (this.playerManager.CollisionDetected(vehicle) && vehicle.Sprite.Visibility != Visibility.Collapsed)
+                if (this.playerManager.CollisionDetected(vehicle) && vehicle.Sprite.Visibility != Visibility.Collapsed && !this.playerIsImmune)
                 {
                     this.handleLifeLost();
                 }
@@ -212,7 +216,7 @@ namespace FroggerStarter.Controller
             {
                 if (this.playerManager.CollisionDetected(powerUp) && powerUp.Sprite.Visibility != Visibility.Collapsed)
                 {
-                    this.handleFrogTimerPowerUp(powerUp);
+                    this.handlePowerUpIsHit(powerUp);
                 }
             }
         }
@@ -378,12 +382,22 @@ namespace FroggerStarter.Controller
             this.laneManager.HideVehicles();
         }
 
-        private void handleFrogTimerPowerUp(TimerPowerUp powerUp)
+        private async void handlePowerUpIsHit(PowerUp powerUp)
         {
-            this.playerManager.TimerPowerUp();
-            powerUp.Sprite.Visibility = Visibility.Collapsed;
-            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerManager.TimeRemaining};
-            this.TimeRemainingCount?.Invoke(this, timeRemaining);
+            if (powerUp.PowerUpType == PowerUpType.Timer)
+            {
+                this.playerManager.TimerPowerUp();
+                powerUp.Sprite.Visibility = Visibility.Collapsed;
+                var timeRemaining = new TimeRemainingEventArgs { TimeRemaining = this.playerManager.TimeRemaining };
+                this.TimeRemainingCount?.Invoke(this, timeRemaining);
+            }
+            else
+            {
+                this.playerIsImmune = true;
+                powerUp.Sprite.Visibility = Visibility.Collapsed;
+                await Task.Delay(3000);
+                this.playerIsImmune = false;
+            }
         }
 
         #endregion

@@ -1,7 +1,7 @@
 ﻿namespace FroggerStarter.Enums
 {
     /// <summary>
-    ///     Stores enumerators for the LaneDirection enumerator
+    ///     Stores enumerators for the Direction enumerator
     /// </summary>
     public enum Direction
     {

@@ -18,7 +18,7 @@ namespace FroggerStarter.Model.Lanes
         #region Data members
 
         /// <summary>The lane direction</summary>
-        protected readonly Direction LaneDirection;
+        protected readonly Direction Direction;
 
         /// <summary>The vehicles</summary>
         protected readonly IList<Vehicle> Vehicles;
@@ -50,14 +50,14 @@ namespace FroggerStarter.Model.Lanes
         /// <summary>
         ///     Initializes a new instance of the <see cref="Lane" /> class.
         /// </summary>
-        /// <param name="laneDirection">The laneDirection.</param>
+        /// <param name="direction">The direction.</param>
         /// <param name="vehicleType">Type of the vehicle.</param>
         /// <param name="numberOfVehicles">The number of vehicles.</param>
         /// <param name="defaultSpeed">The default speed.</param>
         /// <param name="yLocation">The y location.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// </exception>
-        protected Lane(Direction laneDirection, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
+        protected Lane(Direction direction, VehicleType vehicleType, int numberOfVehicles, double defaultSpeed,
             double yLocation)
         {
             if (numberOfVehicles <= 0)
@@ -72,10 +72,10 @@ namespace FroggerStarter.Model.Lanes
 
             this.Vehicles = new List<Vehicle>();
             this.NumberOfVehicles = numberOfVehicles;
-            this.LaneDirection = laneDirection;
+            this.Direction = direction;
             this.YLocation = yLocation;
 
-            this.populateLane(vehicleType, defaultSpeed, laneDirection);
+            this.populateLane(vehicleType, defaultSpeed, direction);
         }
 
         #endregion
@@ -117,10 +117,10 @@ namespace FroggerStarter.Model.Lanes
             var nextVehicleX = 0;
             for (var i = 0; i < this.NumberOfVehicles; i++)
             {
-                var vehicleToAdd = VehicleFactory.BuildVehicleSprite(vehicleType, direction, defaultSpeed);
+                var vehicleToAdd = VehicleFactory.BuildVehicle(vehicleType, direction, defaultSpeed);
                 vehicleToAdd.X = nextVehicleX;
                 nextVehicleX += (int) LaneSettings.LaneLength / this.NumberOfVehicles;
-                if (this.LaneDirection == Direction.Right)
+                if (this.Direction == Direction.Right)
                 {
                     vehicleToAdd.FlipSpriteHorizontal();
                 }

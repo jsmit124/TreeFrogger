@@ -164,7 +164,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.lanes)
             {
-                lane.HideAnotherLog();
+                lane.ShowAnotherVehicle();
             }
         }
 

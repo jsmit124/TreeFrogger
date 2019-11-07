@@ -21,7 +21,7 @@ namespace FroggerStarter.Factory
         /// <param name="direction">The direction of vehicle.</param>
         /// <param name="speed">The speed of vehicle.</param>
         /// <returns>Returns the specified vehicle sprite</returns>
-        public static Vehicle BuildVehicleSprite(VehicleType typeOfVehicle, Direction direction, double speed)
+        public static Vehicle BuildVehicle(VehicleType typeOfVehicle, Direction direction, double speed)
         {
             if (speed < 0)
             {
