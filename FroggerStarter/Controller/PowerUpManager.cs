@@ -22,8 +22,6 @@ namespace FroggerStarter.Controller
         private const int MinImmunityPositionY = 405;
         private const int MinPositionX = 0;
 
-        private int currentPowerUpIndex;
-
         private readonly IList<PowerUp> powerUps;
         private DispatcherTimer timer;
 
@@ -64,11 +62,9 @@ namespace FroggerStarter.Controller
 
         private void timerOnTick(object sender, object e)
         {
-            if (this.currentPowerUpIndex < this.powerUps.Count)
-            {
-                this.powerUps[this.currentPowerUpIndex].Sprite.Visibility = Visibility.Visible;
-                this.currentPowerUpIndex++;
-            }
+            var random = new Random();
+            var index = random.Next(0, this.powerUps.Count - 1);
+            this.powerUps[index].Sprite.Visibility = Visibility.Visible;
         }
 
         /// <summary>

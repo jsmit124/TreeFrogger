@@ -362,6 +362,7 @@ namespace FroggerStarter.Controller
                 this.playerManager.IncrementFrogsInHomes();
                 this.checkForGameOver();
                 this.checkForLevelOver();
+                this.playerIsImmune = false;
             }
         }
 
