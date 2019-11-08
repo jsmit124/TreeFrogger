@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using FroggerStarter.Constants;
-using FroggerStarter.Enums;
 using FroggerStarter.Model.Lanes;
 using FroggerStarter.Model.Vehicles;
 
@@ -71,14 +70,13 @@ namespace FroggerStarter.Controller
 
         private void createLanes()
         {
-            this.lanes.Add(new RoadLane(Direction.Right, VehicleType.PoliceCar, 5, 3.5,
-                this.calculateNextLaneYLocation()));
-            this.lanes.Add(new RoadLane(Direction.Left, VehicleType.Bus, 3, 2.5, this.calculateNextLaneYLocation()));
-            this.lanes.Add(new RoadLane(Direction.Left, VehicleType.SpeedCar, 3, 5,
-                this.calculateNextLaneYLocation()));
-            this.lanes.Add(new RoadLane(Direction.Right, VehicleType.Bus, 3, 1.5, this.calculateNextLaneYLocation()));
-            this.lanes.Add(new RoadLane(Direction.Left, VehicleType.PoliceCar, 4, 1,
-                this.calculateNextLaneYLocation()));
+            for (var i = 0; i < LaneSettings.RoadNumberOfVehicles.Length; i++)
+            {
+                var lane = new RoadLane(LaneSettings.RoadDirections[i], LaneSettings.RoadVehicleTypes[i],
+                    LaneSettings.RoadNumberOfVehicles[i], LaneSettings.RoadSpeeds[i],
+                    this.calculateNextLaneYLocation());
+                this.lanes.Add(lane);
+            }
         }
 
         private double calculateNextLaneYLocation()

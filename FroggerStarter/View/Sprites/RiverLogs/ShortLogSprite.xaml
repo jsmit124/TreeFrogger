@@ -13,7 +13,7 @@
     <UserControl.Resources>
         <SolidColorBrush x:Key="LogColor" Color="SandyBrown" />
         <SolidColorBrush x:Key="LogSecondaryColor" Color="SaddleBrown" />
-        <SolidColorBrush x:Key="LogHighlight" Color="White" />
+        <SolidColorBrush x:Key="LogHighlight" Color="#ECE9AE" />
         <SolidColorBrush x:Key="WaterColor" Color="MidnightBlue" />
     </UserControl.Resources>
 
