@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
 using FroggerStarter.Model;
+using FroggerStarter.Model.Vehicles;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Controller
@@ -220,21 +221,30 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>Makes the player stay on log.</summary>
-        /// <param name="direction">The direction.</param>
-        /// <param name="speed">The speed.</param>
-        public void MakePlayerStayOnLog(Direction direction, double speed)
+        /// <param name="log"></param>
+        public void MakePlayerStayOnLog(Vehicle log)
         {
-            this.player.MoveWithLog(direction, speed);
+            this.player.MoveWithLog(log.Direction, log.SpeedX);
         }
 
         /// <summary>
         ///     Collisions the detected.
         /// </summary>
         /// <param name="otherObject">The other object.</param>
-        /// <returns>True is collision is detected, false otherwise</returns>
+        /// <returns>True if collision is detected, false otherwise</returns>
         public bool CollisionDetected(BaseObject otherObject)
         {
             return this.player.CollisionDetected(otherObject);
+        }
+
+        /// <summary>
+        ///     Collisions the detected with frog home.
+        /// </summary>
+        /// <param name="home">The home.</param>
+        /// <returns>True if collision is detected, false otherwise</returns>
+        public bool CollisionDetectedWithFrogHome(FrogHome home)
+        {
+            return this.player.CollisionDetectedWithFrogHome(home);
         }
 
         /// <summary>

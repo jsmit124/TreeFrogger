@@ -15,7 +15,7 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
-        private readonly IList<FrogHome> homeFrogs;
+        private readonly IList<FrogHome> frogHomes;
         private readonly double homeYLocations;
 
         #endregion
@@ -27,10 +27,10 @@ namespace FroggerStarter.Controller
         /// </summary>
         public FrogHomeManager(double topLaneLocation)
         {
-            this.homeFrogs = new List<FrogHome>();
+            this.frogHomes = new List<FrogHome>();
             this.homeYLocations = topLaneLocation;
-            this.createHomeFrogs();
-            this.makeHomeFrogsCollapsed();
+            this.createFrogHomes();
+            this.makeFrogHomesCollapsed();
         }
 
         #endregion
@@ -47,7 +47,7 @@ namespace FroggerStarter.Controller
         /// </returns>
         public IEnumerator<FrogHome> GetEnumerator()
         {
-            return this.homeFrogs.GetEnumerator();
+            return this.frogHomes.GetEnumerator();
         }
 
         /// <summary>
@@ -60,28 +60,41 @@ namespace FroggerStarter.Controller
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.homeFrogs.GetEnumerator();
+            return this.frogHomes.GetEnumerator();
         }
 
         /// <summary>Makes the home frogs collapsed.</summary>
-        public void makeHomeFrogsCollapsed()
+        public void makeFrogHomesCollapsed()
         {
-            this.homeFrogs.ToList().ForEach(homeFrog => homeFrog.Sprite.Visibility = Visibility.Collapsed);
+            this.frogHomes.ToList().ForEach(homeFrog => homeFrog.Sprite.Visibility = Visibility.Collapsed);
         }
 
-        private void createHomeFrogs()
+        private void createFrogHomes()
         {
             var count = 0;
             while (count < GameSettings.FrogHomeCount)
             {
-                var homeFrog = new FrogHome();
+                var frogHome = new FrogHome();
                 var stepsBetweenHomes = 3;
 
-                this.homeFrogs.Add(homeFrog);
-                homeFrog.X = stepsBetweenHomes * (homeFrog.Width * (this.homeFrogs.Count() - 1));
-                homeFrog.Y = this.homeYLocations;
-
+                this.frogHomes.Add(frogHome);
+                frogHome.X = stepsBetweenHomes * (frogHome.Width * (this.frogHomes.Count() - 1));
+                frogHome.Y = this.homeYLocations;
+                this.adjustEndFrogHomes(frogHome);
                 count++;
+            }
+        }
+
+        private void adjustEndFrogHomes(FrogHome homeFrog)
+        {
+            switch (this.frogHomes.Count)
+            {
+                case 1:
+                    homeFrog.X += 5;
+                    break;
+                case 5:
+                    homeFrog.X -= 5;
+                    break;
             }
         }
 

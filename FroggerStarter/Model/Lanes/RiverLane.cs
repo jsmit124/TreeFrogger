@@ -35,9 +35,9 @@ namespace FroggerStarter.Model.Lanes
         #region Methods
 
         /// <summary>
-        ///     Updates the maximum cars per lane.
+        ///     Updates the maximum vehicles per lane.
         /// </summary>
-        public override void UpdateMaxCarsPerLane()
+        public override void UpdateMaxVehiclesPerLane()
         {
             this.maxLogsInLane -= 1;
         }
@@ -49,7 +49,7 @@ namespace FroggerStarter.Model.Lanes
         /// </summary>
         public async void HideAnotherVehicle()
         {
-            for (var index = 0; index < this.maxLogsInLane; index++)
+            for (var index = this.maxLogsInLane; index < this.NumberOfVehicles; index++)
             {
                 await this.hideLog(index);
             }

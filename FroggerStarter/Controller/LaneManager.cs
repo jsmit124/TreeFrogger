@@ -148,7 +148,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.lanes)
             {
-                lane.UpdateMaxCarsPerLane();
+                lane.UpdateMaxVehiclesPerLane();
             }
         }
 

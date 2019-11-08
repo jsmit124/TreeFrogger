@@ -62,6 +62,33 @@ namespace FroggerStarter.Controller
             this.lanes.ToList().ForEach(lane => lane.MoveVehiclesForward());
         }
 
+        /// <summary>
+        ///     Increments the maximum amount of vehicles per lane.
+        ///     Precondition: None
+        ///     Postcondition: Max amount of vehicles per lane decreased by one
+        /// </summary>
+        public void DecrementMaxAmountOfVehiclesPerLane()
+        {
+            foreach (var lane in this.lanes)
+            {
+                lane.UpdateMaxVehiclesPerLane();
+            }
+        }
+
+        /// <summary>
+        ///     Increases all vehicle speed.
+        ///     Precondition: None
+        ///     Postcondition: Increases all vehicle speeds by speed param
+        /// </summary>
+        /// <param name="speed">The speed.</param>
+        public void IncreaseAllVehicleSpeed(double speed)
+        {
+            foreach (var lane in this.lanes)
+            {
+                lane.IncreaseVehicleSpeeds(speed);
+            }
+        }
+
         private void createLanes()
         {
             this.lanes.Add(new RiverLane(Direction.Right, VehicleType.ShortLog, 3, 3.5,
