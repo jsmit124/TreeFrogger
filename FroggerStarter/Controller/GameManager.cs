@@ -226,7 +226,7 @@ namespace FroggerStarter.Controller
         {
             foreach (var frogHome in this.homeManager)
             {
-                if (this.playerManager.CollisionDetected(frogHome))
+                if (this.playerManager.CollisionDetectedWithFrogHome(frogHome))
                 {
                     this.handleFrogMadeItHome(frogHome);
                 }
@@ -336,15 +336,7 @@ namespace FroggerStarter.Controller
         private void handlePlayerLandedOnLog(Vehicle log)
         {
             this.playerOnMovingLog = true;
-            switch (log.Direction)
-            {
-                case Direction.Left:
-                    this.playerManager.MakePlayerStayOnLog(Direction.Left, log.SpeedX);
-                    break;
-                case Direction.Right:
-                    this.playerManager.MakePlayerStayOnLog(Direction.Right, log.SpeedX);
-                    break;
-            }
+            this.playerManager.MakePlayerStayOnLog(log);
         }
 
         private void handleStartDeathAnimation()
@@ -518,10 +510,12 @@ namespace FroggerStarter.Controller
 
         private void enableNextLevel(double speed)
         {
-            this.homeManager.makeHomeFrogsCollapsed();
+            this.homeManager.makeFrogHomesCollapsed();
             this.playerManager.ResetFrogsInHome();
             this.laneManager.IncreaseAllVehicleSpeed(speed);
             this.laneManager.IncrementMaxAmountOfVehiclesPerLane();
+            this.riverManager.DecrementMaxAmountOfVehiclesPerLane();
+            this.riverManager.IncreaseAllVehicleSpeed(speed);
         }
 
         #endregion

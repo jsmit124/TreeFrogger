@@ -105,6 +105,20 @@ namespace FroggerStarter.Model
             return currentArea.IntersectsWith(collisionArea);
         }
 
+        /// <summary>Collisions the detected with frog home.</summary>
+        /// <param name="home">The home.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public bool CollisionDetectedWithFrogHome(FrogHome home)
+        {
+            if (home == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return !((this.X - home.X) > (this.Width * .1)) && (home.X - this.X) <= (this.Width * .1) && this.CollisionDetected(home);
+        }
+
         /// <summary>
         ///     Flips the sprite horizontal.
         ///     Precondition: None
