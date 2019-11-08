@@ -16,10 +16,8 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
-        private const int MaxTimerPositionY = 305;
-        private const int MinTimerPositionY = 105;
-        private const int MaxImmunityPositionY = 605;
-        private const int MinImmunityPositionY = 405;
+        private const int MaxPositionY = 605;
+        private const int MinPositionY = 405;
         private const int MinPositionX = 0;
 
         private readonly IList<PowerUp> powerUps;
@@ -109,16 +107,9 @@ namespace FroggerStarter.Controller
         private static void setPowerUpPosition(PowerUp powerUp, int maxX)
         {
             var random = new Random();
-            if (powerUp.PowerUpType == PowerUpType.Timer)
-            {
-                powerUp.X = random.Next(MinPositionX, maxX);
-                powerUp.Y = random.Next(MinTimerPositionY, MaxTimerPositionY);
-            }
-            else
-            {
-                powerUp.X = random.Next(MinPositionX, maxX);
-                powerUp.Y = random.Next(MinImmunityPositionY, MaxImmunityPositionY);
-            }
+            powerUp.X = random.Next(MinPositionX, maxX);
+            powerUp.Y = random.Next(MinPositionY, MaxPositionY);
+            
         }
 
         private void checkCollisionWithPowerUp(PowerUp powerUp)
