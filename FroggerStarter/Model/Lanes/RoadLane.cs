@@ -52,7 +52,7 @@ namespace FroggerStarter.Model.Lanes
         /// <summary>
         ///     Updates the maximum vehicles per lane.
         /// </summary>
-        public override void UpdateMaxVehiclesPerLane()
+        public void UpdateMaxVehiclesPerLane()
         {
             this.maxCarsInLane += 1;
         }

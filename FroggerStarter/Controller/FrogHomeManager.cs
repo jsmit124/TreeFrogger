@@ -90,10 +90,10 @@ namespace FroggerStarter.Controller
             switch (this.frogHomes.Count)
             {
                 case 1:
-                    homeFrog.X += 5;
+                    homeFrog.X += LaneSettings.EdgeOfScreenCushion;
                     break;
                 case 5:
-                    homeFrog.X -= 5;
+                    homeFrog.X -= LaneSettings.EdgeOfScreenCushion;
                     break;
             }
         }

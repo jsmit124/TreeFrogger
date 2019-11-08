@@ -36,9 +36,12 @@ namespace FroggerStarter.Model.Lanes
         /// <summary>
         ///     Updates the maximum vehicles per lane.
         /// </summary>
-        public override void UpdateMaxVehiclesPerLane()
+        public void UpdateMaxVehiclesPerLane()
         {
-            this.maxLogsInLane -= 1;
+            if (!this.isOneCarRemaining())
+            {
+                this.maxLogsInLane -= 1;
+            }
         }
 
         /// <summary>
@@ -48,12 +51,9 @@ namespace FroggerStarter.Model.Lanes
         /// </summary>
         public void HideAnotherVehicle()
         {
-            for (var index = this.maxLogsInLane; index < this.NumberOfVehicles; index++)
+            for (var index = this.maxLogsInLane; index < Vehicles.Count; index++)
             {
-                if (this.NumberOfVehicles != 1)
-                {
-                    this.hideLog(index);
-                }
+                this.hideLog(index);
             }
         }
 
@@ -72,6 +72,11 @@ namespace FroggerStarter.Model.Lanes
             }
         }
 
+        private bool isOneCarRemaining()
+        {
+            return Vehicles.Count == 1;
+        }
+
         private void makeNextLogCollapsed(int index)
         {
             Vehicles[index].Sprite.Visibility = Visibility.Collapsed;
@@ -79,7 +84,7 @@ namespace FroggerStarter.Model.Lanes
 
         private void setupMaxLogsPerLane()
         {
-            this.maxLogsInLane = Vehicles.Count;
+            this.maxLogsInLane = Vehicles.Count + 1;
         }
 
         private bool nextVehicleIsReadyToBeVisible(int i)
@@ -90,13 +95,13 @@ namespace FroggerStarter.Model.Lanes
         private bool vehicleCrossedLeftBoundary(int i)
         {
             return Vehicles[i].Direction == Direction.Left &&
-                   Math.Abs(Vehicles[i].X - (0.0 - Vehicles[i].Width)) <= 0;
+                   Math.Abs(Vehicles[i].X - (0.0 - Vehicles[i].Width - 1)) <= 0;
         }
 
         private bool vehicleCrossedRightBoundary(int i)
         {
             return Vehicles[i].Direction == Direction.Right &&
-                   Vehicles[i].X >= LaneSettings.LaneLength;
+                   Vehicles[i].X >= LaneSettings.LaneLength - 1;
         }
 
         #endregion

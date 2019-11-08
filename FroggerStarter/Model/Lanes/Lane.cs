@@ -144,11 +144,6 @@ namespace FroggerStarter.Model.Lanes
         }
 
         /// <summary>
-        ///     Updates the maximum vehicles per lane.
-        /// </summary>
-        public abstract void UpdateMaxVehiclesPerLane();
-
-        /// <summary>
         ///     Increases the vehicle speeds.
         ///     Precondition: None
         ///     Postcondition: All vehicle speeds increased by <see param="speed" />

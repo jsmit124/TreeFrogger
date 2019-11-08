@@ -30,6 +30,11 @@ namespace FroggerStarter.Constants
         /// </summary>
         public static double LaneLength = 650;
 
+        /// <summary>
+        ///     The edge of screen cushion
+        /// </summary>
+        public static int EdgeOfScreenCushion = 15;
+
         #endregion
     }
 }

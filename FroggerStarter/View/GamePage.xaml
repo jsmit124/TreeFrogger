@@ -36,11 +36,11 @@
         <TextBlock x:Name="levelTextBlock" Canvas.Left="145" Canvas.Top="8" Text="Level: 1" TextWrapping="Wrap" 
                    Height="36" Width="96" FontSize="26" FontWeight="Bold" Foreground="White" />
         <Rectangle Canvas.Top="52" Fill="Silver" Width="{StaticResource AppWidth}" Height="3" />
-        <Rectangle Canvas.Top="55" Canvas.Left="0" Fill="Black" Width="60" Height="50" />
+        <Rectangle Canvas.Top="55" Canvas.Left="10" Fill="Black" Width="60" Height="50" />
         <Rectangle Canvas.Top="55" Canvas.Left="145" Fill="Black" Width="60" Height="50" />
         <Rectangle Canvas.Top="55" Canvas.Left="295" Fill="Black" Width="60" Height="50" />
         <Rectangle Canvas.Top="55" Canvas.Left="445" Fill="Black" Width="60" Height="50" />
-        <Rectangle Canvas.Top="55" Canvas.Left="590" Fill="Black" Width="60" Height="50" />
+        <Rectangle Canvas.Top="55" Canvas.Left="580" Fill="Black" Width="60" Height="50" />
         <TextBlock x:Name="timeRemainingTextBlock" Canvas.Left="10" Text="Time: 20" TextWrapping="Wrap"
                    Height="35" Width="114" FontSize="26" FontWeight="Bold" Foreground="White" Canvas.Top="8" />
         <TextBlock Canvas.Left="278" Text="Tree" TextWrapping="Wrap" Height="33" Width="49" FontSize="24"

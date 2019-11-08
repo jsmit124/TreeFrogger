@@ -93,8 +93,8 @@ namespace FroggerStarter.Controller
         {
             this.lanes.Add(new RiverLane(Direction.Right, VehicleType.ShortLog, 3, 2.1,
                 this.calculateNextLaneYLocation()));
-            this.lanes.Add(
-                new RiverLane(Direction.Left, VehicleType.LongLog, 2, 2, this.calculateNextLaneYLocation()));
+            this.lanes.Add(new RiverLane(Direction.Left, VehicleType.LongLog, 2, 1.6,
+                this.calculateNextLaneYLocation()));
             this.lanes.Add(new RiverLane(Direction.Right, VehicleType.ShortLog, 3, 1.8,
                 this.calculateNextLaneYLocation()));
             this.lanes.Add(new RiverLane(Direction.Left, VehicleType.LongLog, 2, 1.6,
