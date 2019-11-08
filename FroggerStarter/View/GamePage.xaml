@@ -10,6 +10,15 @@
     Width="650">
 
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="Auto" Background="Black" Margin="0,-5,0,0">
+        <MediaElement Source="../Assets/SoundEffects/Dying.wav" Name="dyingElement" MediaEnded="DyingElement_MediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
+        <MediaElement Source="../Assets/SoundEffects/GameOver.wav" Name="gameOverElement" MediaEnded="GameOverElement_OnMediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
+        <MediaElement Source="../Assets/SoundEffects/PowerUpActivated.wav" Name="powerUpActivatedElement" MediaEnded="PowerUpElement_MediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
+        <MediaElement Source="../Assets/SoundEffects/MadeItHome.wav" Name="madeItHomeElement" MediaEnded="MadeItHomeElement_OnMediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
+        <MediaElement Source="../Assets/SoundEffects/LevelComplete.wav" Name="levelCompleteElement" MediaEnded="LevelCompleteElement_MediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
+        <MediaElement Source="../Assets/SoundEffects/Background.wav" Name="backgroundMusicElement" IsLooping="True" AudioCategory="BackgroundCapableMedia" />
+
+
+
         <TextBlock x:Name="gameOverTextBlock" Canvas.ZIndex="100" Text="GAME OVER" Foreground="White"
                    LineStackingStrategy="MaxHeight"
                    TextWrapping="Wrap" Canvas.Left="161" Canvas.Top="165" Height="87" Width="372" FontSize="60"

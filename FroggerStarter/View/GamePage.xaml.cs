@@ -71,22 +71,34 @@ namespace FroggerStarter.View
 
         private void onScoreCountUpdated(object sender, ScoreIncreasedEventArgs score)
         {
+            this.madeItHomeElement.IsMuted = false;
+            this.madeItHomeElement.Play();
             this.scoreTextBlock.Text = "Score: " + (score.Score + 1);
         }
 
         private void onLivesCountUpdated(object sender, LivesLostEventArgs lives)
         {
+            this.dyingElement.IsMuted = false;
+            this.dyingElement.Play();
             this.livesTextBlock.Text = "Lives: " + lives.Lives;
         }
 
         private void onLevelUpdated(object sender, LevelIncreasedEventArgs level)
         {
+            this.madeItHomeElement.IsMuted = true;
+            this.levelCompleteElement.IsMuted = false;
+            this.levelCompleteElement.Play();
             this.levelTextBlock.Text = "Level: " + level.Level;
         }
 
         private async void onGameOver(object sender, EventArgs e)
         {
             this.gameOverTextBlock.Visibility = Visibility.Visible;
+            this.backgroundMusicElement.Stop();
+
+            this.dyingElement.IsMuted = true;
+            this.gameOverElement.IsMuted = false;
+            this.gameOverElement.Play();
 
             var result = await showGameEndContentDialog();
 
@@ -103,6 +115,12 @@ namespace FroggerStarter.View
         private void onTimeRemainingUpdate(object sender, TimeRemainingEventArgs timeRemaining)
         {
             this.timeRemainingTextBlock.Text = "Time: " + timeRemaining.TimeRemaining;
+        }
+
+        private void onPowerUpActivated(object sender, EventArgs e)
+        {
+            this.powerUpActivatedElement.IsMuted = false;
+            this.powerUpActivatedElement.Play();
         }
 
         private static async Task<ContentDialogResult> showGameEndContentDialog()
@@ -140,8 +158,11 @@ namespace FroggerStarter.View
             this.gameManager.GameOver += this.onGameOver;
             this.gameManager.TimeRemainingCount += this.onTimeRemainingUpdate;
             this.gameManager.LevelIncreased += this.onLevelUpdated;
+            this.gameManager.PowerUpActivated += this.onPowerUpActivated;
 
             this.resetTextBlocks();
+
+            this.backgroundMusicElement.Play();
         }
 
         private void resetTextBlocks()
@@ -153,5 +174,40 @@ namespace FroggerStarter.View
         }
 
         #endregion
+
+        private void DyingElement_MediaEnded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            this.dyingElement.Stop();
+        }
+
+        private void GameOverElement_OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+            this.gameOverElement.Stop();
+        }
+
+        private void PowerUpElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            this.powerUpActivatedElement.Stop();
+        }
+
+        private void MadeItHomeElement_OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+            this.madeItHomeElement.Stop();
+        }
+
+        private void LevelCompleteElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            this.levelCompleteElement.Stop();
+        }
+
+        private void unmuteAllSounds()
+        {
+            this.backgroundMusicElement.IsMuted = false;
+            this.gameOverElement.IsMuted = false;
+            this.dyingElement.IsMuted = false;
+            this.levelCompleteElement.IsMuted = false;
+            this.madeItHomeElement.IsMuted = false;
+        }
+
     }
 }

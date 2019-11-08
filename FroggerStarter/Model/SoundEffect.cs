@@ -22,5 +22,13 @@ namespace FroggerStarter.Model
         {
             this.soundElement.Play();
         }
+
+        /// <summary>
+        /// Stops this instance.
+        /// </summary>
+        public void Stop()
+        {
+            this.soundElement.Stop();
+        }
     }
 }
