@@ -161,6 +161,9 @@
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sprites\PlayerMovementAnimation\FirstPlayerMovementFrame.xaml.cs">
+      <DependentUpon>FirstPlayerMovementFrame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sprites\PowerUps\ImmunityPowerUpSprite.xaml.cs">
       <DependentUpon>ImmunityPowerUpSprite.xaml</DependentUpon>
     </Compile>
@@ -236,6 +239,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Sprites\BaseSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\PlayerMovementAnimation\FirstPlayerMovementFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
