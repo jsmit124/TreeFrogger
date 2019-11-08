@@ -187,6 +187,7 @@ namespace FroggerStarter.Controller
             this.checkForPlayerLeftLog();
             this.checkForPlayerCollisionWithHome();
             this.checkForPlayerCollisionWithTimerPowerUp();
+            this.checkForPlayerIsOffScreen();
         }
 
         private void checkForPlayerCollisionWithVehicles()
@@ -198,6 +199,14 @@ namespace FroggerStarter.Controller
                 {
                     this.handleLifeLost();
                 }
+            }
+        }
+
+        private void checkForPlayerIsOffScreen()
+        {
+            if (this.playerManager.IsOffScreen())
+            {
+                this.handleLifeLost();
             }
         }
 

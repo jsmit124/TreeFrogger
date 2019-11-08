@@ -283,6 +283,14 @@ namespace FroggerStarter.Controller
                    !this.player.Y.Equals(LaneSettings.TopLaneYLocation);
         }
 
+        /// <summary>Determines whether [is off screen].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is off screen]; otherwise, <c>false</c>.</returns>
+        public bool IsOffScreen()
+        {
+            return this.player.IsOffScreen();
+        }
+
         #endregion
     }
 }
