@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
@@ -47,47 +46,35 @@ namespace FroggerStarter.Model.Lanes
         ///     Precondition: None.
         ///     Postcondition: Makes next index visible
         /// </summary>
-        public async void HideAnotherVehicle()
+        public void HideAnotherVehicle()
         {
             for (var index = this.maxLogsInLane; index < this.NumberOfVehicles; index++)
             {
-                await this.hideLog(index);
+                if (this.NumberOfVehicles != 1)
+                {
+                    this.hideLog(index);
+                }
             }
         }
 
-        /// <summary>
-        ///     Hide all the vehicles except the first vehicle.
-        ///     Precondition: None.
-        ///     Postcondition: Makes all logs visible
-        /// </summary>
-        public void showAllLogs()
-        {
-            foreach (var vehicle in Vehicles)
-            {
-                vehicle.Sprite.Visibility = Visibility.Visible;
-            }
-        }
-
-        private async Task hideLog(int index)
+        private void hideLog(int index)
         {
             if (this.nextVehicleIsReadyToBeVisible(index))
             {
                 if (this.vehicleCrossedLeftBoundary(index))
                 {
                     this.makeNextLogCollapsed(index);
-                    await Task.Delay(850);
                 }
                 else if (this.vehicleCrossedRightBoundary(index))
                 {
                     this.makeNextLogCollapsed(index);
-                    await Task.Delay(850);
                 }
             }
         }
 
         private void makeNextLogCollapsed(int index)
         {
-            Vehicles[index + 1].Sprite.Visibility = Visibility.Collapsed;
+            Vehicles[index].Sprite.Visibility = Visibility.Collapsed;
         }
 
         private void setupMaxLogsPerLane()
@@ -97,19 +84,19 @@ namespace FroggerStarter.Model.Lanes
 
         private bool nextVehicleIsReadyToBeVisible(int i)
         {
-            return Vehicles[i].Sprite.Visibility == Visibility.Visible && i + 1 != Vehicles.Count;
+            return Vehicles[i].Sprite.Visibility == Visibility.Visible;
         }
 
         private bool vehicleCrossedLeftBoundary(int i)
         {
-            return Vehicles[i + 1].Direction == Direction.Left &&
-                   Math.Abs(Vehicles[i + 1].X - (0.0 - Vehicles[i + 1].Width)) <= 0;
+            return Vehicles[i].Direction == Direction.Left &&
+                   Math.Abs(Vehicles[i].X - (0.0 - Vehicles[i].Width)) <= 0;
         }
 
         private bool vehicleCrossedRightBoundary(int i)
         {
-            return Vehicles[i + 1].Direction == Direction.Right &&
-                   Vehicles[i + 1].X >= LaneSettings.LaneLength;
+            return Vehicles[i].Direction == Direction.Right &&
+                   Vehicles[i].X >= LaneSettings.LaneLength;
         }
 
         #endregion
