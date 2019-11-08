@@ -331,11 +331,6 @@ namespace FroggerStarter.Controller
             this.timeRemainingTimer.Stop();
             this.handleStartDeathAnimation();
 
-            //TODO remove - this is for testing sound effects
-            //Michael, if you see this, just remove it if you need to
-            //var sound = new SoundEffect(SoundEffectType.Death);
-            //sound.Play();
-
             if (!this.checkForGameOver())
             {
                 this.setPlayerToCenterOfBottomLane();
@@ -428,6 +423,7 @@ namespace FroggerStarter.Controller
 
         private async void handlePowerUpIsHit(PowerUp powerUp)
         {
+            this.PowerUpActivated?.Invoke(this, EventArgs.Empty);
             if (powerUp.PowerUpType == PowerUpType.Timer)
             {
                 this.playerManager.TimerPowerUp();
@@ -555,6 +551,11 @@ namespace FroggerStarter.Controller
         ///     The game over event handler
         /// </summary>
         public EventHandler<EventArgs> GameOver;
+
+        /// <summary>
+        /// The power up activated event handler
+        /// </summary>
+        public EventHandler<EventArgs> PowerUpActivated;
 
         /// <summary>
         ///     The life lost event handler
