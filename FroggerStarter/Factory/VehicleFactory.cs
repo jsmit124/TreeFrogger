@@ -1,6 +1,5 @@
 ﻿using System;
 using FroggerStarter.Enums;
-using FroggerStarter.Model;
 using FroggerStarter.Model.Vehicles;
 
 namespace FroggerStarter.Factory
