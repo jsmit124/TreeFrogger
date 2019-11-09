@@ -100,6 +100,7 @@ namespace FroggerStarter.Controller
             this.addVehiclesToView();
             this.addLogsToView();
             this.addDeathAnimationsToView();
+            this.addPlayerMovementAnimationsToView();
             this.placeHomeFrogs();
             this.laneManager.HideVehicles();
             this.createAndPlacePlayer();
@@ -112,7 +113,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
-            this.playerManager.MovePlayerLeft(0);
+            this.playerManager.MovePlayer(0, Direction.Left);
         }
 
         /// <summary>
@@ -122,7 +123,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            this.playerManager.MovePlayerRight(this.backgroundWidth);
+            this.playerManager.MovePlayer(this.backgroundWidth, Direction.Right);
         }
 
         /// <summary>
@@ -132,7 +133,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            this.playerManager.MovePlayerUp(LaneSettings.TopLaneYLocation);
+            this.playerManager.MovePlayer(LaneSettings.TopLaneYLocation, Direction.Up);
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            this.playerManager.MovePlayerDown((int) Math.Floor(this.backgroundHeight));
+            this.playerManager.MovePlayer((int) Math.Floor(this.backgroundHeight), Direction.Down);
         }
 
         /// <summary>
@@ -465,6 +466,11 @@ namespace FroggerStarter.Controller
         private void addDeathAnimationsToView()
         {
             this.deathAnimationManager.ToList().ForEach(animation => this.gameCanvas.Children.Add(animation.Sprite));
+        }
+
+        private void addPlayerMovementAnimationsToView()
+        {
+            this.gameCanvas.Children.Add(this.playerManager.MovementSprite);
         }
 
         private void addPowerUpsToView()

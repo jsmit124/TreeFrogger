@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Model;
+using FroggerStarter.Model.Animations;
 
 namespace FroggerStarter.Controller
 {

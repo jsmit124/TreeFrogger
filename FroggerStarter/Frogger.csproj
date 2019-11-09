@@ -127,6 +127,7 @@
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\PowerUpManager.cs" />
     <Compile Include="Controller\RiverManager.cs" />
+    <Compile Include="Enums\PlayerFrames.cs" />
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="Enums\VehicleType.cs" />
@@ -134,13 +135,15 @@
     <Compile Include="Factory\PowerUpFactory.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Model\BaseObject.cs" />
+    <Compile Include="Model\Animations\BaseAnimation.cs" />
+    <Compile Include="Model\Animations\PlayerMovementAnimation.cs" />
     <Compile Include="Model\Lanes\RiverLane.cs" />
     <Compile Include="Model\Lanes\RoadLane.cs" />
     <Compile Include="Model\PowerUps\ImmunityPowerUp.cs" />
     <Compile Include="Model\PowerUps\PowerUp.cs" />
     <Compile Include="Model\PowerUps\TimerPowerUp.cs" />
     <Compile Include="Model\Vehicles\Bus.cs" />
-    <Compile Include="Model\DeathAnimation.cs" />
+    <Compile Include="Model\Animations\DeathAnimation.cs" />
     <Compile Include="Model\Frog.cs" />
     <Compile Include="Controller\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />

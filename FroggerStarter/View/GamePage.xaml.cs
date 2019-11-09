@@ -200,14 +200,5 @@ namespace FroggerStarter.View
             this.levelCompleteElement.Stop();
         }
 
-        private void unmuteAllSounds()
-        {
-            this.backgroundMusicElement.IsMuted = false;
-            this.gameOverElement.IsMuted = false;
-            this.dyingElement.IsMuted = false;
-            this.levelCompleteElement.IsMuted = false;
-            this.madeItHomeElement.IsMuted = false;
-        }
-
     }
 }

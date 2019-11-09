@@ -1,5 +1,10 @@
-﻿using FroggerStarter.Constants;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Windows.UI.Xaml;
+using FroggerStarter.Constants;
+using FroggerStarter.Controller;
 using FroggerStarter.Enums;
+using FroggerStarter.Model.Animations;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
@@ -33,6 +38,16 @@ namespace FroggerStarter.Model
         #region Methods
 
         /// <summary>
+        ///     Enables movement.
+        ///     Precondition: None
+        ///     Postcondition: base.speedX = SpeedXDirection, base.speedY = SpeedYDirection
+        /// </summary>
+        public void EnableMovement()
+        {
+            SetSpeed(SpeedXDirection, SpeedYDirection);
+        }
+
+        /// <summary>
         ///     Moves the game object right.
         ///     Precondition: None
         ///     Postcondition: X == X@prev + SpeedX
@@ -43,16 +58,6 @@ namespace FroggerStarter.Model
             {
                 base.MoveRight();
             }
-        }
-
-        /// <summary>
-        ///     Enables movement.
-        ///     Precondition: None
-        ///     Postcondition: base.speedX = SpeedXDirection, base.speedY = SpeedYDirection
-        /// </summary>
-        public void EnableMovement()
-        {
-            SetSpeed(SpeedXDirection, SpeedYDirection);
         }
 
         /// <summary>

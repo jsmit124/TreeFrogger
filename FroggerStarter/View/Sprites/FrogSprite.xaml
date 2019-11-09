@@ -10,41 +10,41 @@
     Width="50">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="FrogColor" Color="LawnGreen" />
+        <SolidColorBrush x:Key="FrogColor" Color="LimeGreen" />
         <SolidColorBrush x:Key="FrogSecondaryColor" Color="Yellow" />
         <SolidColorBrush x:Key="EyeColor" Color="HotPink" />
     </UserControl.Resources>
 
     <Canvas Width="50" Height="50" Background="Transparent">
-        <Rectangle Canvas.Top="12" Canvas.Left="12" Fill="{StaticResource FrogColor}" Width="26" Height="30" />
-        <Rectangle Canvas.Left="16" Fill="{StaticResource FrogColor}" Width="18" Height="8" Canvas.Top="4" />
-        <Rectangle Canvas.Top="42" Canvas.Left="16" Fill="{StaticResource FrogColor}" Width="18" Height="4" />
-        <Rectangle Canvas.Top="8" Canvas.Left="12" Fill="{StaticResource EyeColor}" Width="4" Height="4" />
-        <Rectangle Canvas.Top="8" Canvas.Left="34" Fill="{StaticResource EyeColor}" Width="4" Height="4" />
+        <Rectangle Canvas.Top="15" Canvas.Left="12" Fill="{StaticResource FrogColor}" Width="26" Height="21" />
+        <Rectangle Canvas.Left="16" Fill="{StaticResource FrogColor}" Width="18" Height="6" Canvas.Top="9" />
+        <Rectangle Canvas.Top="36" Canvas.Left="16" Fill="{StaticResource FrogColor}" Width="18" Height="3" />
+        <Rectangle Canvas.Top="12" Canvas.Left="12" Fill="{StaticResource EyeColor}" Width="4" Height="3" />
+        <Rectangle Canvas.Top="12" Canvas.Left="34" Fill="{StaticResource EyeColor}" Width="4" Height="3" />
 
-        <Rectangle Canvas.Top="16" Canvas.Left="8" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
-        <Rectangle Canvas.Left="4" Fill="{StaticResource FrogColor}" Width="4" Height="20" />
+        <Rectangle Canvas.Top="21" Canvas.Left="8" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
+        <Rectangle Canvas.Left="4" Fill="{StaticResource FrogColor}" Width="4" Height="20" Canvas.Top="5" />
 
-        <Rectangle Canvas.Top="16" Canvas.Left="38" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
-        <Rectangle Canvas.Left="42" Fill="{StaticResource FrogColor}" Width="4" Height="20" />
+        <Rectangle Canvas.Top="21" Canvas.Left="38" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
+        <Rectangle Canvas.Left="42" Fill="{StaticResource FrogColor}" Width="4" Height="20" Canvas.Top="5" />
 
-        <Rectangle Canvas.Top="34" Canvas.Left="8" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
-        <Rectangle Canvas.Top="34" Canvas.Left="4" Fill="{StaticResource FrogColor}" Width="4" Height="16" />
+        <Rectangle Canvas.Top="29" Canvas.Left="8" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
+        <Rectangle Canvas.Top="29" Canvas.Left="4" Fill="{StaticResource FrogColor}" Width="4" Height="16" />
 
-        <Rectangle Canvas.Top="34" Canvas.Left="38" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
-        <Rectangle Canvas.Top="42" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
-        <Rectangle Canvas.Top="42" Fill="{StaticResource FrogColor}" Width="4" Height="4" Canvas.Left="46" />
-        <Rectangle Canvas.Top="34" Canvas.Left="42" Fill="{StaticResource FrogColor}" Width="4" Height="16" />
-        <Rectangle Fill="{StaticResource FrogColor}" Width="4" Height="4" Canvas.Left="46" Canvas.Top="4" />
-        <Rectangle Fill="{StaticResource FrogColor}" Width="4" Height="4" Canvas.Top="4" />
-        <Rectangle Canvas.Top="4" Canvas.Left="24" Fill="{StaticResource FrogSecondaryColor}" Width="10" Height="4" />
-        <Rectangle Canvas.Top="4" Canvas.Left="16" Fill="{StaticResource FrogSecondaryColor}" Width="4" Height="4" />
-        <Rectangle Canvas.Top="8" Canvas.Left="20" Fill="{StaticResource FrogSecondaryColor}" Width="8" Height="30" />
-        <Rectangle Canvas.Top="16" Canvas.Left="28" Fill="{StaticResource FrogSecondaryColor}" Width="10" Height="22" />
-        <Rectangle Canvas.Top="16" Canvas.Left="12" Fill="{StaticResource FrogSecondaryColor}" Width="8" Height="4" />
-        <Rectangle Canvas.Top="20" Canvas.Left="12" Fill="{StaticResource FrogSecondaryColor}" Width="4" Height="18" />
-        <Rectangle Canvas.Top="38" Canvas.Left="16" Fill="{StaticResource FrogSecondaryColor}" Width="4" Height="4" />
-        <Rectangle Canvas.Top="42" Canvas.Left="20" Fill="{StaticResource FrogSecondaryColor}" Width="10" Height="4" />
-        <Rectangle Canvas.Top="38" Canvas.Left="26" Fill="{StaticResource FrogSecondaryColor}" Width="8" Height="4" />
+        <Rectangle Canvas.Top="29" Canvas.Left="38" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
+        <Rectangle Canvas.Top="37" Fill="{StaticResource FrogColor}" Width="4" Height="4" />
+        <Rectangle Canvas.Top="37" Fill="{StaticResource FrogColor}" Width="4" Height="4" Canvas.Left="46" />
+        <Rectangle Canvas.Top="29" Canvas.Left="42" Fill="{StaticResource FrogColor}" Width="4" Height="16" />
+        <Rectangle Fill="{StaticResource FrogColor}" Width="4" Height="4" Canvas.Left="46" Canvas.Top="9" />
+        <Rectangle Fill="{StaticResource FrogColor}" Width="4" Height="4" Canvas.Top="9" />
+        <Rectangle Canvas.Top="9" Canvas.Left="24" Fill="{StaticResource FrogSecondaryColor}" Width="10" Height="3" />
+        <Rectangle Canvas.Top="9" Canvas.Left="16" Fill="{StaticResource FrogSecondaryColor}" Width="4" Height="3" />
+        <Rectangle Canvas.Top="12" Canvas.Left="20" Fill="{StaticResource FrogSecondaryColor}" Width="8" Height="21" />
+        <Rectangle Canvas.Top="17" Canvas.Left="28" Fill="{StaticResource FrogSecondaryColor}" Width="10" Height="16" />
+        <Rectangle Canvas.Top="17" Canvas.Left="12" Fill="{StaticResource FrogSecondaryColor}" Width="8" Height="3" />
+        <Rectangle Canvas.Top="20" Canvas.Left="12" Fill="{StaticResource FrogSecondaryColor}" Width="4" Height="13" />
+        <Rectangle Canvas.Top="33" Canvas.Left="16" Fill="{StaticResource FrogSecondaryColor}" Width="4" Height="3" />
+        <Rectangle Canvas.Top="36" Canvas.Left="20" Fill="{StaticResource FrogSecondaryColor}" Width="10" Height="3" />
+        <Rectangle Canvas.Top="33" Canvas.Left="26" Fill="{StaticResource FrogSecondaryColor}" Width="8" Height="3" />
     </Canvas>
 </local:BaseSprite>
