@@ -344,6 +344,7 @@ namespace FroggerStarter.Controller
         public void EnableMovement()
         {
             this.player.EnableMovement();
+            this.Sprite.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -352,6 +353,7 @@ namespace FroggerStarter.Controller
         public void DisableMovement()
         {
             this.player.StopMovement();
+            this.Sprite.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
