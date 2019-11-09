@@ -8,7 +8,6 @@ using FroggerStarter.Enums;
 using FroggerStarter.Model;
 using FroggerStarter.Model.PowerUps;
 using FroggerStarter.Model.Vehicles;
-using FroggerStarter.View;
 using FroggerStarter.View.Dialogs;
 
 namespace FroggerStarter.Controller
@@ -29,6 +28,7 @@ namespace FroggerStarter.Controller
         private bool gameIsOver;
         private bool playerIsImmune;
         private bool playerOnMovingLog;
+        private bool deathAnimationActive;
 
         private Canvas gameCanvas;
 
@@ -114,7 +114,9 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
+            
             this.playerManager.MovePlayer(0, Direction.Left);
+            
         }
 
         /// <summary>
@@ -124,7 +126,9 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
+            
             this.playerManager.MovePlayer(this.backgroundWidth, Direction.Right);
+            
         }
 
         /// <summary>
@@ -134,7 +138,9 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
+            
             this.playerManager.MovePlayer(LaneSettings.TopLaneYLocation, Direction.Up);
+            
         }
 
         /// <summary>
@@ -144,7 +150,9 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            this.playerManager.MovePlayer((int) Math.Floor(this.backgroundHeight), Direction.Down);
+            
+            this.playerManager.MovePlayer((int)Math.Floor(this.backgroundHeight), Direction.Down);
+            
         }
 
         /// <summary>
@@ -190,6 +198,7 @@ namespace FroggerStarter.Controller
             this.checkForPlayerCollisionWithHome();
             this.checkForPlayerCollisionWithTimerPowerUp();
             this.checkForPlayerIsOffScreen();
+            this.checkForDeathAnimationActive();
         }
 
         private void checkForPlayerCollisionWithVehicles()
@@ -284,6 +293,14 @@ namespace FroggerStarter.Controller
             }
         }
 
+        private void checkForDeathAnimationActive()
+        {
+            if (this.deathAnimationActive)
+            {
+                this.playerManager.Sprite.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private async void handleStartup()
         {
             var startDialog = new StartScreenDialog();
@@ -331,6 +348,7 @@ namespace FroggerStarter.Controller
             this.LifeLost?.Invoke(this, lives);
 
             this.timeRemainingTimer.Stop();
+            this.deathAnimationActive = true;
             this.handleStartDeathAnimation();
 
             if (!this.checkForGameOver())
@@ -421,6 +439,7 @@ namespace FroggerStarter.Controller
             this.playerManager.EnableMovement();
             this.resetTimeRemainingTimer();
             this.laneManager.HideVehicles();
+            this.deathAnimationActive = false;
         }
 
         private async void handlePowerUpIsHit(PowerUp powerUp)
