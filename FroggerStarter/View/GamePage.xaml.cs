@@ -125,12 +125,7 @@ namespace FroggerStarter.View
 
         private static async Task<ContentDialogResult> showGameEndContentDialog()
         {
-            var gameEndDialog = new ContentDialog {
-                Title = "GAME OVER",
-                Content = "Play again?",
-                PrimaryButtonText = "Play Again",
-                CloseButtonText = "Close"
-            };
+            var gameEndDialog = new GameEndDialog();
             var result = await gameEndDialog.ShowAsync();
 
             return result;
