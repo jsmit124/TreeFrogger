@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using FroggerStarter.Constants;
-using FroggerStarter.Model;
+using FroggerStarter.Enums;
 using FroggerStarter.Model.Animations;
 
 namespace FroggerStarter.Controller
@@ -15,6 +15,11 @@ namespace FroggerStarter.Controller
     public class DeathAnimationManager : IEnumerable<DeathAnimation>
     {
         #region Data members
+
+        /// <summary>
+        ///     The animation over
+        /// </summary>
+        public EventHandler<EventArgs> AnimationOver;
 
         private readonly IList<DeathAnimation> animations;
         private DispatcherTimer deathAnimationTimer;
@@ -159,9 +164,9 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Plays the death animation.
-        /// Precondition: None
-        /// Postcondition: None
+        ///     Plays the death animation.
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         public void PlayDeathAnimation()
         {
@@ -169,9 +174,9 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Stops the animation timer.
-        /// Precondition: None
-        /// Postcondition: None
+        ///     Stops the animation timer.
+        ///     Precondition: None
+        ///     Postcondition: None
         /// </summary>
         public void StopAnimationTimer()
         {
@@ -179,9 +184,17 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// The animation over
+        ///     Rotates the sprite.
+        ///     @Precondition: None
+        ///     @Postcondition: Sprite is rotated
         /// </summary>
-        public EventHandler<EventArgs> AnimationOver;
+        public void RotateAllSprites(Direction direction)
+        {
+            foreach (var animation in this.animations)
+            {
+                animation.RotateSprite(direction);
+            }
+        }
 
         #endregion
     }

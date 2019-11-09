@@ -105,6 +105,14 @@ namespace FroggerStarter.Controller
         /// </value>
         public int Level => this.playerStats.Level;
 
+        /// <summary>
+        ///     Gets or sets the current direction.
+        /// </summary>
+        /// <value>
+        ///     The current direction.
+        /// </value>
+        public Direction CurrentDirection { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -217,6 +225,7 @@ namespace FroggerStarter.Controller
         /// <param name="direction">The direction.</param>
         public async void MovePlayer(double boundary, Direction direction)
         {
+            this.CurrentDirection = direction;
             if (this.player.SpeedX > 0)
             {
                 await this.moveBothSprites(boundary, direction);

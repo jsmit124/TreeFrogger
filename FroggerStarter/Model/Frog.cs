@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Windows.UI.Xaml;
-using FroggerStarter.Constants;
-using FroggerStarter.Controller;
+﻿using FroggerStarter.Constants;
 using FroggerStarter.Enums;
-using FroggerStarter.Model.Animations;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model

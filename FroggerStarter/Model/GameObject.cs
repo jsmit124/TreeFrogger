@@ -139,8 +139,6 @@ namespace FroggerStarter.Model
                     this.Sprite.RenderTransform = new CompositeTransform { Rotation = 90 };
                     break;
             }
-            
-            
         }
 
         #endregion

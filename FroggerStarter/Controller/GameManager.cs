@@ -369,6 +369,7 @@ namespace FroggerStarter.Controller
             this.playerManager.Sprite.Visibility = Visibility.Collapsed;
 
             this.setDeathAnimationToPlayerLocation();
+            this.deathAnimationManager.RotateAllSprites(this.playerManager.CurrentDirection);
             this.deathAnimationManager.PlayDeathAnimation();
         }
 
