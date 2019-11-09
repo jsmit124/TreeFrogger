@@ -9,6 +9,7 @@ using FroggerStarter.Model;
 using FroggerStarter.Model.PowerUps;
 using FroggerStarter.Model.Vehicles;
 using FroggerStarter.View;
+using FroggerStarter.View.Dialogs;
 
 namespace FroggerStarter.Controller
 {

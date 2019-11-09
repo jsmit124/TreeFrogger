@@ -156,7 +156,7 @@
     <Compile Include="Model\Vehicles\SpeedCar.cs" />
     <Compile Include="Model\Vehicles\Vehicle.cs" />
     <Compile Include="Utility\RelayCommand.cs" />
-    <Compile Include="View\GameEndDialog.xaml.cs">
+    <Compile Include="View\Dialogs\GameEndDialog.xaml.cs">
       <DependentUpon>GameEndDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\GamePage.xaml.cs">
@@ -209,7 +209,7 @@
     <Compile Include="View\Sprites\Vehicles\SpeedCarSprite.xaml.cs">
       <DependentUpon>SpeedCarSprite.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StartScreenDialog.xaml.cs">
+    <Compile Include="View\Dialogs\StartScreenDialog.xaml.cs">
       <DependentUpon>StartScreenDialog.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -239,7 +239,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\GameEndDialog.xaml">
+    <Page Include="View\Dialogs\GameEndDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -307,7 +307,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\StartScreenDialog.xaml">
+    <Page Include="View\Dialogs\StartScreenDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
