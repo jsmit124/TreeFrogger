@@ -187,28 +187,38 @@ namespace FroggerStarter.View
             }
             else if (result == ContentDialogResult.Secondary)
             {
-                if (this.gameViewModel.HighScores == null)
-                {
-                    await this.chooseFileAndSetHighScores();
-                    await this.showStartDialog();
-                }
-                else if (this.gameViewModel.HighScores.Count == 0)
-                {
-                    var noHighScoresScreen = new NoHighScoresToShowDialog();
-                    result = await noHighScoresScreen.ShowAsync();
-                    if (result == ContentDialogResult.Primary)
-                    {
-                        await this.showStartDialog();
-                    }
-                    if (result == ContentDialogResult.Secondary)
-                    {
-                        await this.chooseFileAndSetHighScores();
-                        await this.showStartDialog();
-                    }
-                }
+                await this.handleHighScoresDisplay();
+            }
+        }
 
-                //TODO display high score screen (which will be bound to view model)
+        private async Task handleHighScoresDisplay()
+        {
+            if (this.gameViewModel.HighScores == null)
+            {
+                await this.chooseFileAndSetHighScores();
+                await this.showStartDialog();
+            }
+            else if (this.gameViewModel.HighScores.Count == 0)
+            {
+                await this.showNoHighScoresScreen();
+            }
 
+            //TODO display high score screen (which will be bound to view model)
+        }
+
+        private async Task showNoHighScoresScreen()
+        {
+            var noHighScoresScreen = new NoHighScoresToShowDialog();
+            var result = await noHighScoresScreen.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                await this.showStartDialog();
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+                await this.chooseFileAndSetHighScores();
+                await this.showStartDialog();
             }
         }
 
