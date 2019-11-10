@@ -8,7 +8,6 @@ using FroggerStarter.Enums;
 using FroggerStarter.Model;
 using FroggerStarter.Model.PowerUps;
 using FroggerStarter.Model.Vehicles;
-using FroggerStarter.View.Dialogs;
 
 namespace FroggerStarter.Controller
 {
@@ -38,13 +37,6 @@ namespace FroggerStarter.Controller
         private readonly DeathAnimationManager deathAnimationManager;
         private readonly PowerUpManager powerUpManager;
         private readonly PlayerManager playerManager;
-        /// <summary>
-        /// Gets the high scores.
-        /// </summary>
-        /// <value>
-        /// The high scores.
-        /// </value>
-        public HighScoreCollection HighScores { get; private set; }
 
         private DispatcherTimer gameTimer;
         private DispatcherTimer timeRemainingTimer;

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
@@ -12,27 +13,34 @@ namespace FroggerStarter.IO
     /// <summary>
     /// Stores information for the high score file reader class
     /// </summary>
-    public class HighScoreFileReader
+    public static class HighScoreFileReader
     {
         /// <summary>
         /// Reads the high scores file.
         /// </summary>
         /// <returns>Returns a Task of type HighScoreCollection</returns>
-        public async Task<HighScoreCollection> ReadHighScoresFile()
+        public static async Task<HighScoreCollection> ReadHighScoresFile()
         {
-            var openPicker = new FileOpenPicker() {
-                ViewMode = PickerViewMode.Thumbnail,
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
+            try
+            {
+                var openPicker = new FileOpenPicker() {
+                    ViewMode = PickerViewMode.Thumbnail,
+                    SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
 
-            };
-            openPicker.FileTypeFilter.Add(".xml");
+                };
+                openPicker.FileTypeFilter.Add(".xml");
 
-            IStorageFile file = await openPicker.PickSingleFileAsync();
+                IStorageFile file = await openPicker.PickSingleFileAsync();
 
-            return this.readFromXml(file).Result;
+                return await readFromXml(file);
+            }
+            catch (InvalidOperationException)
+            {
+                return new HighScoreCollection();
+            }
         }
 
-        private async Task<HighScoreCollection> readFromXml(IStorageFile file)
+        private static async Task<HighScoreCollection> readFromXml(IStorageFile file)
         {
             var serializer = new XmlSerializer(typeof(HighScoreCollection));
             var readStream = await file.OpenStreamForReadAsync();

@@ -18,7 +18,7 @@
         <MediaElement Source="../Assets/SoundEffects/PowerUpActivated.wav" Name="powerUpActivatedElement" AutoPlay="False" MediaEnded="PowerUpElement_MediaEnded" AudioCategory="SoundEffects"/>
         <MediaElement Source="../Assets/SoundEffects/MadeItHome.wav" Name="madeItHomeElement" MediaEnded="MadeItHomeElement_OnMediaEnded" AutoPlay="False" AudioCategory="SoundEffects"/>
         <MediaElement Source="../Assets/SoundEffects/LevelComplete.wav" Name="levelCompleteElement" AutoPlay="False" MediaEnded="LevelCompleteElement_MediaEnded" AudioCategory="SoundEffects"/>
-        <MediaElement Source="../Assets/SoundEffects/Background.wav" Name="backgroundMusicElement" Volume="0.45" IsLooping="True" AudioCategory="BackgroundCapableMedia" />
+        <MediaElement Source="../Assets/SoundEffects/Background.wav" Name="backgroundMusicElement" AutoPlay="False" Volume="0.45" IsLooping="True" AudioCategory="BackgroundCapableMedia" />
 
 
 

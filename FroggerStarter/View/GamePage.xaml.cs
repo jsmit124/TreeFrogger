@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Constants;
 using FroggerStarter.Controller;
+using FroggerStarter.IO;
 using FroggerStarter.View.Dialogs;
 using FroggerStarter.ViewModel;
 using static FroggerStarter.Controller.GameManager;
@@ -172,7 +173,6 @@ namespace FroggerStarter.View
             await this.showStartDialog();
 
             this.unmuteDeathSoundEffects();
-            this.backgroundMusicElement.Play();
         }
 
         private async Task showStartDialog()
@@ -183,15 +183,19 @@ namespace FroggerStarter.View
             if (result == ContentDialogResult.Primary)
             {
                 this.gameManager.StartGame();
+                this.backgroundMusicElement.Play();
             }
             else if (result == ContentDialogResult.Secondary)
             {
-                if (this.gameManager.HighScores == null)
+                if (this.gameViewModel.HighScores == null)
                 {
-                    //TODO use file reader to find file and add to high scores
+                    var highScores = await HighScoreFileReader.ReadHighScoresFile();
+                    this.gameViewModel.SetHighScores(highScores);
                 }
 
+                //TODO display high score screen (which will be bound to view model)
                 //TODO show high scores list in new dialog
+                //TODO if high scores list.count == 0, show "no scores to display" screen
 
             }
         }
