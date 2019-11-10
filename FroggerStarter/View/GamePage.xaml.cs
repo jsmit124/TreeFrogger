@@ -189,15 +189,33 @@ namespace FroggerStarter.View
             {
                 if (this.gameViewModel.HighScores == null)
                 {
-                    var highScores = await HighScoreFileReader.ReadHighScoresFile();
-                    this.gameViewModel.SetHighScores(highScores);
+                    await this.chooseFileAndSetHighScores();
+                    await this.showStartDialog();
+                }
+                else if (this.gameViewModel.HighScores.Count == 0)
+                {
+                    var noHighScoresScreen = new NoHighScoresToShowDialog();
+                    result = await noHighScoresScreen.ShowAsync();
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        await this.showStartDialog();
+                    }
+                    if (result == ContentDialogResult.Secondary)
+                    {
+                        await this.chooseFileAndSetHighScores();
+                        await this.showStartDialog();
+                    }
                 }
 
                 //TODO display high score screen (which will be bound to view model)
-                //TODO show high scores list in new dialog
-                //TODO if high scores list.count == 0, show "no scores to display" screen
 
             }
+        }
+
+        private async Task chooseFileAndSetHighScores()
+        {
+            var highScores = await HighScoreFileReader.ReadHighScoresFile();
+            this.gameViewModel.SetHighScores(highScores);
         }
 
         private void setupEvents()

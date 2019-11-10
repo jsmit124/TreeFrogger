@@ -7,9 +7,11 @@ namespace FroggerStarter.Model
     /// <summary>
     /// Stores information for the player information to add to the high scores
     /// </summary>
-    public class HighScoreCollection :IEnumerable
+    public class HighScoreCollection : IEnumerable
     {
         private readonly IList<HighScorePlayerInfo> highScores;
+
+        public int Count => this.highScores.Count;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HighScorePlayerInfo"/> class.

@@ -165,6 +165,12 @@
     <Compile Include="View\Dialogs\GameEndDialog.xaml.cs">
       <DependentUpon>GameEndDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Dialogs\HighScoresDialog.xaml.cs">
+      <DependentUpon>HighScoresDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialogs\NoHighScoresToShowDialog.xaml.cs">
+      <DependentUpon>NoHighScoresToShowDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -249,6 +255,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="View\Dialogs\GameEndDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialogs\HighScoresDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialogs\NoHighScoresToShowDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
