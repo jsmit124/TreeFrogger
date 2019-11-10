@@ -380,7 +380,7 @@ namespace FroggerStarter.Controller
         private void handlePlayerScored()
         {
             this.playerOnMovingLog = false;
-            this.playerManager.IncrementScore(this.playerManager.TimeRemaining);
+            this.playerManager.IncrementScore(this.playerManager.TimeRemaining * this.playerManager.Lives);
 
             var score = new ScoreIncreasedEventArgs {Score = this.playerManager.Score};
             this.ScoreIncreased?.Invoke(this, score);
