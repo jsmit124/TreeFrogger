@@ -38,6 +38,7 @@ namespace FroggerStarter.Controller
         private readonly DeathAnimationManager deathAnimationManager;
         private readonly PowerUpManager powerUpManager;
         private readonly PlayerManager playerManager;
+        private HighScoreCollection highScores;
 
         private DispatcherTimer gameTimer;
         private DispatcherTimer timeRemainingTimer;
@@ -316,6 +317,10 @@ namespace FroggerStarter.Controller
                 this.setupTimeRemainingTimer();
                 this.powerUpManager.startPowerUpTimer();
                 this.playerManager.EnableMovement();
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+
             }
         }
 

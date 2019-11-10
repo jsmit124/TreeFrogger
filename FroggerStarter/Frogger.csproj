@@ -138,6 +138,7 @@
     <Compile Include="Model\BaseObject.cs" />
     <Compile Include="Model\Animations\BaseAnimation.cs" />
     <Compile Include="Model\Animations\PlayerMovementAnimation.cs" />
+    <Compile Include="Model\HighScoreCollection.cs" />
     <Compile Include="Model\HighScorePlayerInfo.cs" />
     <Compile Include="Model\Lanes\RiverLane.cs" />
     <Compile Include="Model\Lanes\RoadLane.cs" />
