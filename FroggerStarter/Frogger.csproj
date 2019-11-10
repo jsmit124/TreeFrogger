@@ -133,9 +133,12 @@
     <Compile Include="Factory\DeathAnimationFactory.cs" />
     <Compile Include="Factory\PowerUpFactory.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
+    <Compile Include="IO\HighScoreFileReader.cs" />
+    <Compile Include="IO\HighScoreFileWriter.cs" />
     <Compile Include="Model\BaseObject.cs" />
     <Compile Include="Model\Animations\BaseAnimation.cs" />
     <Compile Include="Model\Animations\PlayerMovementAnimation.cs" />
+    <Compile Include="Model\HighScorePlayerInfo.cs" />
     <Compile Include="Model\Lanes\RiverLane.cs" />
     <Compile Include="Model\Lanes\RoadLane.cs" />
     <Compile Include="Model\PowerUps\ImmunityPowerUp.cs" />
