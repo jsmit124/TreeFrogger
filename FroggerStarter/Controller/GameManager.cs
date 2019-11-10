@@ -38,7 +38,13 @@ namespace FroggerStarter.Controller
         private readonly DeathAnimationManager deathAnimationManager;
         private readonly PowerUpManager powerUpManager;
         private readonly PlayerManager playerManager;
-        private HighScoreCollection highScores;
+        /// <summary>
+        /// Gets the high scores.
+        /// </summary>
+        /// <value>
+        /// The high scores.
+        /// </value>
+        public HighScoreCollection HighScores { get; private set; }
 
         private DispatcherTimer gameTimer;
         private DispatcherTimer timeRemainingTimer;
@@ -80,7 +86,6 @@ namespace FroggerStarter.Controller
             this.playerManager = new PlayerManager();
 
             this.deathAnimationManager.AnimationOver += this.handleDeathAnimationHasEnded;
-            this.handleStartup();
         }
 
         #endregion
@@ -306,27 +311,15 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private async void handleStartup()
+        /// <summary>
+        /// Starts the game.
+        /// </summary>
+        public void StartGame()
         {
-            var startDialog = new StartScreenDialog();
-            var result = await startDialog.ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                this.setupGameTimer();
-                this.setupTimeRemainingTimer();
-                this.powerUpManager.startPowerUpTimer();
-                this.playerManager.EnableMovement();
-            }
-            else if (result == ContentDialogResult.Secondary)
-            {
-                if (this.highScores == null)
-                {
-                    //TODO use file reader to find file and add to high scores
-                }
-
-                //TODO show high scores list
-            }
+            this.setupGameTimer();
+            this.setupTimeRemainingTimer();
+            this.powerUpManager.startPowerUpTimer();
+            this.playerManager.EnableMovement();
         }
 
         private void handleLevelOver()

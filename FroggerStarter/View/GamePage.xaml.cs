@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using FroggerStarter.Constants;
 using FroggerStarter.Controller;
 using FroggerStarter.View.Dialogs;
+using FroggerStarter.ViewModel;
 using static FroggerStarter.Controller.GameManager;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -26,6 +27,7 @@ namespace FroggerStarter.View
         private readonly double applicationHeight = (double) Application.Current.Resources["AppHeight"];
         private readonly double applicationWidth = (double) Application.Current.Resources["AppWidth"];
         private GameManager gameManager;
+        private GameViewModel gameViewModel;
 
         #endregion
 
@@ -45,6 +47,8 @@ namespace FroggerStarter.View
                            .SetPreferredMinSize(new Size(this.applicationWidth, this.applicationHeight));
 
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
+
+            this.gameViewModel = new GameViewModel();
             this.setupNewGame();
         }
 
@@ -157,11 +161,43 @@ namespace FroggerStarter.View
             Application.Current.Exit();
         }
 
-        private void setupNewGame()
+        private async void setupNewGame()
         {
             this.gameManager = new GameManager(this.applicationHeight, this.applicationWidth);
             this.gameManager.InitializeGame(this.canvas);
 
+            this.setupEvents();
+            this.resetTextBlocks();
+
+            await this.showStartDialog();
+
+            this.unmuteDeathSoundEffects();
+            this.backgroundMusicElement.Play();
+        }
+
+        private async Task showStartDialog()
+        {
+            var startDialog = new StartScreenDialog();
+            var result = await startDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                this.gameManager.StartGame();
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+                if (this.gameManager.HighScores == null)
+                {
+                    //TODO use file reader to find file and add to high scores
+                }
+
+                //TODO show high scores list in new dialog
+
+            }
+        }
+
+        private void setupEvents()
+        {
             this.gameManager.ScoreIncreased += this.onScoreCountUpdated;
             this.gameManager.LifeLost += this.onLivesCountUpdated;
             this.gameManager.GameOver += this.onGameOver;
@@ -173,11 +209,6 @@ namespace FroggerStarter.View
             this.gameManager.DiedHitWall += this.onDiedHitWall;
             this.gameManager.DiedInWater += this.onDiedInWater;
             this.gameManager.DiedTimeRanOut += this.onDiedTimeRunout;
-
-            this.resetTextBlocks();
-
-            this.unmuteDeathSoundEffects();
-            this.backgroundMusicElement.Play();
         }
 
         private void onDiedTimeRunout(object sender, EventArgs e)
