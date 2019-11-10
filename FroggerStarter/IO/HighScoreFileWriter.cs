@@ -38,7 +38,7 @@ namespace FroggerStarter.IO
 
         private static async void writeToXml(IStorageFile newFile, HighScoreCollection info)
         {
-            var serializer = new XmlSerializer(typeof(HighScorePlayerInfo));
+            var serializer = new XmlSerializer(typeof(HighScoreCollection));
             var writeStream = await newFile.OpenStreamForWriteAsync();
 
             serializer.Serialize(writeStream, info);

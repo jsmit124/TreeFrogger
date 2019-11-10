@@ -320,7 +320,12 @@ namespace FroggerStarter.Controller
             }
             else if (result == ContentDialogResult.Secondary)
             {
+                if (this.highScores == null)
+                {
+                    //TODO use file reader to find file and add to high scores
+                }
 
+                //TODO show high scores list
             }
         }
 
