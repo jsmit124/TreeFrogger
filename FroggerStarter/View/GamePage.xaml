@@ -10,15 +10,15 @@
     Width="650">
 
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="Auto" Background="Black" Margin="0,-5,0,0">
-        <MediaElement Source="../Assets/SoundEffects/DiedByWall.wav" Name="deathByWallElement" MediaEnded="deathByWallElement_MediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
-        <MediaElement Source="../Assets/SoundEffects/DiedByWater.wav" Name="deathByWaterElement" MediaEnded="deathByWaterElement_MediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
-        <MediaElement Source="../Assets/SoundEffects/DiedByTimeRunout.wav" Name="deathByTimeRunoutElement" MediaEnded="deathByTimeRunoutElement_MediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
-        <MediaElement Source="../Assets/SoundEffects/DiedByCar.wav" Name="deathByVehicleElement" MediaEnded="deathByVehicleElement_MediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
-        <MediaElement Source="../Assets/SoundEffects/GameOver.wav" Name="gameOverElement" MediaEnded="GameOverElement_OnMediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
-        <MediaElement Source="../Assets/SoundEffects/PowerUpActivated.wav" Name="powerUpActivatedElement" MediaEnded="PowerUpElement_MediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
-        <MediaElement Source="../Assets/SoundEffects/MadeItHome.wav" Name="madeItHomeElement" MediaEnded="MadeItHomeElement_OnMediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
-        <MediaElement Source="../Assets/SoundEffects/LevelComplete.wav" Name="levelCompleteElement" MediaEnded="LevelCompleteElement_MediaEnded" AudioCategory="SoundEffects" IsMuted="True"/>
-        <MediaElement Source="../Assets/SoundEffects/Background.wav" Name="backgroundMusicElement" IsLooping="True" AudioCategory="BackgroundCapableMedia" />
+        <MediaElement Source="../Assets/SoundEffects/DiedByWall.wav" Name="deathByWallElement" MediaEnded="deathByWallElement_MediaEnded" AutoPlay="False" AudioCategory="SoundEffects"/>
+        <MediaElement Source="../Assets/SoundEffects/DiedByWater.wav" Name="deathByWaterElement" MediaEnded="deathByWaterElement_MediaEnded" AutoPlay="False" AudioCategory="SoundEffects"/>
+        <MediaElement Source="../Assets/SoundEffects/DiedByTimeRunout.wav" Volume="1" Name="deathByTimeRunoutElement" MediaEnded="deathByTimeRunoutElement_MediaEnded" AutoPlay="False" AudioCategory="SoundEffects"/>
+        <MediaElement Source="../Assets/SoundEffects/DiedByCar.wav" Name="deathByVehicleElement" MediaEnded="deathByVehicleElement_MediaEnded" AutoPlay="False" AudioCategory="SoundEffects"/>
+        <MediaElement Source="../Assets/SoundEffects/GameOver.wav" Name="gameOverElement" MediaEnded="GameOverElement_OnMediaEnded" AutoPlay="False" AudioCategory="SoundEffects"/>
+        <MediaElement Source="../Assets/SoundEffects/PowerUpActivated.wav" Name="powerUpActivatedElement" AutoPlay="False" MediaEnded="PowerUpElement_MediaEnded" AudioCategory="SoundEffects"/>
+        <MediaElement Source="../Assets/SoundEffects/MadeItHome.wav" Name="madeItHomeElement" MediaEnded="MadeItHomeElement_OnMediaEnded" AutoPlay="False" AudioCategory="SoundEffects"/>
+        <MediaElement Source="../Assets/SoundEffects/LevelComplete.wav" Name="levelCompleteElement" AutoPlay="False" MediaEnded="LevelCompleteElement_MediaEnded" AudioCategory="SoundEffects"/>
+        <MediaElement Source="../Assets/SoundEffects/Background.wav" Name="backgroundMusicElement" Volume="0.45" IsLooping="True" AudioCategory="BackgroundCapableMedia" />
 
 
 

@@ -218,6 +218,7 @@ namespace FroggerStarter.Controller
         {
             if (this.playerManager.IsOffScreen())
             {
+                this.DiedHitWall?.Invoke(this, EventArgs.Empty);
                 this.handleLifeLost();
             }
         }

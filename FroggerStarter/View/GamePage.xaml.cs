@@ -73,7 +73,6 @@ namespace FroggerStarter.View
 
         private void onScoreCountUpdated(object sender, ScoreIncreasedEventArgs score)
         {
-            this.madeItHomeElement.IsMuted = false;
             this.madeItHomeElement.Play();
             this.scoreTextBlock.Text = "Score: " + (score.Score + 1);
         }
@@ -97,7 +96,6 @@ namespace FroggerStarter.View
             this.backgroundMusicElement.Stop();
 
             this.muteDeathSoundEffects();
-            this.gameOverElement.IsMuted = false;
             this.gameOverElement.Play();
 
               var result = await showGameEndContentDialog();
@@ -127,7 +125,6 @@ namespace FroggerStarter.View
 
         private void onPowerUpActivated(object sender, EventArgs e)
         {
-            this.powerUpActivatedElement.IsMuted = false;
             this.powerUpActivatedElement.Play();
         }
 
@@ -175,25 +172,21 @@ namespace FroggerStarter.View
 
         private void onDiedTimeRunout(object sender, EventArgs e)
         {
-            this.deathByTimeRunoutElement.IsMuted = false;
             this.deathByTimeRunoutElement.Play();
         }
 
         private void onDiedInWater(object sender, EventArgs e)
         {
-            this.deathByWaterElement.IsMuted = false;
             this.deathByWaterElement.Play();
         }
 
         private void onDiedHitWall(object sender, EventArgs e)
         {
-            this.deathByWallElement.IsMuted = false;
             this.deathByWallElement.Play();
         }
 
         private void onDiedByVehicle(object sender, EventArgs e)
         {
-            this.deathByVehicleElement.IsMuted = false;
             this.deathByVehicleElement.Play();
         }
 
