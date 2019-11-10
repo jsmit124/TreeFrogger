@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Services.Maps;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -79,8 +80,6 @@ namespace FroggerStarter.View
 
         private void onLivesCountUpdated(object sender, LivesLostEventArgs lives)
         {
-            this.dyingElement.IsMuted = false;
-            this.dyingElement.Play();
             this.livesTextBlock.Text = "Lives: " + lives.Lives;
         }
 
@@ -97,11 +96,11 @@ namespace FroggerStarter.View
             this.gameOverTextBlock.Visibility = Visibility.Visible;
             this.backgroundMusicElement.Stop();
 
-            this.dyingElement.IsMuted = true;
+            this.muteDeathSoundEffects();
             this.gameOverElement.IsMuted = false;
             this.gameOverElement.Play();
 
-            var result = await showGameEndContentDialog();
+              var result = await showGameEndContentDialog();
 
             if (result == ContentDialogResult.Primary)
             {
@@ -111,6 +110,14 @@ namespace FroggerStarter.View
             {
                 closeGame();
             }
+        }
+
+        private void muteDeathSoundEffects()
+        {
+            this.deathByWaterElement.IsMuted = true;
+            this.deathByTimeRunoutElement.IsMuted = true;
+            this.deathByVehicleElement.IsMuted = true;
+            this.deathByWallElement.IsMuted = true;
         }
 
         private void onTimeRemainingUpdate(object sender, TimeRemainingEventArgs timeRemaining)
@@ -156,9 +163,38 @@ namespace FroggerStarter.View
             this.gameManager.LevelIncreased += this.onLevelUpdated;
             this.gameManager.PowerUpActivated += this.onPowerUpActivated;
 
+            this.gameManager.DiedHitByVehicle += this.onDiedByVehicle;
+            this.gameManager.DiedHitWall += this.onDiedHitWall;
+            this.gameManager.DiedInWater += this.onDiedInWater;
+            this.gameManager.DiedTimeRanOut += this.onDiedTimeRunout;
+
             this.resetTextBlocks();
 
             this.backgroundMusicElement.Play();
+        }
+
+        private void onDiedTimeRunout(object sender, EventArgs e)
+        {
+            this.deathByTimeRunoutElement.IsMuted = false;
+            this.deathByTimeRunoutElement.Play();
+        }
+
+        private void onDiedInWater(object sender, EventArgs e)
+        {
+            this.deathByWaterElement.IsMuted = false;
+            this.deathByWaterElement.Play();
+        }
+
+        private void onDiedHitWall(object sender, EventArgs e)
+        {
+            this.deathByWallElement.IsMuted = false;
+            this.deathByWallElement.Play();
+        }
+
+        private void onDiedByVehicle(object sender, EventArgs e)
+        {
+            this.deathByVehicleElement.IsMuted = false;
+            this.deathByVehicleElement.Play();
         }
 
         private void resetTextBlocks()
@@ -171,9 +207,24 @@ namespace FroggerStarter.View
 
         #endregion
 
-        private void DyingElement_MediaEnded(object sender, RoutedEventArgs routedEventArgs)
+        private void deathByWallElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            this.dyingElement.Stop();
+            this.deathByWallElement.Stop();
+        }
+
+        private void deathByWaterElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            this.deathByWaterElement.Stop();
+        }
+
+        private void deathByTimeRunoutElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            this.deathByTimeRunoutElement.Stop();
+        }
+
+        private void deathByVehicleElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            this.deathByVehicleElement.Stop();
         }
 
         private void GameOverElement_OnMediaEnded(object sender, RoutedEventArgs e)

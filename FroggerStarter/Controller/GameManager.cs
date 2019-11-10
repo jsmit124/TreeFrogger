@@ -208,6 +208,7 @@ namespace FroggerStarter.Controller
                 if (this.playerManager.CollisionDetected(vehicle) &&
                     vehicle.Sprite.Visibility != Visibility.Collapsed && !this.playerIsImmune)
                 {
+                    this.DiedHitByVehicle?.Invoke(this, EventArgs.Empty);
                     this.handleLifeLost();
                 }
             }
@@ -238,6 +239,7 @@ namespace FroggerStarter.Controller
         {
             if (!this.playerOnMovingLog && this.playerManager.HasCrossedRoad())
             {
+                this.DiedInWater?.Invoke(this, EventArgs.Empty);
                 this.handleLifeLost();
             }
         }
@@ -289,6 +291,7 @@ namespace FroggerStarter.Controller
         {
             if (this.playerManager.Y <= LaneSettings.TopLaneYLocation)
             {
+                this.DiedHitWall?.Invoke(this, EventArgs.Empty);
                 this.handleLifeLost();
             }
         }
@@ -399,6 +402,7 @@ namespace FroggerStarter.Controller
 
         private void handleTimeRemainingIsZero()
         {
+            this.DiedTimeRanOut?.Invoke(this, EventArgs.Empty);
             this.handleLifeLost();
 
             if (!this.checkForGameOver())
@@ -583,6 +587,26 @@ namespace FroggerStarter.Controller
         /// The power up activated event handler
         /// </summary>
         public EventHandler<EventArgs> PowerUpActivated;
+
+        /// <summary>
+        /// The player died in water event handler
+        /// </summary>
+        public EventHandler<EventArgs> DiedInWater;
+
+        /// <summary>
+        /// The player died by getting hit by vehicle event handler
+        /// </summary>
+        public EventHandler<EventArgs> DiedHitByVehicle;
+
+        /// <summary>
+        /// The player died due to time ran out event handler
+        /// </summary>
+        public EventHandler<EventArgs> DiedTimeRanOut;
+
+        /// <summary>
+        /// The player died due to hit wall event handler
+        /// </summary>
+        public EventHandler<EventArgs> DiedHitWall;
 
         /// <summary>
         ///     The life lost event handler

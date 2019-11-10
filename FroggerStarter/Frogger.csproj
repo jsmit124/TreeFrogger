@@ -220,7 +220,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\SoundEffects\Background.wav" />
-    <Content Include="Assets\SoundEffects\Dying.wav" />
+    <Content Include="Assets\SoundEffects\DiedByWall.wav" />
+    <Content Include="Assets\SoundEffects\DiedByCar.wav" />
+    <Content Include="Assets\SoundEffects\DiedByTimeRunout.wav" />
+    <Content Include="Assets\SoundEffects\DiedByWater.wav" />
     <Content Include="Assets\SoundEffects\GameOver.wav" />
     <Content Include="Assets\SoundEffects\LevelComplete.wav" />
     <Content Include="Assets\SoundEffects\MadeItHome.wav" />
