@@ -4,10 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:FroggerStarter.ViewModel"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Height="705"
     Width="650">
+
+    <Page.DataContext>
+        <viewModel:GameViewModel/>
+    </Page.DataContext>
 
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="Auto" Background="Black" Margin="0,-5,0,0">
         <MediaElement Source="../Assets/SoundEffects/DiedByWall.wav" Name="deathByWallElement" MediaEnded="deathByWallElement_MediaEnded" AutoPlay="False" AudioCategory="SoundEffects"/>
@@ -19,8 +24,6 @@
         <MediaElement Source="../Assets/SoundEffects/MadeItHome.wav" Name="madeItHomeElement" MediaEnded="MadeItHomeElement_OnMediaEnded" AutoPlay="False" AudioCategory="SoundEffects"/>
         <MediaElement Source="../Assets/SoundEffects/LevelComplete.wav" Name="levelCompleteElement" AutoPlay="False" MediaEnded="LevelCompleteElement_MediaEnded" AudioCategory="SoundEffects"/>
         <MediaElement Source="../Assets/SoundEffects/Background.wav" Name="backgroundMusicElement" AutoPlay="False" Volume="0.45" IsLooping="True" AudioCategory="BackgroundCapableMedia" />
-
-
 
         <TextBlock x:Name="gameOverTextBlock" Canvas.ZIndex="100" Text="GAME OVER" Foreground="White"
                    LineStackingStrategy="MaxHeight"

@@ -35,7 +35,7 @@ namespace FroggerStarter.Model
         /// <param name="name">The name.</param>
         /// <param name="score">The score.</param>
         /// <param name="levelCompleted">The level completed.</param>
-        public HighScorePlayerInfo(String name, int score, int levelCompleted)
+        public HighScorePlayerInfo(string name, int score, int levelCompleted)
         {
             this.Name = name;
             this.Score = score;

@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Constants;
 using FroggerStarter.Controller;
+using FroggerStarter.Extensions;
 using FroggerStarter.IO;
 using FroggerStarter.View.Dialogs;
 using FroggerStarter.ViewModel;
@@ -49,8 +50,8 @@ namespace FroggerStarter.View
 
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
 
-            this.gameViewModel = new GameViewModel();
             this.setupNewGame();
+            this.gameViewModel = new GameViewModel(this.gameManager);
         }
 
         #endregion
@@ -80,7 +81,8 @@ namespace FroggerStarter.View
         {
             this.madeItHomeElement.IsMuted = false;
             this.madeItHomeElement.Play();
-            this.scoreTextBlock.Text = "Score: " + (score.Score + 1);
+            this.scoreTextBlock.Text = "Score: " + (score.Score);
+            this.gameViewModel.Score = score.Score;
         }
 
         private void onLivesCountUpdated(object sender, LivesLostEventArgs lives)
@@ -104,16 +106,23 @@ namespace FroggerStarter.View
             this.muteDeathSoundEffects();
             this.gameOverElement.Play();
 
-              var result = await showGameEndContentDialog();
+            var result = await showGameEndContentDialog();
 
             if (result == ContentDialogResult.Primary)
             {
                 this.restart();
             }
-            else
+            else if (result == ContentDialogResult.Secondary)
             {
                 closeGame();
             }
+
+            //TODO handle add button clicked
+                //TODO handle no name input
+                //TODO handle not 3 letters input
+                //TODO handler add to high scores file and collection within view model
+
+            //TODO handle high scores button clicked
         }
 
         private void muteDeathSoundEffects()
@@ -196,7 +205,6 @@ namespace FroggerStarter.View
             if (this.gameViewModel.HighScores == null)
             {
                 await this.chooseFileAndSetHighScores();
-                await this.showStartDialog();
             }
             else if (this.gameViewModel.HighScores.Count == 0)
             {
@@ -204,6 +212,8 @@ namespace FroggerStarter.View
             }
 
             //TODO display high score screen (which will be bound to view model)
+
+            await this.showStartDialog();
         }
 
         private async Task showNoHighScoresScreen()
@@ -211,21 +221,16 @@ namespace FroggerStarter.View
             var noHighScoresScreen = new NoHighScoresToShowDialog();
             var result = await noHighScoresScreen.ShowAsync();
 
-            if (result == ContentDialogResult.Primary)
-            {
-                await this.showStartDialog();
-            }
-            else if (result == ContentDialogResult.Secondary)
+            if (result == ContentDialogResult.Secondary)
             {
                 await this.chooseFileAndSetHighScores();
-                await this.showStartDialog();
             }
         }
 
         private async Task chooseFileAndSetHighScores()
         {
             var highScores = await HighScoreFileReader.ReadHighScoresFile();
-            this.gameViewModel.SetHighScores(highScores);
+            this.gameViewModel.HighScores = highScores.ToObservableCollection();
         }
 
         private void setupEvents()

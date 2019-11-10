@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -19,7 +21,7 @@ namespace FroggerStarter.IO
         /// Reads the high scores file.
         /// </summary>
         /// <returns>Returns a Task of type HighScoreCollection</returns>
-        public static async Task<HighScoreCollection> ReadHighScoresFile()
+        public static async Task<IList<HighScorePlayerInfo>> ReadHighScoresFile()
         {
             try
             {
@@ -36,16 +38,16 @@ namespace FroggerStarter.IO
             }
             catch (InvalidOperationException)
             {
-                return new HighScoreCollection();
+                return new List<HighScorePlayerInfo>();
             }
         }
 
-        private static async Task<HighScoreCollection> readFromXml(IStorageFile file)
+        private static async Task<List<HighScorePlayerInfo>> readFromXml(IStorageFile file)
         {
-            var serializer = new XmlSerializer(typeof(HighScoreCollection));
+            var serializer = new XmlSerializer(typeof(List<HighScorePlayerInfo>));
             var readStream = await file.OpenStreamForReadAsync();
 
-            return (HighScoreCollection) serializer.Deserialize(readStream);
+            return (List<HighScorePlayerInfo>) serializer.Deserialize(readStream);
         }
     }
 
