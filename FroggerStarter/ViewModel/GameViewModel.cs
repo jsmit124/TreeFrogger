@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using FroggerStarter.Annotations;
 using FroggerStarter.Extensions;
 using FroggerStarter.Model;
 using FroggerStarter.Utility;
@@ -10,7 +13,7 @@ namespace FroggerStarter.ViewModel
     /// <summary>
     ///     Stores information for the game's ViewModel class
     /// </summary>
-    public class GameViewModel
+    public class GameViewModel : INotifyPropertyChanged
     {
         #region Data members
 
@@ -39,7 +42,11 @@ namespace FroggerStarter.ViewModel
         public ObservableCollection<HighScorePlayerInfo> HighScores
         {
             get => this.highScores;
-            set => this.highScores = value;
+            set
+            {
+                this.highScores = value;
+                onPropertyChanged();
+            }
         }
 
         /// <summary>
@@ -77,7 +84,7 @@ namespace FroggerStarter.ViewModel
 
         private bool canAddStudent(object obj)
         {
-            return true;
+            return this.Initials.Length == 3;
         }
 
         private void addStudent(object obj)
@@ -87,10 +94,20 @@ namespace FroggerStarter.ViewModel
                 this.HighScores = new List<HighScorePlayerInfo>().ToObservableCollection();
             }
 
-            this.highScores.Add(new HighScorePlayerInfo("JTS", 3, 5));
             this.HighScores = this.highScores.ToObservableCollection();
+
         }
 
         #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>Ons the property changed.</summary>
+        /// <param name="propertyName">Name of the property.</param>
+        [NotifyPropertyChangedInvocator]
+        protected virtual void onPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

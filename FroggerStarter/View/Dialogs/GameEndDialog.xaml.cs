@@ -1,4 +1,6 @@
-﻿ using Windows.UI.Xaml;
+﻿ using System;
+ using System.Diagnostics.Tracing;
+ using Windows.UI.Xaml;
  using Windows.UI.Xaml.Controls;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -39,7 +41,39 @@ namespace FroggerStarter.View.Dialogs
             {
                 this.initialsErrorTextBlock.Visibility = Visibility.Collapsed;
                 this.addButton.IsEnabled = false;
+
+                var initials = new AddToHighScoresButtonClickedEventArgs {Initials = this.initialsTextBox.Text};
+                this.AddToHighScoresButtonClicked?.Invoke(this, initials);
             }
+        }
+
+        private void ViewHighScoresButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.HighScoresButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>Resets this instance.</summary>
+        public void Reset()
+        {
+            this.addButton.IsEnabled = true;
+            this.initialsTextBox.Text = "";
+        }
+
+        /// <summary>The add to high scores button clicked event handler</summary>
+        public EventHandler<AddToHighScoresButtonClickedEventArgs> AddToHighScoresButtonClicked;
+
+        /// <summary>
+        ///  The high scores button clicked event handler
+        /// </summary>
+        public EventHandler<EventArgs> HighScoresButtonClicked;
+
+        /// <summary></summary>
+        /// <seealso cref="System.EventArgs" />
+        public class AddToHighScoresButtonClickedEventArgs : EventArgs
+        {
+            /// <summary>Gets or sets the initials.</summary>
+            /// <value>The initials.</value>
+            public string Initials { get; set; }
         }
     }
 }

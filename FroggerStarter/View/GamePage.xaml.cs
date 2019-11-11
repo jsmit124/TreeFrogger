@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Services.Maps;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -11,6 +11,7 @@ using FroggerStarter.Constants;
 using FroggerStarter.Controller;
 using FroggerStarter.Extensions;
 using FroggerStarter.IO;
+using FroggerStarter.Model;
 using FroggerStarter.View.Dialogs;
 using FroggerStarter.ViewModel;
 using static FroggerStarter.Controller.GameManager;
@@ -24,15 +25,8 @@ namespace FroggerStarter.View
     /// </summary>
     public sealed partial class GamePage
     {
-        #region Data members
-
-        private readonly double applicationHeight = (double) Application.Current.Resources["AppHeight"];
-        private readonly double applicationWidth = (double) Application.Current.Resources["AppWidth"];
-        private GameManager gameManager;
-        private GameViewModel gameViewModel;
-
-        #endregion
-
+        private int score;
+        private int level = 1;
         #region Constructors
 
         /// <summary>
@@ -40,19 +34,85 @@ namespace FroggerStarter.View
         /// </summary>
         public GamePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             ApplicationView.PreferredLaunchViewSize = new Size
-                {Width = this.applicationWidth, Height = this.applicationHeight};
+                {Width = applicationWidth, Height = applicationHeight};
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView()
-                           .SetPreferredMinSize(new Size(this.applicationWidth, this.applicationHeight));
+                .SetPreferredMinSize(new Size(applicationWidth, applicationHeight));
 
-            Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
+            Window.Current.CoreWindow.KeyDown += coreWindowOnKeyDown;
 
-            this.setupNewGame();
-            this.gameViewModel = new GameViewModel();
+            this.gameEndDialog = new GameEndDialog();
+
+            setupNewGame();
+            gameViewModel = new GameViewModel();
         }
+
+        private void onAddToHighScoresButtonClicked(object sender, GameEndDialog.AddToHighScoresButtonClickedEventArgs initials)
+        {
+            this.handleAddToHighScores(initials.Initials);
+        }
+
+        private async void onHighScoreButtonClicked(object sender, EventArgs e)
+        {
+            
+            this.gameEndDialog.Hide();
+            await Task.Delay(5000);
+            await this.handleHighScoresDisplay();
+        }
+
+        #endregion
+
+        private void deathByWallElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            deathByWallElement.Stop();
+        }
+
+        private void deathByWaterElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            deathByWaterElement.Stop();
+        }
+
+        private void deathByTimeRunoutElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            deathByTimeRunoutElement.Stop();
+        }
+
+        private void deathByVehicleElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            deathByVehicleElement.Stop();
+        }
+
+        private void GameOverElement_OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+            gameOverElement.Stop();
+        }
+
+        private void PowerUpElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            powerUpActivatedElement.Stop();
+        }
+
+        private void MadeItHomeElement_OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+            madeItHomeElement.Stop();
+        }
+
+        private void LevelCompleteElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            levelCompleteElement.Stop();
+        }
+
+        #region Data members
+
+        private readonly double applicationHeight = (double) Application.Current.Resources["AppHeight"];
+        private readonly double applicationWidth = (double) Application.Current.Resources["AppWidth"];
+        private GameManager gameManager;
+        private readonly GameViewModel gameViewModel;
+
+        private readonly GameEndDialog gameEndDialog;
 
         #endregion
 
@@ -63,106 +123,106 @@ namespace FroggerStarter.View
             switch (args.VirtualKey)
             {
                 case VirtualKey.Left:
-                    this.gameManager.MovePlayerLeft();
+                    gameManager.MovePlayerLeft();
                     break;
                 case VirtualKey.Right:
-                    this.gameManager.MovePlayerRight();
+                    gameManager.MovePlayerRight();
                     break;
                 case VirtualKey.Up:
-                    this.gameManager.MovePlayerUp();
+                    gameManager.MovePlayerUp();
                     break;
                 case VirtualKey.Down:
-                    this.gameManager.MovePlayerDown();
+                    gameManager.MovePlayerDown();
                     break;
             }
         }
 
         private void onScoreCountUpdated(object sender, ScoreIncreasedEventArgs score)
         {
-            this.madeItHomeElement.IsMuted = false;
-            this.madeItHomeElement.Play();
-            this.scoreTextBlock.Text = "Score: " + (score.Score);
+            madeItHomeElement.IsMuted = false;
+            madeItHomeElement.Play();
+            this.score = score.Score;
+            scoreTextBlock.Text = "Score: " + this.score;
         }
 
         private void onLivesCountUpdated(object sender, LivesLostEventArgs lives)
         {
-            this.livesTextBlock.Text = "Lives: " + lives.Lives;
+            livesTextBlock.Text = "Lives: " + lives.Lives;
         }
 
         private void onLevelUpdated(object sender, LevelIncreasedEventArgs level)
         {
-            this.madeItHomeElement.IsMuted = true;
-            this.levelCompleteElement.IsMuted = false;
-            this.levelCompleteElement.Play();
-            this.levelTextBlock.Text = "Level: " + level.Level;
+            madeItHomeElement.IsMuted = true;
+            levelCompleteElement.IsMuted = false;
+            levelCompleteElement.Play();
+            this.level = level.Level;
+            levelTextBlock.Text = "Level: " + this.level;
         }
 
         private async void onGameOver(object sender, EventArgs e)
         {
-            this.gameOverTextBlock.Visibility = Visibility.Visible;
-            this.backgroundMusicElement.Stop();
+            gameOverTextBlock.Visibility = Visibility.Visible;
+            backgroundMusicElement.Stop();
 
-            this.muteDeathSoundEffects();
-            this.gameOverElement.Play();
+            muteDeathSoundEffects();
+            gameOverElement.Play();
 
             var result = await showGameEndContentDialog();
 
             if (result == ContentDialogResult.Primary)
-            {
-                this.restart();
-            }
-            else if (result == ContentDialogResult.Secondary)
-            {
-                closeGame();
-            }
+                restart();
+            else if (result == ContentDialogResult.Secondary) closeGame();
 
-            //TODO handle add button clicked
-                //TODO handle no name input
-                //TODO handle not 3 letters input
-                //TODO handler add to high scores file and collection within view model
+            //TODO handler add to high scores file and collection within view model
+        }
 
-            //TODO handle high scores button clicked
+        private void handleAddToHighScores(string initials)
+        {
+            if (this.gameViewModel.HighScores == null)
+            {
+                this.gameViewModel.HighScores = new ObservableCollection<HighScorePlayerInfo>();
+            }
+            this.gameViewModel.HighScores.Add(new HighScorePlayerInfo(initials, this.score, this.level));
         }
 
         private void muteDeathSoundEffects()
         {
-            this.deathByWaterElement.IsMuted = true;
-            this.deathByTimeRunoutElement.IsMuted = true;
-            this.deathByVehicleElement.IsMuted = true;
-            this.deathByWallElement.IsMuted = true;
+            deathByWaterElement.IsMuted = true;
+            deathByTimeRunoutElement.IsMuted = true;
+            deathByVehicleElement.IsMuted = true;
+            deathByWallElement.IsMuted = true;
         }
 
         private void unmuteDeathSoundEffects()
         {
-            this.deathByWaterElement.IsMuted = false;
-            this.deathByTimeRunoutElement.IsMuted = false;
-            this.deathByVehicleElement.IsMuted = false;
-            this.deathByWallElement.IsMuted = false;
+            deathByWaterElement.IsMuted = false;
+            deathByTimeRunoutElement.IsMuted = false;
+            deathByVehicleElement.IsMuted = false;
+            deathByWallElement.IsMuted = false;
         }
 
         private void onTimeRemainingUpdate(object sender, TimeRemainingEventArgs timeRemaining)
         {
-            this.timeRemainingTextBlock.Text = "Time: " + timeRemaining.TimeRemaining;
+            timeRemainingTextBlock.Text = "Time: " + timeRemaining.TimeRemaining;
         }
 
         private void onPowerUpActivated(object sender, EventArgs e)
         {
-            this.powerUpActivatedElement.Play();
+            powerUpActivatedElement.Play();
         }
 
-        private static async Task<ContentDialogResult> showGameEndContentDialog()
+        private async Task<ContentDialogResult> showGameEndContentDialog()
         {
-            var gameEndDialog = new GameEndDialog();
-            var result = await gameEndDialog.ShowAsync();
+            var result = await this.gameEndDialog.ShowAsync();
 
             return result;
         }
 
         private void restart()
         {
-            this.gameManager.RemoveSprites();
-            this.gameOverTextBlock.Visibility = Visibility.Collapsed;
-            this.setupNewGame();
+            gameManager.RemoveSprites();
+            gameOverTextBlock.Visibility = Visibility.Collapsed;
+            setupNewGame();
         }
 
         private static void closeGame()
@@ -172,15 +232,16 @@ namespace FroggerStarter.View
 
         private async void setupNewGame()
         {
-            this.gameManager = new GameManager(this.applicationHeight, this.applicationWidth);
-            this.gameManager.InitializeGame(this.canvas);
+            gameManager = new GameManager(applicationHeight, applicationWidth);
+            gameManager.InitializeGame(canvas);
 
-            this.setupEvents();
-            this.resetTextBlocks();
+            setupEvents();
+            resetTextBlocks();
+            this.gameEndDialog.Reset();
 
-            await this.showStartDialog();
+            await showStartDialog();
 
-            this.unmuteDeathSoundEffects();
+            unmuteDeathSoundEffects();
         }
 
         private async Task showStartDialog()
@@ -190,29 +251,27 @@ namespace FroggerStarter.View
 
             if (result == ContentDialogResult.Primary)
             {
-                this.gameManager.StartGame();
-                this.backgroundMusicElement.Play();
+                gameManager.StartGame();
+                backgroundMusicElement.Play();
             }
             else if (result == ContentDialogResult.Secondary)
             {
-                await this.handleHighScoresDisplay();
+                await handleHighScoresDisplay();
             }
         }
 
         private async Task handleHighScoresDisplay()
         {
-            if (this.gameViewModel.HighScores == null)
-            {
-                await this.chooseFileAndSetHighScores();
-            }
-            else if (this.gameViewModel.HighScores.Count == 0)
-            {
-                await this.showNoHighScoresScreen();
-            }
+            if (gameViewModel.HighScores == null)
+                await chooseFileAndSetHighScores();
+            else if (gameViewModel.HighScores.Count == 0) await showNoHighScoresScreen();
 
-            //TODO display high score screen (which will be bound to view model)
-
-            await this.showStartDialog();
+            if (this.gameViewModel.HighScores != null && gameViewModel.HighScores.Count > 0)
+            {
+                var highScoresDisplay = new HighScoresDialog();
+                await highScoresDisplay.ShowAsync();
+            }
+            this.restart();
         }
 
         private async Task showNoHighScoresScreen()
@@ -220,102 +279,61 @@ namespace FroggerStarter.View
             var noHighScoresScreen = new NoHighScoresToShowDialog();
             var result = await noHighScoresScreen.ShowAsync();
 
-            if (result == ContentDialogResult.Secondary)
-            {
-                await this.chooseFileAndSetHighScores();
-            }
+            if (result == ContentDialogResult.Secondary) await chooseFileAndSetHighScores();
         }
 
         private async Task chooseFileAndSetHighScores()
         {
             var highScores = await HighScoreFileReader.ReadHighScoresFile();
-            this.gameViewModel.HighScores = highScores.ToObservableCollection();
+            gameViewModel.HighScores = highScores.ToObservableCollection();
         }
 
         private void setupEvents()
         {
-            this.gameManager.ScoreIncreased += this.onScoreCountUpdated;
-            this.gameManager.LifeLost += this.onLivesCountUpdated;
-            this.gameManager.GameOver += this.onGameOver;
-            this.gameManager.TimeRemainingCount += this.onTimeRemainingUpdate;
-            this.gameManager.LevelIncreased += this.onLevelUpdated;
-            this.gameManager.PowerUpActivated += this.onPowerUpActivated;
+            this.gameManager.ScoreIncreased += onScoreCountUpdated;
+            this.gameManager.LifeLost += onLivesCountUpdated;
+            this.gameManager.GameOver += onGameOver;
+            this.gameManager.TimeRemainingCount += onTimeRemainingUpdate;
+            this.gameManager.LevelIncreased += onLevelUpdated;
+            this.gameManager.PowerUpActivated += onPowerUpActivated;
 
-            this.gameManager.DiedHitByVehicle += this.onDiedByVehicle;
-            this.gameManager.DiedHitWall += this.onDiedHitWall;
-            this.gameManager.DiedInWater += this.onDiedInWater;
-            this.gameManager.DiedTimeRanOut += this.onDiedTimeRunout;
+            this.gameManager.DiedHitByVehicle += onDiedByVehicle;
+            this.gameManager.DiedHitWall += onDiedHitWall;
+            this.gameManager.DiedInWater += onDiedInWater;
+            this.gameManager.DiedTimeRanOut += onDiedTimeRunout;
+
+            this.gameEndDialog.HighScoresButtonClicked += this.onHighScoreButtonClicked;
+            this.gameEndDialog.AddToHighScoresButtonClicked += this.onAddToHighScoresButtonClicked;
         }
 
         private void onDiedTimeRunout(object sender, EventArgs e)
         {
-            this.deathByTimeRunoutElement.Play();
+            deathByTimeRunoutElement.Play();
         }
 
         private void onDiedInWater(object sender, EventArgs e)
         {
-            this.deathByWaterElement.Play();
+            deathByWaterElement.Play();
         }
 
         private void onDiedHitWall(object sender, EventArgs e)
         {
-            this.deathByWallElement.Play();
+            deathByWallElement.Play();
         }
 
         private void onDiedByVehicle(object sender, EventArgs e)
         {
-            this.deathByVehicleElement.Play();
+            deathByVehicleElement.Play();
         }
 
         private void resetTextBlocks()
         {
-            this.scoreTextBlock.Text = "Score: 0";
-            this.livesTextBlock.Text = "Lives: " + GameSettings.PlayerLives;
-            this.levelTextBlock.Text = "Level: 1";
-            this.timeRemainingTextBlock.Text = "Time: " + GameSettings.TimeRemainingAtStart;
+            scoreTextBlock.Text = "Score: 0";
+            livesTextBlock.Text = "Lives: " + GameSettings.PlayerLives;
+            levelTextBlock.Text = "Level: 1";
+            timeRemainingTextBlock.Text = "Time: " + GameSettings.TimeRemainingAtStart;
         }
 
         #endregion
-
-        private void deathByWallElement_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            this.deathByWallElement.Stop();
-        }
-
-        private void deathByWaterElement_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            this.deathByWaterElement.Stop();
-        }
-
-        private void deathByTimeRunoutElement_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            this.deathByTimeRunoutElement.Stop();
-        }
-
-        private void deathByVehicleElement_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            this.deathByVehicleElement.Stop();
-        }
-
-        private void GameOverElement_OnMediaEnded(object sender, RoutedEventArgs e)
-        {
-            this.gameOverElement.Stop();
-        }
-
-        private void PowerUpElement_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            this.powerUpActivatedElement.Stop();
-        }
-
-        private void MadeItHomeElement_OnMediaEnded(object sender, RoutedEventArgs e)
-        {
-            this.madeItHomeElement.Stop();
-        }
-
-        private void LevelCompleteElement_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            this.levelCompleteElement.Stop();
-        }
-
     }
 }

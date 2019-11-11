@@ -17,7 +17,7 @@
     <Grid>
         <TextBox x:Name="initialsTextBox" Text="{Binding Path=Initials, Mode=TwoWay}" Header="Add to high scores?" Width="125" Height="55" PlaceholderText="Enter initials" Margin="46,0,0,0" extensions:TextBoxRegex.ValidationMode="Dynamic"
                  extensions:TextBoxRegex.Regex="^[A-Z]{1,3}$" CharacterCasing="Upper" TextAlignment="Center"/>
-        <Button x:Name="viewHighScoresButton" Content="High Scores" Width="93" Margin="0,22,0,0"/>
+        <Button x:Name="viewHighScoresButton" Content="High Scores" Width="93" Margin="0,22,0,0" Click="ViewHighScoresButton_Click"/>
         <Button x:Name="addButton" Command="{Binding AddCommand}" Content="Add" Margin="225,22,0,0" Click="AddButton_Click"/>
         <TextBlock x:Name="initialsErrorTextBlock" HorizontalAlignment="Left" Foreground="Red" Margin="131,74,0,0" Text="Enter 3 initials" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="9" Visibility="Collapsed"/>
     </Grid>
