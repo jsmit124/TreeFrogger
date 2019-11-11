@@ -59,7 +59,7 @@ namespace FroggerStarter.View
         {
             
             this.gameEndDialog.Hide();
-            await Task.Delay(5000);
+            await Task.Delay(2000);  //TODO
             await this.handleHighScoresDisplay();
         }
 
