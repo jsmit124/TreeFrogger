@@ -1,4 +1,5 @@
-﻿ using Windows.UI.Xaml.Controls;
+﻿ using Windows.UI.Xaml;
+ using Windows.UI.Xaml.Controls;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,6 +27,19 @@ namespace FroggerStarter.View.Dialogs
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+        }
+
+        private void AddButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (this.initialsTextBox.Text.Length < 3)
+            {
+                this.initialsErrorTextBlock.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.initialsErrorTextBlock.Visibility = Visibility.Collapsed;
+                this.addButton.IsEnabled = false;
+            }
         }
     }
 }

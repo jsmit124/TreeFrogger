@@ -51,7 +51,7 @@ namespace FroggerStarter.View
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
 
             this.setupNewGame();
-            this.gameViewModel = new GameViewModel(this.gameManager);
+            this.gameViewModel = new GameViewModel();
         }
 
         #endregion
@@ -82,7 +82,6 @@ namespace FroggerStarter.View
             this.madeItHomeElement.IsMuted = false;
             this.madeItHomeElement.Play();
             this.scoreTextBlock.Text = "Score: " + (score.Score);
-            this.gameViewModel.Score = score.Score;
         }
 
         private void onLivesCountUpdated(object sender, LivesLostEventArgs lives)

@@ -11,8 +11,12 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <Grid>
-        <ListView x:Name="highScoresListView" Height="215" Width="270" VerticalAlignment="Top"/>
-        <Border BorderThickness="1" BorderBrush="Aqua"/>
+        <ListView x:Name="highScoresListView" BorderThickness="1" BorderBrush="Aqua" Height="215" Width="270" VerticalAlignment="Top"/>
 
+        <ComboBox x:Name="sortComboBox" Margin="0,220,0,0" Width="120" HorizontalAlignment="Center">
+            <ComboBoxItem Content="Score/Name/Level"/>
+            <ComboBoxItem Content="Name/Score/Level"/>
+            <ComboBoxItem Content="Level/Score/Name"/>
+        </ComboBox>
     </Grid>
 </ContentDialog>
