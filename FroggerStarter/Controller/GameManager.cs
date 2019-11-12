@@ -74,6 +74,13 @@ namespace FroggerStarter.Controller
         private DispatcherTimer gameTimer;
         private DispatcherTimer timeRemainingTimer;
 
+        /// <summary>Gets the score.</summary>
+        /// <value>The score.</value>
+        public int Score => this.playerManager.Score;
+        /// <summary>Gets the level.</summary>
+        /// <value>The level.</value>
+        public int Level => this.playerManager.Level;
+
         #endregion
 
         #region Methods

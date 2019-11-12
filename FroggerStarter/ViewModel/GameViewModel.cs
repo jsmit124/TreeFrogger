@@ -20,6 +20,8 @@ namespace FroggerStarter.ViewModel
         private ObservableCollection<HighScorePlayerInfo> highScores;
         private ComboBoxItem sortComboboxSelection;
         private string initials;
+        private int currentScore;
+        private int currentLevel;
 
         #endregion
 
@@ -95,6 +97,10 @@ namespace FroggerStarter.ViewModel
 
         private void sortScores(object obj)
         {
+            if (sortComboboxSelection == null)
+            {
+                return;
+            }
             switch (sortComboboxSelection.Content)
             {
                 case "Score/Name/Level":
@@ -121,12 +127,12 @@ namespace FroggerStarter.ViewModel
 
         private bool canAddScore(object obj)
         {
-            return Initials.Length == 3 && sortComboboxSelection != null;
+            return Initials.Length == 3;
         }
 
         private void addScore(object obj)
         {
-            record.AddInfo(new HighScorePlayerInfo(Initials, 5, 3));
+            record.AddInfo(new HighScorePlayerInfo(Initials, this.currentScore, this.currentLevel));
             sortScores(obj);
             HighScores = record.HighScores.ToObservableCollection();
             //HighScoreFileWriter.FindFileAndWriteHighScoreToFile(this.record);
@@ -142,5 +148,14 @@ namespace FroggerStarter.ViewModel
         }
 
         #endregion
+
+        /// <summary>Sets the score and level.</summary>
+        /// <param name="score">The score.</param>
+        /// <param name="level">The level.</param>
+        public void SetScoreLevel(int score, int level)
+        {
+            this.currentScore = score;
+            this.currentLevel = level;
+        }
     }
 }
