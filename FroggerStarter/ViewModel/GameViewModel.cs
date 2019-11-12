@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Annotations;
 using FroggerStarter.Extensions;
-using FroggerStarter.IO;
 using FroggerStarter.Model;
 using FroggerStarter.Utility;
 
@@ -44,11 +41,11 @@ namespace FroggerStarter.ViewModel
         /// </value>
         public ObservableCollection<HighScorePlayerInfo> HighScores
         {
-            get => this.highScores;
+            get => highScores;
             set
             {
-                this.highScores = value;
-                this.onPropertyChanged();
+                highScores = value;
+                onPropertyChanged();
             }
         }
 
@@ -56,12 +53,12 @@ namespace FroggerStarter.ViewModel
         /// <value>The sort combobox selection.</value>
         public ComboBoxItem SortComboboxSelection
         {
-            get => this.sortComboboxSelection;
+            get => sortComboboxSelection;
             set
             {
-                this.sortComboboxSelection = value;
-                this.sortScores(value);
-                this.onPropertyChanged();
+                sortComboboxSelection = value;
+                sortScores(value);
+                onPropertyChanged();
             }
         }
 
@@ -73,11 +70,11 @@ namespace FroggerStarter.ViewModel
         /// </value>
         public string Initials
         {
-            get => this.initials;
+            get => initials;
             set
             {
-                this.initials = value;
-                this.AddCommand.OnCanExecuteChanged();
+                initials = value;
+                AddCommand.OnCanExecuteChanged();
             }
         }
 
@@ -90,28 +87,28 @@ namespace FroggerStarter.ViewModel
         /// </summary>
         public GameViewModel()
         {
-            this.initials = "";
-            this.AddCommand = new RelayCommand(this.addScore, this.canAddScore);
-            this.record = new HighScoreRecord();
-            this.HighScores = this.record.HighScores.ToObservableCollection();
+            initials = "";
+            AddCommand = new RelayCommand(addScore, canAddScore);
+            record = new HighScoreRecord();
+            HighScores = record.HighScores.ToObservableCollection();
         }
 
         private void sortScores(object obj)
         {
-            switch (this.sortComboboxSelection.Content)
+            switch (sortComboboxSelection.Content)
             {
                 case "Score/Name/Level":
-                    this.record.HighScores.Sort(new HighScorePlayerInfo.SortByScoreNameLevel());
+                    record.HighScores.Sort(new HighScorePlayerInfo.SortByScoreNameLevel());
                     break;
                 case "Name/Score/Level":
-                    this.record.HighScores.Sort(new HighScorePlayerInfo.SortByNameScoreLevel());
+                    record.HighScores.Sort(new HighScorePlayerInfo.SortByNameScoreLevel());
                     break;
                 default:
-                    this.record.HighScores.Sort(new HighScorePlayerInfo.SortByLevelScoreName());
+                    record.HighScores.Sort(new HighScorePlayerInfo.SortByLevelScoreName());
                     break;
             }
 
-            this.HighScores = this.record.HighScores.ToObservableCollection();
+            HighScores = record.HighScores.ToObservableCollection();
         }
 
         #endregion
@@ -124,17 +121,16 @@ namespace FroggerStarter.ViewModel
 
         private bool canAddScore(object obj)
         {
-            return this.Initials.Length == 3 && this.sortComboboxSelection != null;
+            return Initials.Length == 3 && sortComboboxSelection != null;
         }
 
         private void addScore(object obj)
         {
-            this.record.AddInfo(new HighScorePlayerInfo(this.Initials, 5, 3));
-            this.sortScores(obj);
-            this.HighScores = this.record.HighScores.ToObservableCollection();
+            record.AddInfo(new HighScorePlayerInfo(Initials, 5, 3));
+            sortScores(obj);
+            HighScores = record.HighScores.ToObservableCollection();
             //HighScoreFileWriter.FindFileAndWriteHighScoreToFile(this.record);
         }
-
 
 
         /// <summary>Ons the property changed.</summary>
@@ -142,7 +138,7 @@ namespace FroggerStarter.ViewModel
         [NotifyPropertyChangedInvocator]
         public virtual void onPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

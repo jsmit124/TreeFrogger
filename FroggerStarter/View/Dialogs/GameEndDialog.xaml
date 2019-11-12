@@ -31,7 +31,9 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ComboBox SelectedValue="{Binding Path=SortComboboxSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="1,220,0,0" Width="170" SelectedIndex="0">
+        <ComboBox
+            SelectedValue="{Binding Path=SortComboboxSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Margin="1,220,0,0" Width="170" SelectedIndex="0">
             <ComboBoxItem Content="Score/Name/Level" />
             <ComboBoxItem Content="Name/Score/Level" />
             <ComboBoxItem Content="Level/Score/Name" />

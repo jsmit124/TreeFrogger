@@ -17,6 +17,39 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class GameManager
     {
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="GameManager" /> class.
+        /// </summary>
+        /// <param name="backgroundHeight">Height of the background.</param>
+        /// <param name="backgroundWidth">Width of the background.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     backgroundHeight &lt;= 0
+        ///     or
+        ///     backgroundWidth &lt;= 0
+        /// </exception>
+        public GameManager(double backgroundHeight, double backgroundWidth)
+        {
+            if (backgroundHeight <= 0) throw new ArgumentOutOfRangeException(nameof(backgroundHeight));
+
+            if (backgroundWidth <= 0) throw new ArgumentOutOfRangeException(nameof(backgroundWidth));
+
+            this.backgroundHeight = backgroundHeight;
+            this.backgroundWidth = backgroundWidth;
+
+            laneManager = new LaneManager(LaneSettings.MiddleSafeLaneLocation);
+            riverManager = new RiverManager(LaneSettings.TopLaneYLocation);
+            homeManager = new FrogHomeManager(LaneSettings.TopLaneYLocation);
+            deathAnimationManager = new DeathAnimationManager();
+            powerUpManager = new PowerUpManager();
+            playerManager = new PlayerManager();
+
+            deathAnimationManager.AnimationOver += handleDeathAnimationHasEnded;
+        }
+
+        #endregion
+
         #region Data members
 
         private readonly double backgroundHeight;
@@ -43,45 +76,6 @@ namespace FroggerStarter.Controller
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="GameManager" /> class.
-        /// </summary>
-        /// <param name="backgroundHeight">Height of the background.</param>
-        /// <param name="backgroundWidth">Width of the background.</param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///     backgroundHeight &lt;= 0
-        ///     or
-        ///     backgroundWidth &lt;= 0
-        /// </exception>
-        public GameManager(double backgroundHeight, double backgroundWidth)
-        {
-            if (backgroundHeight <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(backgroundHeight));
-            }
-
-            if (backgroundWidth <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(backgroundWidth));
-            }
-
-            this.backgroundHeight = backgroundHeight;
-            this.backgroundWidth = backgroundWidth;
-
-            this.laneManager = new LaneManager(LaneSettings.MiddleSafeLaneLocation);
-            this.riverManager = new RiverManager(LaneSettings.TopLaneYLocation);
-            this.homeManager = new FrogHomeManager(LaneSettings.TopLaneYLocation);
-            this.deathAnimationManager = new DeathAnimationManager();
-            this.powerUpManager = new PowerUpManager();
-            this.playerManager = new PlayerManager();
-
-            this.deathAnimationManager.AnimationOver += this.handleDeathAnimationHasEnded;
-        }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -94,15 +88,15 @@ namespace FroggerStarter.Controller
         /// <exception cref="ArgumentNullException">gameCanvas</exception>
         public void InitializeGame(Canvas gamePage)
         {
-            this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
-            this.addPowerUpsToView();
-            this.addVehiclesToView();
-            this.addLogsToView();
-            this.addDeathAnimationsToView();
-            this.addPlayerMovementAnimationsToView();
-            this.placeHomeFrogs();
-            this.laneManager.HideVehicles();
-            this.createAndPlacePlayer();
+            gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
+            addPowerUpsToView();
+            addVehiclesToView();
+            addLogsToView();
+            addDeathAnimationsToView();
+            addPlayerMovementAnimationsToView();
+            placeHomeFrogs();
+            laneManager.HideVehicles();
+            createAndPlacePlayer();
         }
 
         /// <summary>
@@ -112,7 +106,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
-            this.playerManager.MovePlayer(0, Direction.Left);
+            playerManager.MovePlayer(0, Direction.Left);
         }
 
         /// <summary>
@@ -122,7 +116,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            this.playerManager.MovePlayer(this.backgroundWidth, Direction.Right);
+            playerManager.MovePlayer(backgroundWidth, Direction.Right);
         }
 
         /// <summary>
@@ -132,7 +126,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            this.playerManager.MovePlayer(LaneSettings.TopLaneYLocation, Direction.Up);
+            playerManager.MovePlayer(LaneSettings.TopLaneYLocation, Direction.Up);
         }
 
         /// <summary>
@@ -142,7 +136,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            this.playerManager.MovePlayer((int) Math.Floor(this.backgroundHeight), Direction.Down);
+            playerManager.MovePlayer((int) Math.Floor(backgroundHeight), Direction.Down);
         }
 
         /// <summary>
@@ -152,147 +146,121 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void RemoveSprites()
         {
-            this.gameCanvas.Children.Remove(this.playerManager.Sprite);
-            this.removePowerUpSprites();
-            this.removeVehicleSprites();
-            this.removeLogSprites();
-            this.removeHomeFrogSprites();
+            gameCanvas.Children.Remove(playerManager.Sprite);
+            removePowerUpSprites();
+            removeVehicleSprites();
+            removeLogSprites();
+            removeHomeFrogSprites();
         }
 
         private void gameTimerOnTick(object sender, object e)
         {
-            this.laneManager.MoveVehicles();
-            this.riverManager.MoveVehicles();
-            this.checkForPlayerCollisionWithObjects();
-            this.checkForPlayerHitTopWall();
+            laneManager.MoveVehicles();
+            riverManager.MoveVehicles();
+            checkForPlayerCollisionWithObjects();
+            checkForPlayerHitTopWall();
         }
 
         private void timeRemainingTimerOnTick(object sender, object e)
         {
-            this.playerManager.DecrementTimeRemaining();
+            playerManager.DecrementTimeRemaining();
 
-            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerManager.TimeRemaining};
-            this.TimeRemainingCount?.Invoke(this, timeRemaining);
+            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = playerManager.TimeRemaining};
+            TimeRemainingCount?.Invoke(this, timeRemaining);
 
-            if (this.playerManager.TimeRemaining == 0)
-            {
-                this.handleTimeRemainingIsZero();
-            }
+            if (playerManager.TimeRemaining == 0) handleTimeRemainingIsZero();
         }
 
         private void checkForPlayerCollisionWithObjects()
         {
-            this.checkForPlayerCollisionWithVehicles();
-            this.checkForPlayerCollisionWithLogs();
-            this.checkForPlayerLeftLog();
-            this.checkForPlayerCollisionWithHome();
-            this.checkForPlayerCollisionWithTimerPowerUp();
-            this.checkForPlayerIsOffScreen();
-            this.checkForDeathAnimationActive();
+            checkForPlayerCollisionWithVehicles();
+            checkForPlayerCollisionWithLogs();
+            checkForPlayerLeftLog();
+            checkForPlayerCollisionWithHome();
+            checkForPlayerCollisionWithTimerPowerUp();
+            checkForPlayerIsOffScreen();
+            checkForDeathAnimationActive();
         }
 
         private void checkForPlayerCollisionWithVehicles()
         {
-            foreach (var vehicle in this.laneManager)
-            {
-                if (this.playerManager.CollisionDetected(vehicle) &&
-                    vehicle.Sprite.Visibility != Visibility.Collapsed && !this.playerIsImmune)
+            foreach (var vehicle in laneManager)
+                if (playerManager.CollisionDetected(vehicle) &&
+                    vehicle.Sprite.Visibility != Visibility.Collapsed && !playerIsImmune)
                 {
-                    this.DiedHitByVehicle?.Invoke(this, EventArgs.Empty);
-                    this.handleLifeLost();
+                    DiedHitByVehicle?.Invoke(this, EventArgs.Empty);
+                    handleLifeLost();
                 }
-            }
         }
 
         private void checkForPlayerIsOffScreen()
         {
-            if (this.playerManager.IsOffScreen())
+            if (playerManager.IsOffScreen())
             {
-                this.DiedHitWall?.Invoke(this, EventArgs.Empty);
-                this.handleLifeLost();
+                DiedHitWall?.Invoke(this, EventArgs.Empty);
+                handleLifeLost();
             }
         }
 
         private void checkForPlayerCollisionWithLogs()
         {
-            this.playerOnMovingLog = false;
-            foreach (var log in this.riverManager)
-            {
-                if (this.playerManager.CollisionDetected(log) && this.playerManager.HasCrossedRoad() &&
+            playerOnMovingLog = false;
+            foreach (var log in riverManager)
+                if (playerManager.CollisionDetected(log) && playerManager.HasCrossedRoad() &&
                     log.Sprite.Visibility != Visibility.Collapsed)
-                {
-                    this.handlePlayerLandedOnLog(log);
-                }
-            }
+                    handlePlayerLandedOnLog(log);
         }
 
         private void checkForPlayerLeftLog()
         {
-            if (!this.playerOnMovingLog && this.playerManager.HasCrossedRoad())
+            if (!playerOnMovingLog && playerManager.HasCrossedRoad())
             {
-                this.DiedInWater?.Invoke(this, EventArgs.Empty);
-                this.handleLifeLost();
+                DiedInWater?.Invoke(this, EventArgs.Empty);
+                handleLifeLost();
             }
         }
 
         private void checkForPlayerCollisionWithHome()
         {
-            foreach (var frogHome in this.homeManager)
-            {
-                if (this.playerManager.CollisionDetectedWithFrogHome(frogHome))
-                {
-                    this.handleFrogMadeItHome(frogHome);
-                }
-            }
+            foreach (var frogHome in homeManager)
+                if (playerManager.CollisionDetectedWithFrogHome(frogHome))
+                    handleFrogMadeItHome(frogHome);
         }
 
         private void checkForPlayerCollisionWithTimerPowerUp()
         {
-            foreach (var powerUp in this.powerUpManager)
-            {
-                if (this.playerManager.CollisionDetected(powerUp) && powerUp.Sprite.Visibility != Visibility.Collapsed)
-                {
-                    this.handlePowerUpIsHit(powerUp);
-                }
-            }
+            foreach (var powerUp in powerUpManager)
+                if (playerManager.CollisionDetected(powerUp) && powerUp.Sprite.Visibility != Visibility.Collapsed)
+                    handlePowerUpIsHit(powerUp);
         }
 
         private void checkForLevelOver()
         {
-            if (this.playerManager.AmountOfFrogsInHome != GameSettings.FrogHomeCount)
-            {
-                return;
-            }
+            if (playerManager.AmountOfFrogsInHome != GameSettings.FrogHomeCount) return;
 
-            this.handleLevelOver();
+            handleLevelOver();
         }
 
         private bool checkForGameOver()
         {
-            if (this.playerManager.Lives != 0 && !this.roundThreeOver)
-            {
-                return false;
-            }
+            if (playerManager.Lives != 0 && !roundThreeOver) return false;
 
-            this.handleGameOver();
+            handleGameOver();
             return true;
         }
 
         private void checkForPlayerHitTopWall()
         {
-            if (this.playerManager.Y <= LaneSettings.TopLaneYLocation)
+            if (playerManager.Y <= LaneSettings.TopLaneYLocation)
             {
-                this.DiedHitWall?.Invoke(this, EventArgs.Empty);
-                this.handleLifeLost();
+                DiedHitWall?.Invoke(this, EventArgs.Empty);
+                handleLifeLost();
             }
         }
 
         private void checkForDeathAnimationActive()
         {
-            if (this.deathAnimationActive)
-            {
-                this.playerManager.Sprite.Visibility = Visibility.Collapsed;
-            }
+            if (deathAnimationActive) playerManager.Sprite.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -300,246 +268,237 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void StartGame()
         {
-            this.setupGameTimer();
-            this.setupTimeRemainingTimer();
-            this.powerUpManager.startPowerUpTimer();
-            this.playerManager.EnableMovement();
+            setupGameTimer();
+            setupTimeRemainingTimer();
+            powerUpManager.startPowerUpTimer();
+            playerManager.EnableMovement();
         }
 
         private void handleLevelOver()
         {
-            if (!this.roundOneOver)
+            if (!roundOneOver)
             {
-                this.roundOneOver = true;
-                this.enableNextLevel(.5);
+                roundOneOver = true;
+                enableNextLevel(.5);
             }
-            else if (!this.roundTwoOver)
+            else if (!roundTwoOver)
             {
-                this.roundTwoOver = true;
-                this.enableNextLevel(1);
+                roundTwoOver = true;
+                enableNextLevel(1);
             }
-            else if (!this.roundThreeOver)
+            else if (!roundThreeOver)
             {
-                this.roundThreeOver = true;
-                this.handleGameOver();
+                roundThreeOver = true;
+                handleGameOver();
             }
 
-            this.playerManager.IncrementLevel();
-            var level = new LevelIncreasedEventArgs {Level = this.playerManager.Level};
-            this.LevelIncreased?.Invoke(this, level);
+            playerManager.IncrementLevel();
+            var level = new LevelIncreasedEventArgs {Level = playerManager.Level};
+            LevelIncreased?.Invoke(this, level);
         }
 
         private void handleLifeLost()
         {
-            this.playerOnMovingLog = false;
-            this.playerManager.Sprite.Visibility = Visibility.Collapsed;
-            this.playerManager.DecrementLives();
+            playerOnMovingLog = false;
+            playerManager.Sprite.Visibility = Visibility.Collapsed;
+            playerManager.DecrementLives();
 
-            var lives = new LivesLostEventArgs {Lives = this.playerManager.Lives};
-            this.LifeLost?.Invoke(this, lives);
+            var lives = new LivesLostEventArgs {Lives = playerManager.Lives};
+            LifeLost?.Invoke(this, lives);
 
-            this.timeRemainingTimer.Stop();
-            this.deathAnimationActive = true;
-            this.handleStartDeathAnimation();
+            timeRemainingTimer.Stop();
+            deathAnimationActive = true;
+            handleStartDeathAnimation();
 
-            if (!this.checkForGameOver())
-            {
-                this.setPlayerToCenterOfBottomLane();
-            }
+            if (!checkForGameOver()) setPlayerToCenterOfBottomLane();
         }
 
         private void handlePlayerLandedOnLog(Vehicle log)
         {
-            this.playerOnMovingLog = true;
-            this.playerManager.MakePlayerStayOnLog(log);
+            playerOnMovingLog = true;
+            playerManager.MakePlayerStayOnLog(log);
         }
 
         private void handleStartDeathAnimation()
         {
-            this.playerManager.DisableMovement();
-            this.playerManager.Sprite.Visibility = Visibility.Collapsed;
+            playerManager.DisableMovement();
+            playerManager.Sprite.Visibility = Visibility.Collapsed;
 
-            this.setDeathAnimationToPlayerLocation();
-            this.deathAnimationManager.RotateAllSprites(this.playerManager.CurrentDirection);
-            this.deathAnimationManager.PlayDeathAnimation();
+            setDeathAnimationToPlayerLocation();
+            deathAnimationManager.RotateAllSprites(playerManager.CurrentDirection);
+            deathAnimationManager.PlayDeathAnimation();
         }
 
         private void handlePlayerScored()
         {
-            this.playerOnMovingLog = false;
-            this.playerManager.IncrementScore(this.playerManager.TimeRemaining * this.playerManager.Lives);
+            playerOnMovingLog = false;
+            playerManager.IncrementScore(playerManager.TimeRemaining * playerManager.Lives);
 
-            var score = new ScoreIncreasedEventArgs {Score = this.playerManager.Score};
-            this.ScoreIncreased?.Invoke(this, score);
+            var score = new ScoreIncreasedEventArgs {Score = playerManager.Score};
+            ScoreIncreased?.Invoke(this, score);
 
-            this.resetTimeRemainingTimer();
-            this.setPlayerToCenterOfBottomLane();
+            resetTimeRemainingTimer();
+            setPlayerToCenterOfBottomLane();
         }
 
         private void handleGameOver()
         {
-            this.gameIsOver = true;
-            this.gameTimer.Stop();
-            this.playerManager.Sprite.Visibility = Visibility.Collapsed;
-            this.removePowerUpSprites();
-            this.playerManager.DisableMovement();
-            this.timeRemainingTimer.Stop();
-            this.powerUpManager.stopPowerUpTimer();
-            this.GameOver?.Invoke(this, EventArgs.Empty);
+            gameIsOver = true;
+            gameTimer.Stop();
+            playerManager.Sprite.Visibility = Visibility.Collapsed;
+            removePowerUpSprites();
+            playerManager.DisableMovement();
+            timeRemainingTimer.Stop();
+            powerUpManager.stopPowerUpTimer();
+            GameOver?.Invoke(this, EventArgs.Empty);
         }
 
         private void handleTimeRemainingIsZero()
         {
-            this.DiedTimeRanOut?.Invoke(this, EventArgs.Empty);
-            this.handleLifeLost();
+            DiedTimeRanOut?.Invoke(this, EventArgs.Empty);
+            handleLifeLost();
 
-            if (!this.checkForGameOver())
-            {
-                this.resetTimeRemainingTimer();
-            }
+            if (!checkForGameOver()) resetTimeRemainingTimer();
         }
 
         private void handleFrogMadeItHome(FrogHome frogHome)
         {
             if (frogHome.Sprite.Visibility == Visibility.Visible)
             {
-                this.handleLifeLost();
+                handleLifeLost();
             }
             else
             {
-                this.playerOnMovingLog = false;
-                this.handlePlayerScored();
+                playerOnMovingLog = false;
+                handlePlayerScored();
                 frogHome.Sprite.Visibility = Visibility.Visible;
-                this.playerManager.IncrementFrogsInHomes();
-                this.checkForGameOver();
-                this.checkForLevelOver();
-                this.playerIsImmune = false;
+                playerManager.IncrementFrogsInHomes();
+                checkForGameOver();
+                checkForLevelOver();
+                playerIsImmune = false;
             }
         }
 
         private void handleDeathAnimationHasEnded(object sender, EventArgs e)
         {
-            this.deathAnimationManager.CollapseAllAnimationFrames();
-            this.deathAnimationManager.StopAnimationTimer();
-            this.deathAnimationManager.ResetFrameCount();
+            deathAnimationManager.CollapseAllAnimationFrames();
+            deathAnimationManager.StopAnimationTimer();
+            deathAnimationManager.ResetFrameCount();
 
-            if (this.gameIsOver)
-            {
-                return;
-            }
+            if (gameIsOver) return;
 
-            this.playerManager.Sprite.Visibility = Visibility.Visible;
-            this.playerManager.EnableMovement();
-            this.resetTimeRemainingTimer();
-            this.laneManager.HideVehicles();
-            this.deathAnimationActive = false;
+            playerManager.Sprite.Visibility = Visibility.Visible;
+            playerManager.EnableMovement();
+            resetTimeRemainingTimer();
+            laneManager.HideVehicles();
+            deathAnimationActive = false;
         }
 
         private async void handlePowerUpIsHit(PowerUp powerUp)
         {
-            this.PowerUpActivated?.Invoke(this, EventArgs.Empty);
+            PowerUpActivated?.Invoke(this, EventArgs.Empty);
             if (powerUp.PowerUpType == PowerUpType.Timer)
             {
-                this.playerManager.TimerPowerUp();
+                playerManager.TimerPowerUp();
                 powerUp.Sprite.Visibility = Visibility.Collapsed;
-                var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerManager.TimeRemaining};
-                this.TimeRemainingCount?.Invoke(this, timeRemaining);
+                var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = playerManager.TimeRemaining};
+                TimeRemainingCount?.Invoke(this, timeRemaining);
             }
             else
             {
-                this.playerIsImmune = true;
+                playerIsImmune = true;
                 powerUp.Sprite.Visibility = Visibility.Collapsed;
                 await Task.Delay(3000);
-                this.playerIsImmune = false;
+                playerIsImmune = false;
             }
         }
 
         private void createAndPlacePlayer()
         {
-            this.gameCanvas.Children.Add(this.playerManager.Sprite);
-            this.setPlayerToCenterOfBottomLane();
-            this.playerManager.DisableMovement();
+            gameCanvas.Children.Add(playerManager.Sprite);
+            setPlayerToCenterOfBottomLane();
+            playerManager.DisableMovement();
         }
 
         private void placeHomeFrogs()
         {
-            this.homeManager.ToList().ForEach(homeFrog => this.gameCanvas.Children.Add(homeFrog.Sprite));
+            homeManager.ToList().ForEach(homeFrog => gameCanvas.Children.Add(homeFrog.Sprite));
         }
 
         private void addVehiclesToView()
         {
-            this.laneManager.ToList().ForEach(vehicle => this.gameCanvas.Children.Add(vehicle.Sprite));
+            laneManager.ToList().ForEach(vehicle => gameCanvas.Children.Add(vehicle.Sprite));
         }
 
         private void addLogsToView()
         {
-            this.riverManager.ToList().ForEach(vehicle => this.gameCanvas.Children.Add(vehicle.Sprite));
+            riverManager.ToList().ForEach(vehicle => gameCanvas.Children.Add(vehicle.Sprite));
         }
 
         private void addDeathAnimationsToView()
         {
-            this.deathAnimationManager.ToList().ForEach(animation => this.gameCanvas.Children.Add(animation.Sprite));
+            deathAnimationManager.ToList().ForEach(animation => gameCanvas.Children.Add(animation.Sprite));
         }
 
         private void addPlayerMovementAnimationsToView()
         {
-            this.gameCanvas.Children.Add(this.playerManager.MovementSprite);
+            gameCanvas.Children.Add(playerManager.MovementSprite);
         }
 
         private void addPowerUpsToView()
         {
-            this.powerUpManager.ToList().ForEach(powerUp => this.gameCanvas.Children.Add(powerUp.Sprite));
+            powerUpManager.ToList().ForEach(powerUp => gameCanvas.Children.Add(powerUp.Sprite));
         }
 
         private void removeHomeFrogSprites()
         {
-            this.homeManager.ToList().ForEach(homeFrog => this.gameCanvas.Children.Remove(homeFrog.Sprite));
+            homeManager.ToList().ForEach(homeFrog => gameCanvas.Children.Remove(homeFrog.Sprite));
         }
 
         private void removeVehicleSprites()
         {
-            this.laneManager.ToList().ForEach(vehicle => this.gameCanvas.Children.Remove(vehicle.Sprite));
+            laneManager.ToList().ForEach(vehicle => gameCanvas.Children.Remove(vehicle.Sprite));
         }
 
         private void removeLogSprites()
         {
-            this.riverManager.ToList().ForEach(vehicle => this.gameCanvas.Children.Remove(vehicle.Sprite));
+            riverManager.ToList().ForEach(vehicle => gameCanvas.Children.Remove(vehicle.Sprite));
         }
 
         private void removePowerUpSprites()
         {
-            this.powerUpManager.ToList().ForEach(powerUp => this.gameCanvas.Children.Remove(powerUp.Sprite));
+            powerUpManager.ToList().ForEach(powerUp => gameCanvas.Children.Remove(powerUp.Sprite));
         }
 
         private void setDeathAnimationToPlayerLocation()
         {
-            this.deathAnimationManager.SetAnimationLocation(this.playerManager.X, this.playerManager.Y);
+            deathAnimationManager.SetAnimationLocation(playerManager.X, playerManager.Y);
         }
 
         private void setPlayerToCenterOfBottomLane()
         {
-            this.playerManager.SetPlayerToCenterOfBottomLane();
+            playerManager.SetPlayerToCenterOfBottomLane();
         }
 
         private void resetTimeRemainingTimer()
         {
-            this.timeRemainingTimer.Stop();
-            this.playerManager.ResetTimeRemaining();
+            timeRemainingTimer.Stop();
+            playerManager.ResetTimeRemaining();
 
-            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = this.playerManager.TimeRemaining};
-            this.TimeRemainingCount?.Invoke(this, timeRemaining);
+            var timeRemaining = new TimeRemainingEventArgs {TimeRemaining = playerManager.TimeRemaining};
+            TimeRemainingCount?.Invoke(this, timeRemaining);
 
-            this.timeRemainingTimer.Start();
+            timeRemainingTimer.Start();
         }
 
         private void enableNextLevel(double speed)
         {
-            this.homeManager.makeFrogHomesCollapsed();
-            this.playerManager.ResetFrogsInHome();
-            this.laneManager.IncreaseAllVehicleSpeed(speed);
-            this.laneManager.IncrementMaxAmountOfVehiclesPerLane();
-            this.riverManager.DecrementMaxAmountOfVehiclesPerLane();
-            this.riverManager.IncreaseAllVehicleSpeed(speed);
+            homeManager.makeFrogHomesCollapsed();
+            playerManager.ResetFrogsInHome();
+            laneManager.IncreaseAllVehicleSpeed(speed);
+            laneManager.IncrementMaxAmountOfVehiclesPerLane();
+            riverManager.DecrementMaxAmountOfVehiclesPerLane();
+            riverManager.IncreaseAllVehicleSpeed(speed);
         }
 
         #endregion
@@ -548,18 +507,18 @@ namespace FroggerStarter.Controller
 
         private void setupGameTimer()
         {
-            this.gameTimer = new DispatcherTimer();
-            this.gameTimer.Tick += this.gameTimerOnTick;
-            this.gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 15);
-            this.gameTimer.Start();
+            gameTimer = new DispatcherTimer();
+            gameTimer.Tick += gameTimerOnTick;
+            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 15);
+            gameTimer.Start();
         }
 
         private void setupTimeRemainingTimer()
         {
-            this.timeRemainingTimer = new DispatcherTimer();
-            this.timeRemainingTimer.Tick += this.timeRemainingTimerOnTick;
-            this.timeRemainingTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
-            this.timeRemainingTimer.Start();
+            timeRemainingTimer = new DispatcherTimer();
+            timeRemainingTimer.Tick += timeRemainingTimerOnTick;
+            timeRemainingTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            timeRemainingTimer.Start();
         }
 
         #endregion

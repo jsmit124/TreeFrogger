@@ -8,14 +8,30 @@ namespace FroggerStarter.Model
     /// <summary>
     ///     Stores information for the player information to add to the high scores
     /// </summary>
-    [Serializable, XmlInclude(typeof(HighScorePlayerInfo))]
+    [Serializable]
+    [XmlInclude(typeof(HighScorePlayerInfo))]
     public class HighScoreRecord : IEnumerable<HighScorePlayerInfo>
     {
         #region Data members
 
         /// <summary>The high scores</summary>
-        [XmlArray("High Scores")]
-        public readonly List<HighScorePlayerInfo> HighScores;
+        [XmlArray("High Scores")] public readonly List<HighScorePlayerInfo> HighScores;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="HighScorePlayerInfo" /> class.
+        /// </summary>
+        public HighScoreRecord()
+        {
+            HighScores = new List<HighScorePlayerInfo>();
+            HighScores.Add(new HighScorePlayerInfo("ABC", 4, 6));
+            HighScores.Add(new HighScorePlayerInfo("DEF", 2, 2));
+            HighScores.Add(new HighScorePlayerInfo("GHI", 3, 3));
+            HighScores.Add(new HighScorePlayerInfo("JKL", 4, 4));
+        }
 
         #endregion
 
@@ -27,24 +43,8 @@ namespace FroggerStarter.Model
         /// <returns></returns>
         public HighScorePlayerInfo this[int i]
         {
-            get => this.HighScores[i];
-            set => this.HighScores[i] = value;
-        }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="HighScorePlayerInfo" /> class.
-        /// </summary>
-        public HighScoreRecord()
-        {
-            this.HighScores = new List<HighScorePlayerInfo>();
-            this.HighScores.Add(new HighScorePlayerInfo("ABC", 4, 6));
-            this.HighScores.Add(new HighScorePlayerInfo("DEF", 2, 2));
-            this.HighScores.Add(new HighScorePlayerInfo("GHI", 3, 3));
-            this.HighScores.Add(new HighScorePlayerInfo("JKL", 4, 4));
+            get => HighScores[i];
+            set => HighScores[i] = value;
         }
 
         #endregion
@@ -59,7 +59,7 @@ namespace FroggerStarter.Model
         /// </returns>
         IEnumerator<HighScorePlayerInfo> IEnumerable<HighScorePlayerInfo>.GetEnumerator()
         {
-            return this.HighScores.GetEnumerator();
+            return HighScores.GetEnumerator();
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace FroggerStarter.Model
         /// </returns>
         public IEnumerator GetEnumerator()
         {
-            return this.HighScores.GetEnumerator();
+            return HighScores.GetEnumerator();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace FroggerStarter.Model
         /// <param name="info">The information.</param>
         public void AddInfo(HighScorePlayerInfo info)
         {
-            this.HighScores.Add(info);
+            HighScores.Add(info);
         }
 
         #endregion

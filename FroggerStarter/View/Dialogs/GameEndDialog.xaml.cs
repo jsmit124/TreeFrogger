@@ -45,6 +45,5 @@ namespace FroggerStarter.View.Dialogs
             addButton.IsEnabled = true;
             initialsTextBox.Text = "";
         }
-
     }
 }
