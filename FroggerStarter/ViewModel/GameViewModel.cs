@@ -14,6 +14,15 @@ namespace FroggerStarter.ViewModel
     /// </summary>
     public class GameViewModel : INotifyPropertyChanged
     {
+        /// <summary>Sets the score and level.</summary>
+        /// <param name="score">The score.</param>
+        /// <param name="level">The level.</param>
+        public void SetScoreLevel(int score, int level)
+        {
+            currentScore = score;
+            currentLevel = level;
+        }
+
         #region Data members
 
         private readonly HighScoreRecord record;
@@ -97,10 +106,7 @@ namespace FroggerStarter.ViewModel
 
         private void sortScores(object obj)
         {
-            if (sortComboboxSelection == null)
-            {
-                return;
-            }
+            if (sortComboboxSelection == null) return;
             switch (sortComboboxSelection.Content)
             {
                 case "Score/Name/Level":
@@ -132,7 +138,7 @@ namespace FroggerStarter.ViewModel
 
         private void addScore(object obj)
         {
-            record.AddInfo(new HighScorePlayerInfo(Initials, this.currentScore, this.currentLevel));
+            record.AddInfo(new HighScorePlayerInfo(Initials, currentScore, currentLevel));
             sortScores(obj);
             HighScores = record.HighScores.ToObservableCollection();
             //HighScoreFileWriter.FindFileAndWriteHighScoreToFile(this.record);
@@ -148,14 +154,5 @@ namespace FroggerStarter.ViewModel
         }
 
         #endregion
-
-        /// <summary>Sets the score and level.</summary>
-        /// <param name="score">The score.</param>
-        /// <param name="level">The level.</param>
-        public void SetScoreLevel(int score, int level)
-        {
-            this.currentScore = score;
-            this.currentLevel = level;
-        }
     }
 }

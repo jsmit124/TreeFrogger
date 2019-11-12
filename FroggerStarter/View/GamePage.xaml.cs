@@ -149,7 +149,7 @@ namespace FroggerStarter.View
             gameOverTextBlock.Visibility = Visibility.Visible;
             backgroundMusicElement.Stop();
 
-            this.gameViewModel.SetScoreLevel(this.gameManager.Score, this.gameManager.Level);
+            gameViewModel.SetScoreLevel(gameManager.Score, gameManager.Level);
 
             muteDeathSoundEffects();
             gameOverElement.Play();

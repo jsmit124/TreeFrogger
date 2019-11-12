@@ -76,10 +76,11 @@ namespace FroggerStarter.Controller
 
         /// <summary>Gets the score.</summary>
         /// <value>The score.</value>
-        public int Score => this.playerManager.Score;
+        public int Score => playerManager.Score;
+
         /// <summary>Gets the level.</summary>
         /// <value>The level.</value>
-        public int Level => this.playerManager.Level;
+        public int Level => playerManager.Level;
 
         #endregion
 

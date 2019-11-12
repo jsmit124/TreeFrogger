@@ -15,6 +15,20 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class PlayerManager
     {
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="PlayerManager" /> class.
+        /// </summary>
+        public PlayerManager()
+        {
+            playerStats = new PlayerStatistics();
+            player = new Frog();
+            createMovementSprite();
+        }
+
+        #endregion
+
         #region Data members
 
         private PlayerMovementAnimation movementSprite;
@@ -31,7 +45,7 @@ namespace FroggerStarter.Controller
         /// <value>
         ///     The movement sprite.
         /// </value>
-        public BaseSprite MovementSprite => this.movementSprite.Sprite;
+        public BaseSprite MovementSprite => movementSprite.Sprite;
 
         /// <summary>
         ///     Gets the y.
@@ -41,8 +55,8 @@ namespace FroggerStarter.Controller
         /// </value>
         public double Y
         {
-            get => this.player.Y;
-            set => this.player.Y = value;
+            get => player.Y;
+            set => player.Y = value;
         }
 
         /// <summary>
@@ -53,8 +67,8 @@ namespace FroggerStarter.Controller
         /// </value>
         public double X
         {
-            get => this.player.X;
-            set => this.player.X = value;
+            get => player.X;
+            set => player.X = value;
         }
 
         /// <summary>
@@ -63,7 +77,7 @@ namespace FroggerStarter.Controller
         /// <value>
         ///     The sprite.
         /// </value>
-        public BaseSprite Sprite => this.player.Sprite;
+        public BaseSprite Sprite => player.Sprite;
 
         /// <summary>
         ///     Gets the score.
@@ -71,7 +85,7 @@ namespace FroggerStarter.Controller
         /// <value>
         ///     The score.
         /// </value>
-        public int Score => this.playerStats.Score;
+        public int Score => playerStats.Score;
 
         /// <summary>
         ///     Gets the time remaining.
@@ -79,7 +93,7 @@ namespace FroggerStarter.Controller
         /// <value>
         ///     The time remaining.
         /// </value>
-        public int TimeRemaining => this.playerStats.TimeRemaining;
+        public int TimeRemaining => playerStats.TimeRemaining;
 
         /// <summary>
         ///     Gets the lives.
@@ -87,7 +101,7 @@ namespace FroggerStarter.Controller
         /// <value>
         ///     The lives.
         /// </value>
-        public int Lives => this.playerStats.Lives;
+        public int Lives => playerStats.Lives;
 
         /// <summary>
         ///     Gets the amount of frogs in homes.
@@ -95,7 +109,7 @@ namespace FroggerStarter.Controller
         /// <value>
         ///     The amount of frogs in homes.
         /// </value>
-        public int AmountOfFrogsInHome => this.playerStats.AmountOfFrogsInHome;
+        public int AmountOfFrogsInHome => playerStats.AmountOfFrogsInHome;
 
         /// <summary>
         ///     Gets or sets the level.
@@ -103,7 +117,7 @@ namespace FroggerStarter.Controller
         /// <value>
         ///     The level.
         /// </value>
-        public int Level => this.playerStats.Level;
+        public int Level => playerStats.Level;
 
         /// <summary>
         ///     Gets or sets the current direction.
@@ -115,25 +129,11 @@ namespace FroggerStarter.Controller
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="PlayerManager" /> class.
-        /// </summary>
-        public PlayerManager()
-        {
-            this.playerStats = new PlayerStatistics();
-            this.player = new Frog();
-            this.createMovementSprite();
-        }
-
-        #endregion
-
         #region Methods
 
         private void createMovementSprite()
         {
-            this.movementSprite = new PlayerMovementAnimation {Sprite = {Visibility = Visibility.Collapsed}};
+            movementSprite = new PlayerMovementAnimation {Sprite = {Visibility = Visibility.Collapsed}};
         }
 
         /// <summary>
@@ -141,23 +141,23 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void SetPlayerToCenterOfBottomLane()
         {
-            this.X = (double) Application.Current.Resources["AppWidth"] / 2 - this.player.Sprite.Width / 2;
-            this.Y = (double) Application.Current.Resources["PlayerStartYLocation"];
-            this.movementSprite.X = this.player.X;
-            this.movementSprite.Y = this.player.Y;
-            this.checkIfPlayerIsDisabled();
+            X = (double) Application.Current.Resources["AppWidth"] / 2 - player.Sprite.Width / 2;
+            Y = (double) Application.Current.Resources["PlayerStartYLocation"];
+            movementSprite.X = player.X;
+            movementSprite.Y = player.Y;
+            checkIfPlayerIsDisabled();
         }
 
         private void checkIfPlayerIsDisabled()
         {
-            if (this.player.SpeedX.Equals(0))
+            if (player.SpeedX.Equals(0))
             {
-                this.Sprite.Visibility = Visibility.Collapsed;
-                this.rotateSprites(Direction.Up);
+                Sprite.Visibility = Visibility.Collapsed;
+                rotateSprites(Direction.Up);
             }
             else
             {
-                this.Sprite.Visibility = Visibility.Visible;
+                Sprite.Visibility = Visibility.Visible;
             }
         }
 
@@ -166,7 +166,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void DecrementTimeRemaining()
         {
-            this.playerStats.DecrementTimeRemaining();
+            playerStats.DecrementTimeRemaining();
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void DecrementLives()
         {
-            this.playerStats.DecrementLives();
+            playerStats.DecrementLives();
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void IncrementFrogsInHomes()
         {
-            this.playerStats.IncrementFrogsInHomes();
+            playerStats.IncrementFrogsInHomes();
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void IncrementLevel()
         {
-            this.playerStats.IncrementLevel();
+            playerStats.IncrementLevel();
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void ResetTimeRemaining()
         {
-            this.playerStats.ResetTimeRemaining();
+            playerStats.ResetTimeRemaining();
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace FroggerStarter.Controller
         /// <param name="amount">The amount.</param>
         public void IncrementScore(int amount)
         {
-            this.playerStats.IncrementScore(amount);
+            playerStats.IncrementScore(amount);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void TimerPowerUp()
         {
-            this.playerStats.TimerPowerUp();
+            playerStats.TimerPowerUp();
         }
 
         /// <summary>
@@ -225,41 +225,37 @@ namespace FroggerStarter.Controller
         /// <param name="direction">The direction.</param>
         public async void MovePlayer(double boundary, Direction direction)
         {
-            this.CurrentDirection = direction;
-            if (this.player.SpeedX > 0)
-            {
-                await this.moveBothSprites(boundary, direction);
-            }
+            CurrentDirection = direction;
+            if (player.SpeedX > 0)
+                await moveBothSprites(boundary, direction);
             else
-            {
-                this.Sprite.Visibility = Visibility.Collapsed;
-            }
+                Sprite.Visibility = Visibility.Collapsed;
         }
 
         private async Task moveBothSprites(double boundary, Direction direction)
         {
-            this.rotateSprites(direction);
+            rotateSprites(direction);
             switch (direction)
             {
                 case Direction.Up:
-                    this.movePlayerUp(boundary);
+                    movePlayerUp(boundary);
                     await Task.Delay(70);
-                    this.moveMovementSprite(direction);
+                    moveMovementSprite(direction);
                     break;
                 case Direction.Right:
-                    this.movePlayerRight(boundary);
+                    movePlayerRight(boundary);
                     await Task.Delay(70);
-                    this.moveMovementSprite(direction);
+                    moveMovementSprite(direction);
                     break;
                 case Direction.Left:
-                    this.movePlayerLeft(boundary);
+                    movePlayerLeft(boundary);
                     await Task.Delay(70);
-                    this.moveMovementSprite(direction);
+                    moveMovementSprite(direction);
                     break;
                 default:
-                    this.movePlayerDown(boundary);
+                    movePlayerDown(boundary);
                     await Task.Delay(70);
-                    this.moveMovementSprite(direction);
+                    moveMovementSprite(direction);
                     break;
             }
         }
@@ -270,9 +266,9 @@ namespace FroggerStarter.Controller
         /// <param name="boundary">The boundary.</param>
         private void movePlayerRight(double boundary)
         {
-            this.Sprite.Visibility = Visibility.Collapsed;
-            this.player.MoveRightWithBoundaryCheck(boundary);
-            this.movementSprite.Sprite.Visibility = Visibility.Visible;
+            Sprite.Visibility = Visibility.Collapsed;
+            player.MoveRightWithBoundaryCheck(boundary);
+            movementSprite.Sprite.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -282,9 +278,9 @@ namespace FroggerStarter.Controller
         /// </summary>
         private void movePlayerUp(double boundary)
         {
-            this.Sprite.Visibility = Visibility.Collapsed;
-            this.player.MoveUpWithBoundaryCheck(boundary);
-            this.movementSprite.Sprite.Visibility = Visibility.Visible;
+            Sprite.Visibility = Visibility.Collapsed;
+            player.MoveUpWithBoundaryCheck(boundary);
+            movementSprite.Sprite.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -294,9 +290,9 @@ namespace FroggerStarter.Controller
         /// </summary>
         private void movePlayerDown(double boundary)
         {
-            this.Sprite.Visibility = Visibility.Collapsed;
-            this.player.MoveDownWithBoundaryCheck((int) Math.Floor(boundary));
-            this.movementSprite.Sprite.Visibility = Visibility.Visible;
+            Sprite.Visibility = Visibility.Collapsed;
+            player.MoveDownWithBoundaryCheck((int) Math.Floor(boundary));
+            movementSprite.Sprite.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -306,25 +302,25 @@ namespace FroggerStarter.Controller
         /// </summary>
         private void movePlayerLeft(double boundary)
         {
-            this.Sprite.Visibility = Visibility.Collapsed;
-            this.player.MoveLeftWithBoundaryCheck(boundary);
-            this.movementSprite.Sprite.Visibility = Visibility.Visible;
+            Sprite.Visibility = Visibility.Collapsed;
+            player.MoveLeftWithBoundaryCheck(boundary);
+            movementSprite.Sprite.Visibility = Visibility.Visible;
         }
 
         private void rotateSprites(Direction direction)
         {
-            this.player.RotateSprite(direction);
-            this.movementSprite.RotateSprite(direction);
+            player.RotateSprite(direction);
+            movementSprite.RotateSprite(direction);
 
-            this.Sprite.Visibility = Visibility.Collapsed;
+            Sprite.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>Makes the player stay on log.</summary>
         /// <param name="log"></param>
         public void MakePlayerStayOnLog(Vehicle log)
         {
-            this.player.MoveWithLog(log.Direction, log.SpeedX);
-            this.movementSprite.MoveWithLog(log.Direction, log.SpeedX);
+            player.MoveWithLog(log.Direction, log.SpeedX);
+            movementSprite.MoveWithLog(log.Direction, log.SpeedX);
         }
 
         /// <summary>
@@ -334,7 +330,7 @@ namespace FroggerStarter.Controller
         /// <returns>True if collision is detected, false otherwise</returns>
         public bool CollisionDetected(BaseObject otherObject)
         {
-            return this.player.CollisionDetected(otherObject);
+            return player.CollisionDetected(otherObject);
         }
 
         /// <summary>
@@ -344,7 +340,7 @@ namespace FroggerStarter.Controller
         /// <returns>True if collision is detected, false otherwise</returns>
         public bool CollisionDetectedWithFrogHome(FrogHome home)
         {
-            return this.player.CollisionDetectedWithFrogHome(home);
+            return player.CollisionDetectedWithFrogHome(home);
         }
 
         /// <summary>
@@ -352,8 +348,8 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void EnableMovement()
         {
-            this.player.EnableMovement();
-            this.Sprite.Visibility = Visibility.Visible;
+            player.EnableMovement();
+            Sprite.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -361,8 +357,8 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void DisableMovement()
         {
-            this.player.StopMovement();
-            this.Sprite.Visibility = Visibility.Collapsed;
+            player.StopMovement();
+            Sprite.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -370,7 +366,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void ResetFrogsInHome()
         {
-            this.playerStats.ResetFrogsInHomes();
+            playerStats.ResetFrogsInHomes();
         }
 
         /// <summary>
@@ -381,8 +377,8 @@ namespace FroggerStarter.Controller
         /// </returns>
         public bool HasCrossedRoad()
         {
-            return this.player.Y < LaneSettings.MiddleSafeLaneLocation &&
-                   !this.player.Y.Equals(LaneSettings.TopLaneYLocation);
+            return player.Y < LaneSettings.MiddleSafeLaneLocation &&
+                   !player.Y.Equals(LaneSettings.TopLaneYLocation);
         }
 
         /// <summary>Determines whether [is off screen].</summary>
@@ -391,7 +387,7 @@ namespace FroggerStarter.Controller
         /// </returns>
         public bool IsOffScreen()
         {
-            return this.player.IsOffScreen();
+            return player.IsOffScreen();
         }
 
         private void moveMovementSprite(Direction direction)
@@ -399,25 +395,25 @@ namespace FroggerStarter.Controller
             switch (direction)
             {
                 case Direction.Up:
-                    this.movementSprite.Y = this.player.Y - this.player.SpeedY / 2;
-                    this.movementSprite.X = this.player.X;
+                    movementSprite.Y = player.Y - player.SpeedY / 2;
+                    movementSprite.X = player.X;
                     break;
                 case Direction.Down:
-                    this.movementSprite.Y = this.player.Y + this.player.SpeedY / 2;
-                    this.movementSprite.X = this.player.X;
+                    movementSprite.Y = player.Y + player.SpeedY / 2;
+                    movementSprite.X = player.X;
                     break;
                 case Direction.Left:
-                    this.movementSprite.Y = this.player.Y;
-                    this.movementSprite.X = this.player.X - this.player.SpeedX / 2;
+                    movementSprite.Y = player.Y;
+                    movementSprite.X = player.X - player.SpeedX / 2;
                     break;
                 case Direction.Right:
-                    this.movementSprite.Y = this.player.Y;
-                    this.movementSprite.X = this.player.X + this.player.SpeedX / 2;
+                    movementSprite.Y = player.Y;
+                    movementSprite.X = player.X + player.SpeedX / 2;
                     break;
             }
 
-            this.movementSprite.Sprite.Visibility = Visibility.Collapsed;
-            this.Sprite.Visibility = Visibility.Visible;
+            movementSprite.Sprite.Visibility = Visibility.Collapsed;
+            Sprite.Visibility = Visibility.Visible;
         }
 
         #endregion

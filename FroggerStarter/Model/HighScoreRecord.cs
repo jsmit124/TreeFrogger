@@ -27,10 +27,6 @@ namespace FroggerStarter.Model
         public HighScoreRecord()
         {
             HighScores = new List<HighScorePlayerInfo>();
-            HighScores.Add(new HighScorePlayerInfo("ABC", 4, 6));
-            HighScores.Add(new HighScorePlayerInfo("DEF", 2, 2));
-            HighScores.Add(new HighScorePlayerInfo("GHI", 3, 3));
-            HighScores.Add(new HighScorePlayerInfo("JKL", 4, 4));
         }
 
         #endregion
