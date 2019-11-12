@@ -1,7 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using FroggerStarter.Constants;
 using FroggerStarter.Enums;
-using FroggerStarter.View.Sprites;
 using FroggerStarter.View.Sprites.PlayerMovementAnimation;
 
 namespace FroggerStarter.Model.Animations
@@ -21,6 +20,10 @@ namespace FroggerStarter.Model.Animations
         {
             Sprite = new FirstPlayerMovementFrame {Visibility = Visibility.Collapsed};
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         ///     Moves the game object right.
@@ -93,10 +96,11 @@ namespace FroggerStarter.Model.Animations
 
         /// <summary>Determines whether [is off screen].</summary>
         /// <returns>
-        ///   <c>true</c> if [is off screen]; otherwise, <c>false</c>.</returns>
+        ///     <c>true</c> if [is off screen]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsOffScreen()
         {
-            return (X <= (0 - this.Width) || X >= LaneSettings.LaneLength);
+            return X <= 0 - Width || X >= LaneSettings.LaneLength;
         }
 
         #endregion

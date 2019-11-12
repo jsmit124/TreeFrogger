@@ -116,7 +116,8 @@ namespace FroggerStarter.Model
                 throw new ArgumentNullException();
             }
 
-            return (this.X - home.X) >= (this.Width * .1) && this.CollisionDetected(home) || (home.X - this.X) <= (this.Width * .1) && this.CollisionDetected(home);
+            return this.X - home.X >= this.Width * .1 && this.CollisionDetected(home) ||
+                   home.X - this.X <= this.Width * .1 && this.CollisionDetected(home);
         }
 
         /// <summary>

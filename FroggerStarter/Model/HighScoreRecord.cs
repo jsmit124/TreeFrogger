@@ -1,29 +1,38 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Stores information for the player information to add to the high scores
+    ///     Stores information for the player information to add to the high scores
     /// </summary>
     public class HighScoreRecord : IEnumerable
     {
+        #region Data members
+
         /// <summary>The high scores</summary>
         public readonly IList<HighScorePlayerInfo> HighScores;
 
-        /// <summary>Gets or sets the <see cref="HighScorePlayerInfo"/> with the specified i.</summary>
+        #endregion
+
+        #region Properties
+
+        /// <summary>Gets or sets the <see cref="HighScorePlayerInfo" /> with the specified i.</summary>
         /// <param name="i">The i.</param>
-        /// <value>The <see cref="HighScorePlayerInfo"/>.</value>
+        /// <value>The <see cref="HighScorePlayerInfo" />.</value>
         /// <returns></returns>
         public HighScorePlayerInfo this[int i]
         {
-            get => HighScores[i];
+            get => this.HighScores[i];
             set => this.HighScores[i] = value;
         }
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="HighScorePlayerInfo"/> class.
+        ///     Initializes a new instance of the <see cref="HighScorePlayerInfo" /> class.
         /// </summary>
         public HighScoreRecord()
         {
@@ -31,11 +40,15 @@ namespace FroggerStarter.Model
             this.HighScores.Add(new HighScorePlayerInfo("JIS", 5, 6));
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        /// Returns an enumerator that iterates through a collection.
+        ///     Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
         /// </returns>
         public IEnumerator GetEnumerator()
         {
@@ -43,12 +56,14 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Adds the specified information.
+        ///     Adds the specified information.
         /// </summary>
         /// <param name="info">The information.</param>
         public void Add(HighScorePlayerInfo info)
         {
             this.HighScores.Add(info);
         }
+
+        #endregion
     }
 }

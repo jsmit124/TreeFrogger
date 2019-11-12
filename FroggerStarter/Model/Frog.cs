@@ -113,10 +113,11 @@ namespace FroggerStarter.Model
 
         /// <summary>Determines whether [is off screen].</summary>
         /// <returns>
-        ///   <c>true</c> if [is off screen]; otherwise, <c>false</c>.</returns>
+        ///     <c>true</c> if [is off screen]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsOffScreen()
         {
-            return (X <= (0 - this.Width) || X >= LaneSettings.LaneLength);
+            return X <= 0 - Width || X >= LaneSettings.LaneLength;
         }
 
         #endregion

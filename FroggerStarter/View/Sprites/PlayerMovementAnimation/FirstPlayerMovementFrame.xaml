@@ -29,26 +29,30 @@
         <Rectangle Canvas.Left="42" Fill="{StaticResource FrogColor}" Width="4" Height="20" />
 
         <Rectangle Canvas.Top="24" Canvas.Left="10" Fill="{StaticResource FrogColor}" Width="2" Height="4" />
-        <Rectangle Canvas.Top="24" Canvas.Left="7" Fill="{StaticResource FrogColor}" Width="4" Height="25" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" >
+        <Rectangle Canvas.Top="24" Canvas.Left="7" Fill="{StaticResource FrogColor}" Width="4" Height="25"
+                   RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
             <Rectangle.RenderTransform>
-                <CompositeTransform Rotation="9"/>
+                <CompositeTransform Rotation="9" />
             </Rectangle.RenderTransform>
         </Rectangle>
 
         <Rectangle Canvas.Top="24" Canvas.Left="38" Fill="{StaticResource FrogColor}" Width="2" Height="4" />
-        <Rectangle Canvas.Top="40.333" Fill="{StaticResource FrogColor}" Width="4" Height="5" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Canvas.Left="2" >
+        <Rectangle Canvas.Top="40.333" Fill="{StaticResource FrogColor}" Width="4" Height="5"
+                   RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Canvas.Left="2">
             <Rectangle.RenderTransform>
-                <CompositeTransform Rotation="9"/>
+                <CompositeTransform Rotation="9" />
             </Rectangle.RenderTransform>
         </Rectangle>
-        <Rectangle Canvas.Top="40.833" Fill="{StaticResource FrogColor}" Width="4" Height="5" Canvas.Left="44" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" >
+        <Rectangle Canvas.Top="40.833" Fill="{StaticResource FrogColor}" Width="4" Height="5" Canvas.Left="44"
+                   RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
             <Rectangle.RenderTransform>
-                <CompositeTransform Rotation="-9"/>
+                <CompositeTransform Rotation="-9" />
             </Rectangle.RenderTransform>
         </Rectangle>
-        <Rectangle Canvas.Top="24" Canvas.Left="39" Fill="{StaticResource FrogColor}" Width="4" Height="25" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" >
+        <Rectangle Canvas.Top="24" Canvas.Left="39" Fill="{StaticResource FrogColor}" Width="4" Height="25"
+                   RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
             <Rectangle.RenderTransform>
-                <CompositeTransform Rotation="-9"/>
+                <CompositeTransform Rotation="-9" />
             </Rectangle.RenderTransform>
         </Rectangle>
         <Rectangle Fill="{StaticResource FrogColor}" Width="4" Height="4" Canvas.Left="46" Canvas.Top="4" />

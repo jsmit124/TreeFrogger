@@ -12,21 +12,22 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <ContentDialog.DataContext>
-        <viewmodel:GameViewModel/>
+        <viewmodel:GameViewModel />
     </ContentDialog.DataContext>
 
     <Grid>
-        <ListView x:Name="highScoresListView" ItemsSource="{Binding Path=HighScores, Mode=TwoWay}" BorderThickness="1" BorderBrush="Aqua" Height="215" Width="270" VerticalAlignment="Top" FontSize="11">
+        <ListView x:Name="highScoresListView" ItemsSource="{Binding Path=HighScores, Mode=TwoWay}" BorderThickness="1"
+                  BorderBrush="Aqua" Height="215" Width="270" VerticalAlignment="Top" FontSize="11">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1">
                         <Grid Height="21.5" Width="270">
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                                <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock HorizontalAlignment="Stretch" Grid.Row="0" 
-                                       Text="{Binding}" FontSize="10"/>
+                            <TextBlock HorizontalAlignment="Stretch" Grid.Row="0"
+                                       Text="{Binding}" FontSize="10" />
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -34,9 +35,9 @@
         </ListView>
 
         <ComboBox x:Name="sortComboBox" Margin="0,220,0,0" Width="226" HorizontalAlignment="Center">
-            <ComboBoxItem Content="Score/Name/Level"/>
-            <ComboBoxItem Content="Name/Score/Level"/>
-            <ComboBoxItem Content="Level/Score/Name"/>
+            <ComboBoxItem Content="Score/Name/Level" />
+            <ComboBoxItem Content="Name/Score/Level" />
+            <ComboBoxItem Content="Level/Score/Name" />
         </ComboBox>
     </Grid>
 </ContentDialog>

@@ -9,6 +9,7 @@ namespace FroggerStarter.Factory
     /// </summary>
     public class PowerUpFactory
     {
+        #region Methods
 
         /// <summary>Builds the power up.</summary>
         /// <param name="typeOfPowerUp">The type of power up.</param>
@@ -26,5 +27,7 @@ namespace FroggerStarter.Factory
                     throw new NotImplementedException();
             }
         }
+
+        #endregion
     }
 }

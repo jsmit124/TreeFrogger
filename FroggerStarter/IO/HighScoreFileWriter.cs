@@ -9,12 +9,14 @@ using FroggerStarter.Model;
 namespace FroggerStarter.IO
 {
     /// <summary>
-    /// Stores information for the High Score File Writer class
+    ///     Stores information for the High Score File Writer class
     /// </summary>
     public static class HighScoreFileWriter
     {
+        #region Methods
+
         /// <summary>
-        /// Writes the high score to file.
+        ///     Writes the high score to file.
         /// </summary>
         /// <param name="info">The information object.</param>
         public static async void FindFileAndWriteHighScoreToFile(List<HighScorePlayerInfo> info)
@@ -33,7 +35,6 @@ namespace FroggerStarter.IO
             {
                 //TODO make new file and write xml to it
             }
-
         }
 
         /// <summary>Writes information to XML.</summary>
@@ -48,5 +49,7 @@ namespace FroggerStarter.IO
 
             writeStream.Close();
         }
+
+        #endregion
     }
 }

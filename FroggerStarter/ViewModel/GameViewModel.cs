@@ -45,7 +45,7 @@ namespace FroggerStarter.ViewModel
             set
             {
                 this.highScores = value;
-                onPropertyChanged();
+                this.onPropertyChanged();
             }
         }
 
@@ -84,6 +84,10 @@ namespace FroggerStarter.ViewModel
 
         #region Methods
 
+        /// <summary>Occurs when a property value changes.</summary>
+        /// <returns></returns>
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private bool canAddScore(object obj)
         {
             return this.Initials != null;
@@ -98,7 +102,6 @@ namespace FroggerStarter.ViewModel
 
             this.record.Add(new HighScorePlayerInfo(this.Initials, 5, 3));
             this.HighScores = this.record.HighScores.ToObservableCollection();
-
         }
 
         /// <summary>Adds the score.</summary>
@@ -112,21 +115,16 @@ namespace FroggerStarter.ViewModel
 
             this.record.Add(info);
             this.HighScores = this.record.HighScores.ToObservableCollection();
-
         }
-
-        #endregion
-
-        /// <summary>Occurs when a property value changes.</summary>
-        /// <returns></returns>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>Ons the property changed.</summary>
         /// <param name="propertyName">Name of the property.</param>
         [NotifyPropertyChangedInvocator]
         protected virtual void onPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }

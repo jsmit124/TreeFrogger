@@ -19,7 +19,7 @@
         <Ellipse Canvas.Top="19" Canvas.Left="30" Fill="LightGreen" Width="5" Height="4" />
         <Ellipse Canvas.Top="7" Canvas.Left="25" Fill="LightGreen" Width="10" Height="9" />
         <Ellipse Canvas.Top="16" Canvas.Left="10" Fill="LightGreen" Width="10" Height="9" />
-        <Rectangle Canvas.Top="28" Canvas.Left="22" Fill="Brown" Width="8" Height="16" />
+        <Rectangle Canvas.Top="28" Canvas.Left="22" Fill="Brown" Width="8" Height="22" />
         <Rectangle Canvas.Top="25" Canvas.Left="22" Fill="Brown" Width="6" Height="7" RenderTransformOrigin="0.5,0.5"
                    UseLayoutRounding="False" d:LayoutRounding="Auto">
             <Rectangle.RenderTransform>

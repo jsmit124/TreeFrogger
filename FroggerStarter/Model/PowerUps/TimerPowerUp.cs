@@ -15,7 +15,7 @@ namespace FroggerStarter.Model.PowerUps
         public TimerPowerUp()
         {
             Sprite = new TimerPowerUpSprite();
-            this.PowerUpType = PowerUpType.Timer;
+            PowerUpType = PowerUpType.Timer;
         }
 
         #endregion

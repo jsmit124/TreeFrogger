@@ -1,5 +1,4 @@
-﻿
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -11,11 +10,17 @@ namespace FroggerStarter.View.Dialogs
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
     public sealed partial class HighScoresDialog : ContentDialog
     {
-        /// <summary>Initializes a new instance of the <see cref="HighScoresDialog"/> class.</summary>
+        #region Constructors
+
+        /// <summary>Initializes a new instance of the <see cref="HighScoresDialog" /> class.</summary>
         public HighScoresDialog()
         {
             this.InitializeComponent();
         }
+
+        #endregion
+
+        #region Methods
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -24,5 +29,7 @@ namespace FroggerStarter.View.Dialogs
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
+
+        #endregion
     }
 }

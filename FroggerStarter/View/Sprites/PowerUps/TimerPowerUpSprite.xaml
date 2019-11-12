@@ -54,7 +54,8 @@
         <Rectangle Fill="{StaticResource Highlight}" Opacity=".7" Width="20" Height="3" Canvas.Top="6" Canvas.Left="15" />
         <Rectangle Fill="{StaticResource Highlight}" Opacity=".7" Width="6" Height="3" Canvas.Top="9" Canvas.Left="35" />
         <Rectangle Fill="{StaticResource Highlight}" Opacity=".7" Width="3" Height="3" Canvas.Top="12" Canvas.Left="38" />
-        <Rectangle Fill="{StaticResource Highlight}" Opacity=".7" Width="3" Height="20" Canvas.Top="15" Canvas.Left="41" />
+        <Rectangle Fill="{StaticResource Highlight}" Opacity=".7" Width="3" Height="20" Canvas.Top="15"
+                   Canvas.Left="41" />
         <Rectangle Fill="{StaticResource Highlight}" Opacity=".7" Width="3" Height="3" Canvas.Top="38" Canvas.Left="38" />
         <Rectangle Fill="{StaticResource Border}" Width="3" Height="26" Canvas.Top="12" Canvas.Left="15" />
         <Rectangle Fill="{StaticResource Border}" Width="17" Height="3" Canvas.Top="12" Canvas.Left="18" />

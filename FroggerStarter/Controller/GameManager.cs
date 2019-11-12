@@ -112,9 +112,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
-            
             this.playerManager.MovePlayer(0, Direction.Left);
-            
         }
 
         /// <summary>
@@ -124,9 +122,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            
             this.playerManager.MovePlayer(this.backgroundWidth, Direction.Right);
-            
         }
 
         /// <summary>
@@ -136,9 +132,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            
             this.playerManager.MovePlayer(LaneSettings.TopLaneYLocation, Direction.Up);
-            
         }
 
         /// <summary>
@@ -148,9 +142,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            
-            this.playerManager.MovePlayer((int)Math.Floor(this.backgroundHeight), Direction.Down);
-            
+            this.playerManager.MovePlayer((int) Math.Floor(this.backgroundHeight), Direction.Down);
         }
 
         /// <summary>
@@ -304,7 +296,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Starts the game.
+        ///     Starts the game.
         /// </summary>
         public void StartGame()
         {
@@ -580,27 +572,27 @@ namespace FroggerStarter.Controller
         public EventHandler<EventArgs> GameOver;
 
         /// <summary>
-        /// The power up activated event handler
+        ///     The power up activated event handler
         /// </summary>
         public EventHandler<EventArgs> PowerUpActivated;
 
         /// <summary>
-        /// The player died in water event handler
+        ///     The player died in water event handler
         /// </summary>
         public EventHandler<EventArgs> DiedInWater;
 
         /// <summary>
-        /// The player died by getting hit by vehicle event handler
+        ///     The player died by getting hit by vehicle event handler
         /// </summary>
         public EventHandler<EventArgs> DiedHitByVehicle;
 
         /// <summary>
-        /// The player died due to time ran out event handler
+        ///     The player died due to time ran out event handler
         /// </summary>
         public EventHandler<EventArgs> DiedTimeRanOut;
 
         /// <summary>
-        /// The player died due to hit wall event handler
+        ///     The player died due to hit wall event handler
         /// </summary>
         public EventHandler<EventArgs> DiedHitWall;
 

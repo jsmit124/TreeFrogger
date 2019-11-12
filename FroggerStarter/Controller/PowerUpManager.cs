@@ -109,7 +109,6 @@ namespace FroggerStarter.Controller
             var random = new Random();
             powerUp.X = random.Next(MinPositionX, maxX);
             powerUp.Y = random.Next(MinPositionY, MaxPositionY);
-            
         }
 
         private void checkCollisionWithPowerUp(PowerUp powerUp)

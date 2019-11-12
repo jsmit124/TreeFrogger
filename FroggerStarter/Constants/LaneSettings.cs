@@ -49,22 +49,27 @@ namespace FroggerStarter.Constants
         /// <summary>
         ///     The road directions
         /// </summary>
-        public static Direction[] RoadDirections = {Direction.Right, Direction.Left, Direction.Left, Direction.Right, Direction.Left};
+        public static Direction[] RoadDirections =
+            {Direction.Right, Direction.Left, Direction.Left, Direction.Right, Direction.Left};
 
         /// <summary>
         ///     The river directions
         /// </summary>
-        public static Direction[] RiverDirections = {Direction.Right, Direction.Left, Direction.Right, Direction.Left, Direction.Right};
+        public static Direction[] RiverDirections =
+            {Direction.Right, Direction.Left, Direction.Right, Direction.Left, Direction.Right};
 
         /// <summary>
         ///     The road vehicle types
         /// </summary>
-        public static VehicleType[] RoadVehicleTypes = {VehicleType.PoliceCar, VehicleType.Bus, VehicleType.SpeedCar, VehicleType.Bus, VehicleType.PoliceCar};
+        public static VehicleType[] RoadVehicleTypes =
+            {VehicleType.PoliceCar, VehicleType.Bus, VehicleType.SpeedCar, VehicleType.Bus, VehicleType.PoliceCar};
 
         /// <summary>
         ///     The river vehicle types
         /// </summary>
-        public static VehicleType[] RiverVehicleTypes = {VehicleType.ShortLog, VehicleType.LongLog, VehicleType.ShortLog, VehicleType.LongLog, VehicleType.ShortLog};
+        public static VehicleType[] RiverVehicleTypes = {
+            VehicleType.ShortLog, VehicleType.LongLog, VehicleType.ShortLog, VehicleType.LongLog, VehicleType.ShortLog
+        };
 
         /// <summary>
         ///     The road number of vehicles
@@ -75,8 +80,6 @@ namespace FroggerStarter.Constants
         ///     The river number of vehicles
         /// </summary>
         public static int[] RiverNumberOfVehicles = {3, 2, 3, 2, 3};
-
-
 
         #endregion
     }

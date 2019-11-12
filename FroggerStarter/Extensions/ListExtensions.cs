@@ -1,17 +1,17 @@
-
-
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace FroggerStarter.Extensions
 {
     /// <summary>
-    /// Stores information for the list extensions
+    ///     Stores information for the list extensions
     /// </summary>
     public static class ListExtensions
     {
+        #region Methods
+
         /// <summary>
-        /// Converts to ObservableCollection.
+        ///     Converts to ObservableCollection.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="collection">The collection.</param>
@@ -20,5 +20,7 @@ namespace FroggerStarter.Extensions
         {
             return new ObservableCollection<T>(collection);
         }
+
+        #endregion
     }
 }

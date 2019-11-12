@@ -16,12 +16,12 @@
         Right,
 
         /// <summary>
-        ///   the up direction
+        ///     the up direction
         /// </summary>
         Up,
 
         /// <summary>
-        ///  The down direction
+        ///     The down direction
         /// </summary>
         Down
     }
