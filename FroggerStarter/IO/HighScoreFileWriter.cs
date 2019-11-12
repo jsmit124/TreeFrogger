@@ -19,7 +19,7 @@ namespace FroggerStarter.IO
         ///     Writes the high score to file.
         /// </summary>
         /// <param name="info">The information object.</param>
-        public static async void FindFileAndWriteHighScoreToFile(List<HighScorePlayerInfo> info)
+        public static async void FindFileAndWriteHighScoreToFile(HighScoreRecord info)
         {
             try
             {
@@ -40,9 +40,9 @@ namespace FroggerStarter.IO
         /// <summary>Writes information to XML.</summary>
         /// <param name="newFile">The new file.</param>
         /// <param name="info">The information.</param>
-        public static async void WriteToXml(IStorageFile newFile, List<HighScorePlayerInfo> info)
+        public static async void WriteToXml(IStorageFile newFile, HighScoreRecord info)
         {
-            var serializer = new XmlSerializer(typeof(List<HighScorePlayerInfo>));
+            var serializer = new XmlSerializer(typeof(HighScoreRecord));
             var writeStream = await newFile.OpenStreamForWriteAsync();
 
             serializer.Serialize(writeStream, info);

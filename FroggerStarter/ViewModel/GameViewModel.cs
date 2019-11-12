@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using FroggerStarter.Annotations;
 using FroggerStarter.Extensions;
+using FroggerStarter.IO;
 using FroggerStarter.Model;
 using FroggerStarter.Utility;
 
@@ -100,7 +101,7 @@ namespace FroggerStarter.ViewModel
                 this.record = new HighScoreRecord();
             }
 
-            this.record.Add(new HighScorePlayerInfo(this.Initials, 5, 3));
+            this.record.AddInfo(new HighScorePlayerInfo(this.Initials, 5, 3));
             this.HighScores = this.record.HighScores.ToObservableCollection();
         }
 
@@ -113,7 +114,8 @@ namespace FroggerStarter.ViewModel
                 this.record = new HighScoreRecord();
             }
 
-            this.record.Add(info);
+            this.record.AddInfo(info);
+            HighScoreFileWriter.FindFileAndWriteHighScoreToFile(this.record);
             this.HighScores = this.record.HighScores.ToObservableCollection();
         }
 

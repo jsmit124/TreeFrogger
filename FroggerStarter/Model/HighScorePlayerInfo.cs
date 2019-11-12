@@ -1,9 +1,14 @@
+using System.Runtime.Serialization;
+using System.Security.Permissions;
+using System.Xml.Serialization;
+
 namespace FroggerStarter.Model
 {
     /// <summary>
     ///     Stores information for the player information to add to the high scores
     /// </summary>
-    public class HighScorePlayerInfo
+    [XmlInclude(typeof(HighScorePlayerInfo))]
+    public class HighScorePlayerInfo : ISerializable
     {
         #region Properties
 
@@ -36,6 +41,16 @@ namespace FroggerStarter.Model
         #region Constructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="HighScorePlayerInfo"/> class.
+        /// </summary>
+        public HighScorePlayerInfo()
+        {
+            this.Name = "";
+            this.Score = 0;
+            this.LevelCompleted = 1;
+        }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="HighScorePlayerInfo" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -57,6 +72,19 @@ namespace FroggerStarter.Model
         public override string ToString()
         {
             return this.Name + " | Score: " + this.Score + " | Level Completed: " + this.LevelCompleted;
+        }
+
+        /// <summary>
+        /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"></see> with the data needed to serialize the target object.
+        /// </summary>
+        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"></see> to populate with data.</param>
+        /// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"></see>) for this serialization.</param>
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Name", this.Name);
+            info.AddValue("Score", this.Score);
+            info.AddValue("Level Completed", this.LevelCompleted);
         }
 
         #endregion
