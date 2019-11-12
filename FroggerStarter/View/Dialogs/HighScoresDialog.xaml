@@ -16,7 +16,7 @@
     </ContentDialog.DataContext>
 
     <Grid>
-        <ListView x:Name="highScoresListView" ItemsSource="{Binding Path=HighScores, Mode=TwoWay}" BorderThickness="1"
+        <ListView ItemsSource="{Binding Path=HighScores, Mode=TwoWay}" BorderThickness="1"
                   BorderBrush="Aqua" Height="215" Width="270" VerticalAlignment="Top" FontSize="11">
             <ListView.ItemTemplate>
                 <DataTemplate>

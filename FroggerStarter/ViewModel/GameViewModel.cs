@@ -122,7 +122,7 @@ namespace FroggerStarter.ViewModel
         /// <summary>Ons the property changed.</summary>
         /// <param name="propertyName">Name of the property.</param>
         [NotifyPropertyChangedInvocator]
-        protected virtual void onPropertyChanged([CallerMemberName] string propertyName = null)
+        public virtual void onPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

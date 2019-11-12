@@ -137,11 +137,11 @@ namespace FroggerStarter.View
             }
         }
 
-        private void onScoreCountUpdated(object sender, ScoreIncreasedEventArgs score)
+        private void onScoreCountUpdated(object sender, ScoreIncreasedEventArgs scoreIncreased)
         {
             this.madeItHomeElement.IsMuted = false;
             this.madeItHomeElement.Play();
-            this.score = score.Score;
+            this.score = scoreIncreased.Score;
             this.scoreTextBlock.Text = "Score: " + this.score;
         }
 
@@ -150,12 +150,12 @@ namespace FroggerStarter.View
             this.livesTextBlock.Text = "Lives: " + lives.Lives;
         }
 
-        private void onLevelUpdated(object sender, LevelIncreasedEventArgs level)
+        private void onLevelUpdated(object sender, LevelIncreasedEventArgs levelIncreased)
         {
             this.madeItHomeElement.IsMuted = true;
             this.levelCompleteElement.IsMuted = false;
             this.levelCompleteElement.Play();
-            this.level = level.Level;
+            this.level = levelIncreased.Level;
             this.levelTextBlock.Text = "Level: " + this.level;
         }
 
@@ -182,6 +182,7 @@ namespace FroggerStarter.View
         private void handleAddToHighScores(string initials)
         {
             this.gameViewModel.AddScore(new HighScorePlayerInfo(initials, this.score, this.level));
+            this.gameViewModel.onPropertyChanged();
         }
 
         private void muteDeathSoundEffects()
@@ -268,6 +269,7 @@ namespace FroggerStarter.View
             else if (this.gameViewModel.HighScores.Count > 0)
             {
                 var highScoresDisplay = new HighScoresDialog();
+                highScoresDisplay.DataContext = this.gameViewModel;
                 await highScoresDisplay.ShowAsync();
             }
 
