@@ -1,5 +1,4 @@
 ﻿ using System;
- using System.Diagnostics.Tracing;
  using Windows.UI.Xaml;
  using Windows.UI.Xaml.Controls;
 

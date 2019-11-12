@@ -44,10 +44,10 @@ namespace FroggerStarter.View
 
             Window.Current.CoreWindow.KeyDown += coreWindowOnKeyDown;
 
+            gameViewModel = new GameViewModel();
             this.gameEndDialog = new GameEndDialog();
 
             setupNewGame();
-            gameViewModel = new GameViewModel();
         }
 
         private void onAddToHighScoresButtonClicked(object sender, GameEndDialog.AddToHighScoresButtonClickedEventArgs initials)
@@ -182,7 +182,7 @@ namespace FroggerStarter.View
             {
                 this.gameViewModel.HighScores = new ObservableCollection<HighScorePlayerInfo>();
             }
-            this.gameViewModel.HighScores.Add(new HighScorePlayerInfo(initials, this.score, this.level));
+            this.gameViewModel.AddScore(new HighScorePlayerInfo(initials, this.score, this.level));
         }
 
         private void muteDeathSoundEffects()

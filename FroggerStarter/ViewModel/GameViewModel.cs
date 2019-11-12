@@ -17,6 +17,8 @@ namespace FroggerStarter.ViewModel
     {
         #region Data members
 
+        private HighScoreRecord record;
+
         private ObservableCollection<HighScorePlayerInfo> highScores;
 
         private string initials;
@@ -34,10 +36,10 @@ namespace FroggerStarter.ViewModel
         public RelayCommand AddCommand { get; }
 
         /// <summary>
-        ///     Gets or sets the high scores.
+        ///     Gets or sets the high HighScores.
         /// </summary>
         /// <value>
-        ///     The high scores.
+        ///     The high HighScores.
         /// </value>
         public ObservableCollection<HighScorePlayerInfo> HighScores
         {
@@ -75,31 +77,49 @@ namespace FroggerStarter.ViewModel
         public GameViewModel()
         {
             this.initials = "";
-            this.AddCommand = new RelayCommand(this.addStudent, this.canAddStudent);
+            this.AddCommand = new RelayCommand(this.addScore, this.canAddScore);
+            this.record = new HighScoreRecord();
         }
 
         #endregion
 
         #region Methods
 
-        private bool canAddStudent(object obj)
+        private bool canAddScore(object obj)
         {
-            return this.Initials.Length == 3;
+            return this.Initials != null;
         }
 
-        private void addStudent(object obj)
+        private void addScore(object obj)
         {
             if (this.HighScores == null)
             {
-                this.HighScores = new List<HighScorePlayerInfo>().ToObservableCollection();
+                this.record = new HighScoreRecord();
             }
 
-            this.HighScores = this.highScores.ToObservableCollection();
+            this.record.Add(new HighScorePlayerInfo("JTS", 5, 3));
+            this.HighScores = this.record.HighScores.ToObservableCollection();
+
+        }
+
+        /// <summary>Adds the score.</summary>
+        /// <param name="info">The information.</param>
+        public void AddScore(HighScorePlayerInfo info)
+        {
+            if (this.HighScores == null)
+            {
+                this.record = new HighScoreRecord();
+            }
+
+            this.record.Add(info);
+            this.HighScores = this.record.HighScores.ToObservableCollection();
 
         }
 
         #endregion
 
+        /// <summary>Occurs when a property value changes.</summary>
+        /// <returns></returns>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>Ons the property changed.</summary>

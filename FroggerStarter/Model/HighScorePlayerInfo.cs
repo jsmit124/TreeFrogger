@@ -41,5 +41,12 @@ namespace FroggerStarter.Model
             this.Score = score;
             this.LevelCompleted = levelCompleted;
         }
+
+        /// <summary>Converts to string.</summary>
+        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+        public override string ToString()
+        {
+            return this.Name + " | Score: " + this.Score + " Level Completed: " + this.LevelCompleted;
+        }
     }
 }

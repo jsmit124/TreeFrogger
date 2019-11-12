@@ -140,6 +140,7 @@
     <Compile Include="Model\Animations\BaseAnimation.cs" />
     <Compile Include="Model\Animations\PlayerMovementAnimation.cs" />
     <Compile Include="Model\HighScorePlayerInfo.cs" />
+    <Compile Include="Model\HighScoreRecord.cs" />
     <Compile Include="Model\Lanes\RiverLane.cs" />
     <Compile Include="Model\Lanes\RoadLane.cs" />
     <Compile Include="Model\PowerUps\ImmunityPowerUp.cs" />
