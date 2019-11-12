@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Xml.Serialization;
 
 namespace FroggerStarter.Model
@@ -9,13 +8,14 @@ namespace FroggerStarter.Model
     /// <summary>
     ///     Stores information for the player information to add to the high scores
     /// </summary>
-    [XmlInclude(typeof(HighScoreRecord))]
-    public class HighScoreRecord : IEnumerable<HighScorePlayerInfo>, ISerializable
+    [Serializable, XmlInclude(typeof(HighScorePlayerInfo))]
+    public class HighScoreRecord : IEnumerable<HighScorePlayerInfo>
     {
         #region Data members
 
         /// <summary>The high scores</summary>
-        public readonly IList<HighScorePlayerInfo> HighScores;
+        [XmlArray("High Scores")]
+        public readonly List<HighScorePlayerInfo> HighScores;
 
         #endregion
 
@@ -41,6 +41,10 @@ namespace FroggerStarter.Model
         public HighScoreRecord()
         {
             this.HighScores = new List<HighScorePlayerInfo>();
+            this.HighScores.Add(new HighScorePlayerInfo("ABC", 4, 6));
+            this.HighScores.Add(new HighScorePlayerInfo("DEF", 2, 2));
+            this.HighScores.Add(new HighScorePlayerInfo("GHI", 3, 3));
+            this.HighScores.Add(new HighScorePlayerInfo("JKL", 4, 4));
         }
 
         #endregion
@@ -70,48 +74,12 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        ///     Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"></see> with the data needed to serialize
-        ///     the target object.
-        /// </summary>
-        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"></see> to populate with data.</param>
-        /// <param name="context">
-        ///     The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"></see>) for this
-        ///     serialization.
-        /// </param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            foreach (var item in this.HighScores)
-            {
-                info.AddValue("Name", item.Name);
-                info.AddValue("Score", item.Score);
-                info.AddValue("Level Completed", item.LevelCompleted);
-            }
-        }
-
-        /// <summary>
         ///     Adds the specified information.
         /// </summary>
         /// <param name="info">The information.</param>
         public void AddInfo(HighScorePlayerInfo info)
         {
             this.HighScores.Add(info);
-        }
-
-        /// <summary>
-        ///     Adds the specified object to add.
-        /// </summary>
-        /// <param name="objectToAdd">The object to add.</param>
-        public void Add(object objectToAdd)
-        {
-            if (objectToAdd.GetType() != typeof(HighScorePlayerInfo))
-            {
-            }
-            else
-            {
-                this.AddInfo((HighScorePlayerInfo) objectToAdd);
-            }
         }
 
         #endregion

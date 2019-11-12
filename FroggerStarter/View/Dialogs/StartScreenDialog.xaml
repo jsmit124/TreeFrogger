@@ -8,7 +8,5 @@
     mc:Ignorable="d"
     Title="TREE FROGGER"
     PrimaryButtonText="PLAY"
-    SecondaryButtonText="HIGH SCORES"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 </ContentDialog>

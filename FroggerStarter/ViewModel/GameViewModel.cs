@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -16,10 +17,8 @@ namespace FroggerStarter.ViewModel
     {
         #region Data members
 
-        private HighScoreRecord record;
-
+        private readonly HighScoreRecord record;
         private ObservableCollection<HighScorePlayerInfo> highScores;
-
         private string initials;
 
         #endregion
@@ -91,33 +90,18 @@ namespace FroggerStarter.ViewModel
 
         private bool canAddScore(object obj)
         {
-            return this.Initials != null;
+            return this.Initials.Length == 3;
         }
 
         private void addScore(object obj)
         {
-            if (this.HighScores == null)
-            {
-                this.record = new HighScoreRecord();
-            }
-
             this.record.AddInfo(new HighScorePlayerInfo(this.Initials, 5, 3));
+            this.record.HighScores.Sort();
             this.HighScores = this.record.HighScores.ToObservableCollection();
-        }
-
-        /// <summary>Adds the score.</summary>
-        /// <param name="info">The information.</param>
-        public void AddScore(HighScorePlayerInfo info)
-        {
-            if (this.HighScores == null)
-            {
-                this.record = new HighScoreRecord();
-            }
-
-            this.record.AddInfo(info);
             //HighScoreFileWriter.FindFileAndWriteHighScoreToFile(this.record);
-            this.HighScores = this.record.HighScores.ToObservableCollection();
         }
+
+
 
         /// <summary>Ons the property changed.</summary>
         /// <param name="propertyName">Name of the property.</param>

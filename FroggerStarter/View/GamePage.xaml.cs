@@ -10,7 +10,6 @@ using FroggerStarter.Constants;
 using FroggerStarter.Controller;
 using FroggerStarter.Extensions;
 using FroggerStarter.IO;
-using FroggerStarter.Model;
 using FroggerStarter.View.Dialogs;
 using FroggerStarter.ViewModel;
 using static FroggerStarter.Controller.GameManager;
@@ -33,7 +32,6 @@ namespace FroggerStarter.View
         private readonly double applicationWidth = (double) Application.Current.Resources["AppWidth"];
         private GameManager gameManager;
         private readonly GameViewModel gameViewModel;
-
         private readonly GameEndDialog gameEndDialog;
 
         #endregion
@@ -56,7 +54,7 @@ namespace FroggerStarter.View
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
 
             this.gameViewModel = new GameViewModel();
-            this.gameEndDialog = new GameEndDialog();
+            this.gameEndDialog = new GameEndDialog() { DataContext = this.gameViewModel };
 
             this.setupNewGame();
         }
@@ -64,21 +62,6 @@ namespace FroggerStarter.View
         #endregion
 
         #region Methods
-
-        private void onAddToHighScoresButtonClicked(object sender,
-            GameEndDialog.AddToHighScoresButtonClickedEventArgs initials)
-        {
-            this.handleAddToHighScores(initials.Initials);
-        }
-
-        private async void onHighScoreButtonClicked(object sender, EventArgs e)
-        {
-            if (this.gameEndDialog.IsLoaded)
-            {
-                this.gameEndDialog.Hide();
-            }
-            await this.handleHighScoresDisplay();
-        }
 
         private void deathByWallElement_MediaEnded(object sender, RoutedEventArgs e)
         {
@@ -181,12 +164,6 @@ namespace FroggerStarter.View
             }
         }
 
-        private void handleAddToHighScores(string initials)
-        {
-            this.gameViewModel.AddScore(new HighScorePlayerInfo(initials, this.score, this.level));
-            this.gameViewModel.onPropertyChanged();
-        }
-
         private void muteDeathSoundEffects()
         {
             this.deathByWaterElement.IsMuted = true;
@@ -256,25 +233,6 @@ namespace FroggerStarter.View
                 this.gameManager.StartGame();
                 this.backgroundMusicElement.Play();
             }
-            else if (result == ContentDialogResult.Secondary)
-            {
-                await this.handleHighScoresDisplay();
-            }
-        }
-
-        private async Task handleHighScoresDisplay()
-        {
-            if (this.gameViewModel.HighScores.Count == 0)
-            {
-                await this.showNoHighScoresScreen();
-            }
-            else if (this.gameViewModel.HighScores.Count > 0)
-            {
-                var highScoresDisplay = new HighScoresDialog();
-                await highScoresDisplay.ShowAsync();
-            }
-
-            this.restart();
         }
 
         private async Task showNoHighScoresScreen()
@@ -307,9 +265,6 @@ namespace FroggerStarter.View
             this.gameManager.DiedHitWall += this.onDiedHitWall;
             this.gameManager.DiedInWater += this.onDiedInWater;
             this.gameManager.DiedTimeRanOut += this.onDiedTimeRunout;
-
-            this.gameEndDialog.HighScoresButtonClicked += this.onHighScoreButtonClicked;
-            this.gameEndDialog.AddToHighScoresButtonClicked += this.onAddToHighScoresButtonClicked;
         }
 
         private void onDiedTimeRunout(object sender, EventArgs e)
