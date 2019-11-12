@@ -19,18 +19,6 @@ namespace FroggerStarter.Model
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="HighScorePlayerInfo" /> class.
-        /// </summary>
-        public HighScoreRecord()
-        {
-            HighScores = new List<HighScorePlayerInfo>();
-        }
-
-        #endregion
-
         #region Properties
 
         /// <summary>Gets or sets the <see cref="HighScorePlayerInfo" /> with the specified i.</summary>
@@ -39,8 +27,20 @@ namespace FroggerStarter.Model
         /// <returns></returns>
         public HighScorePlayerInfo this[int i]
         {
-            get => HighScores[i];
-            set => HighScores[i] = value;
+            get => this.HighScores[i];
+            set => this.HighScores[i] = value;
+        }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="HighScorePlayerInfo" /> class.
+        /// </summary>
+        public HighScoreRecord()
+        {
+            this.HighScores = new List<HighScorePlayerInfo>();
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace FroggerStarter.Model
         /// </returns>
         IEnumerator<HighScorePlayerInfo> IEnumerable<HighScorePlayerInfo>.GetEnumerator()
         {
-            return HighScores.GetEnumerator();
+            return this.HighScores.GetEnumerator();
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace FroggerStarter.Model
         /// </returns>
         public IEnumerator GetEnumerator()
         {
-            return HighScores.GetEnumerator();
+            return this.HighScores.GetEnumerator();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace FroggerStarter.Model
         /// <param name="info">The information.</param>
         public void AddInfo(HighScorePlayerInfo info)
         {
-            HighScores.Add(info);
+            this.HighScores.Add(info);
         }
 
         #endregion

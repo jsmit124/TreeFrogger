@@ -11,7 +11,7 @@ namespace FroggerStarter.View.Dialogs
     /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
-    public sealed partial class GameEndDialog : ContentDialog
+    public sealed partial class GameEndDialog
     {
         #region Constructors
 
@@ -20,11 +20,12 @@ namespace FroggerStarter.View.Dialogs
         /// </summary>
         public GameEndDialog()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         #endregion
 
+        #region Methods
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -36,14 +37,16 @@ namespace FroggerStarter.View.Dialogs
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            addButton.IsEnabled = false;
+            this.addButton.IsEnabled = false;
         }
 
         /// <summary>Resets this instance.</summary>
         public void Reset()
         {
-            addButton.IsEnabled = true;
-            initialsTextBox.Text = "";
+            this.addButton.IsEnabled = true;
+            this.initialsTextBox.Text = "";
         }
+
+        #endregion
     }
 }
