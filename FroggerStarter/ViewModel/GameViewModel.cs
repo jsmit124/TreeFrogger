@@ -115,7 +115,7 @@ namespace FroggerStarter.ViewModel
             }
 
             this.record.AddInfo(info);
-            HighScoreFileWriter.FindFileAndWriteHighScoreToFile(this.record);
+            //HighScoreFileWriter.FindFileAndWriteHighScoreToFile(this.record);
             this.HighScores = this.record.HighScores.ToObservableCollection();
         }
 

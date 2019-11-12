@@ -73,8 +73,10 @@ namespace FroggerStarter.View
 
         private async void onHighScoreButtonClicked(object sender, EventArgs e)
         {
-            this.gameEndDialog.Hide();
-            await Task.Delay(5000); //TODO
+            if (this.gameEndDialog.IsLoaded)
+            {
+                this.gameEndDialog.Hide();
+            }
             await this.handleHighScoresDisplay();
         }
 
@@ -267,7 +269,7 @@ namespace FroggerStarter.View
             }
             else if (this.gameViewModel.HighScores.Count > 0)
             {
-                var highScoresDisplay = new HighScoresDialog();
+                var highScoresDisplay = new HighScoresDialog {DataContext = this.gameViewModel};
                 await highScoresDisplay.ShowAsync();
             }
 

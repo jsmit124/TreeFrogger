@@ -20,16 +20,14 @@
                   BorderBrush="Aqua" Height="215" Width="270" VerticalAlignment="Top" FontSize="11">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <Grid Height="21.5" Width="270">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock HorizontalAlignment="Stretch" Grid.Row="0"
+                    <Grid Height="21.5" Width="270">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock HorizontalAlignment="Stretch" Grid.Row="0"
                                        Text="{Binding}" FontSize="10" />
-                        </Grid>
-                    </Border>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

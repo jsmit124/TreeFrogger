@@ -10,7 +10,7 @@ namespace FroggerStarter.Model
     ///     Stores information for the player information to add to the high scores
     /// </summary>
     [XmlInclude(typeof(HighScoreRecord))]
-    public class HighScoreRecord : IEnumerable, ISerializable
+    public class HighScoreRecord : IEnumerable<HighScorePlayerInfo>, ISerializable
     {
         #region Data members
 
@@ -47,6 +47,17 @@ namespace FroggerStarter.Model
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
+        IEnumerator<HighScorePlayerInfo> IEnumerable<HighScorePlayerInfo>.GetEnumerator()
+        {
+            return this.HighScores.GetEnumerator();
+        }
 
         /// <summary>
         ///     Returns an enumerator that iterates through a collection.

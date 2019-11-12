@@ -66,6 +66,7 @@ namespace FroggerStarter.View.Dialogs
 
         private void ViewHighScoresButton_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             this.HighScoresButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
