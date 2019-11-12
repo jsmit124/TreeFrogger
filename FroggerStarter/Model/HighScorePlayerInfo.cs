@@ -40,7 +40,7 @@ namespace FroggerStarter.Model
                     var nameComparison = string.Compare(current.Name, other.Name, StringComparison.Ordinal);
                     if (nameComparison != 0) return nameComparison;
 
-                    return current.LevelCompleted.CompareTo(other.LevelCompleted);
+                    return current.LevelCompleted.CompareTo(other.LevelCompleted) * -1;
                 }
 
                 return 0;
@@ -65,7 +65,7 @@ namespace FroggerStarter.Model
                     var scoreComparison = current.Score.CompareTo(other.Score) * -1;
                     if (scoreComparison != 0) return scoreComparison;
 
-                    return current.LevelCompleted.CompareTo(other.LevelCompleted);
+                    return current.LevelCompleted.CompareTo(other.LevelCompleted) * -1;
                 }
 
                 return 0;
@@ -84,7 +84,7 @@ namespace FroggerStarter.Model
             {
                 if (current != null && other != null)
                 {
-                    var levelComparison = current.LevelCompleted.CompareTo(other.LevelCompleted);
+                    var levelComparison = current.LevelCompleted.CompareTo(other.LevelCompleted) * -1;
                     if (levelComparison != 0) return levelComparison;
 
                     var scoreComparison = current.Score.CompareTo(other.Score) * -1;

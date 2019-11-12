@@ -31,7 +31,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ComboBox SelectedItem="{Binding Path=SortComboboxSelection, Mode=TwoWay }" Margin="1,220,0,0" Width="170" SelectedIndex="0">
+        <ComboBox SelectedValue="{Binding Path=SortComboboxSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="1,220,0,0" Width="170" SelectedIndex="0">
             <ComboBoxItem Content="Score/Name/Level" />
             <ComboBoxItem Content="Name/Score/Level" />
             <ComboBoxItem Content="Level/Score/Name" />
@@ -43,7 +43,5 @@
                  extensions:TextBoxRegex.Regex="^[A-Z]{1,3}$" CharacterCasing="Upper" TextAlignment="Center" />
         <Button x:Name="addButton" Command="{Binding AddCommand}" Content="Add" Margin="175,280,0,0"
                 Click="AddButton_Click" VerticalAlignment="Top" />
-        <Button x:Name="sortbutton" Command="{Binding SortCommand}" Content="Sort" Margin="175,220,0,0"
-            Click="AddButton_Click" VerticalAlignment="Top" />
     </Grid>
 </ContentDialog>
