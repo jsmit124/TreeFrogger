@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace FroggerStarter.Model
@@ -8,7 +9,7 @@ namespace FroggerStarter.Model
     /// </summary>
     [Serializable]
     [XmlRootAttribute("HighScorePlayerInfo")]
-    public class HighScorePlayerInfo : IComparable<HighScorePlayerInfo>
+    public class HighScorePlayerInfo
     {
         #region Methods
 
@@ -20,6 +21,81 @@ namespace FroggerStarter.Model
         }
 
         #endregion
+
+        /// <summary>Sorts players by score, then name, then level completed</summary>
+        /// <seealso cref="HighScorePlayerInfo" />
+        public class SortByScoreNameLevel : IComparer<HighScorePlayerInfo>
+        {
+            /// <summary>Compares the specified current.</summary>
+            /// <param name="current">The current player.</param>
+            /// <param name="other">The other player.</param>
+            /// <returns></returns>
+            public int Compare(HighScorePlayerInfo current, HighScorePlayerInfo other)
+            {
+                if (current != null && other != null)
+                {
+                    var scoreComparison = current.Score.CompareTo(other.Score) * -1;
+                    if (scoreComparison != 0) return scoreComparison;
+
+                    var nameComparison = string.Compare(current.Name, other.Name, StringComparison.Ordinal);
+                    if (nameComparison != 0) return nameComparison;
+
+                    return current.LevelCompleted.CompareTo(other.LevelCompleted);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>Sorts the players by name, then score, then level completed</summary>
+        /// <seealso cref="HighScorePlayerInfo" />
+        public class SortByNameScoreLevel : IComparer<HighScorePlayerInfo>
+        {
+            /// <summary>Compares the specified current player.</summary>
+            /// <param name="current">The current player.</param>
+            /// <param name="other">The other player.</param>
+            /// <returns></returns>
+            public int Compare(HighScorePlayerInfo current, HighScorePlayerInfo other)
+            {
+                if (current != null && other != null)
+                {
+                    var nameComparison = string.Compare(current.Name, other.Name, StringComparison.Ordinal);
+                    if (nameComparison != 0) return nameComparison;
+
+                    var scoreComparison = current.Score.CompareTo(other.Score) * -1;
+                    if (scoreComparison != 0) return scoreComparison;
+
+                    return current.LevelCompleted.CompareTo(other.LevelCompleted);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>sorts the players by level, then score, then name</summary>
+        /// <seealso cref="HighScorePlayerInfo" />
+        public class SortByLevelScoreName : IComparer<HighScorePlayerInfo>
+        {
+            /// <summary>Compares the specified current players.</summary>
+            /// <param name="current">The current player.</param>
+            /// <param name="other">The other player.</param>
+            /// <returns></returns>
+            public int Compare(HighScorePlayerInfo current, HighScorePlayerInfo other)
+            {
+                if (current != null && other != null)
+                {
+                    var levelComparison = current.LevelCompleted.CompareTo(other.LevelCompleted);
+                    if (levelComparison != 0) return levelComparison;
+
+                    var scoreComparison = current.Score.CompareTo(other.Score) * -1;
+                    if (scoreComparison != 0) return scoreComparison;
+
+                    return string.Compare(current.Name, other.Name, StringComparison.Ordinal);
+                }
+
+                return 0;
+            }
+        }
 
         #region Properties
 
@@ -78,19 +154,5 @@ namespace FroggerStarter.Model
         }
 
         #endregion
-
-        /// <summary>Compares to.</summary>
-        /// <param name="other">The other.</param>
-        /// <returns></returns>
-        public int CompareTo(HighScorePlayerInfo other)
-        {
-            var scoreComparison = Score.CompareTo(other.Score) * -1;
-            if (scoreComparison != 0) return scoreComparison;
-
-            var nameComparison = string.Compare(Name, other.Name, StringComparison.Ordinal);
-            if (nameComparison != 0) return nameComparison;
-
-            return LevelCompleted.CompareTo(other.LevelCompleted);
-        }
     }
 }

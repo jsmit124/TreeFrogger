@@ -46,9 +46,5 @@ namespace FroggerStarter.View.Dialogs
             initialsTextBox.Text = "";
         }
 
-        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
