@@ -10,7 +10,7 @@
         /// <summary>
         ///     The player lives
         /// </summary>
-        public static int PlayerLives = 4;
+        public static int PlayerLives = 1;
 
         /// <summary>
         ///     The frog home count

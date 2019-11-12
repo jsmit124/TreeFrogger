@@ -13,7 +13,7 @@ namespace FroggerStarter.Model
         /// <value>
         /// The name.
         /// </value>
-        public String Name { get; private set; }
+        public string Name { get; private set; }
         /// <summary>
         /// Gets the score.
         /// </summary>
@@ -46,7 +46,7 @@ namespace FroggerStarter.Model
         /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
         public override string ToString()
         {
-            return this.Name + " | Score: " + this.Score + " Level Completed: " + this.LevelCompleted;
+            return this.Name + " | Score: " + this.Score + " | Level Completed: " + this.LevelCompleted;
         }
     }
 }

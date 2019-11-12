@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System;
@@ -59,7 +58,7 @@ namespace FroggerStarter.View
         {
             
             this.gameEndDialog.Hide();
-            await Task.Delay(2000);  //TODO
+            await Task.Delay(5000);  //TODO
             await this.handleHighScoresDisplay();
         }
 
@@ -172,16 +171,10 @@ namespace FroggerStarter.View
             if (result == ContentDialogResult.Primary)
                 restart();
             else if (result == ContentDialogResult.Secondary) closeGame();
-
-            //TODO handler add to high scores file and collection within view model
         }
 
         private void handleAddToHighScores(string initials)
         {
-            if (this.gameViewModel.HighScores == null)
-            {
-                this.gameViewModel.HighScores = new ObservableCollection<HighScorePlayerInfo>();
-            }
             this.gameViewModel.AddScore(new HighScorePlayerInfo(initials, this.score, this.level));
         }
 
@@ -262,15 +255,13 @@ namespace FroggerStarter.View
 
         private async Task handleHighScoresDisplay()
         {
-            if (gameViewModel.HighScores == null)
-                await chooseFileAndSetHighScores();
-            else if (gameViewModel.HighScores.Count == 0) await showNoHighScoresScreen();
-
-            if (this.gameViewModel.HighScores != null && gameViewModel.HighScores.Count > 0)
+            if (gameViewModel.HighScores.Count == 0) await showNoHighScoresScreen();
+            else if (gameViewModel.HighScores.Count > 0)
             {
                 var highScoresDisplay = new HighScoresDialog();
                 await highScoresDisplay.ShowAsync();
             }
+
             this.restart();
         }
 

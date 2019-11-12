@@ -16,19 +16,17 @@
     </ContentDialog.DataContext>
 
     <Grid>
-        <ListView x:Name="highScoresListView" ItemsSource="{Binding Path=HighScores, Mode=TwoWay}" BorderThickness="1" BorderBrush="Aqua" Height="215" Width="270" VerticalAlignment="Top">
+        <ListView x:Name="highScoresListView" ItemsSource="{Binding Path=HighScores, Mode=TwoWay}" BorderThickness="1" BorderBrush="Aqua" Height="215" Width="270" VerticalAlignment="Top" FontSize="11">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Grid>
+                        <Grid Height="21.5" Width="270">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <TextBlock HorizontalAlignment="Stretch" Grid.Row="0" 
-                                       Text="{Binding Name}" />
-                            <TextBlock Grid.Row="1" Text="{Binding Score}" />
-                            <TextBlock Grid.Row="2" Text="{Binding LevelCompleted}" />
+                                       Text="{Binding}" FontSize="10"/>
                         </Grid>
                     </Border>
                 </DataTemplate>

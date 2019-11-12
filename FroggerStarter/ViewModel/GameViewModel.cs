@@ -77,6 +77,7 @@ namespace FroggerStarter.ViewModel
             this.initials = "";
             this.AddCommand = new RelayCommand(this.addScore, this.canAddScore);
             this.record = new HighScoreRecord();
+            this.HighScores = this.record.HighScores.ToObservableCollection();
         }
 
         #endregion
@@ -95,7 +96,7 @@ namespace FroggerStarter.ViewModel
                 this.record = new HighScoreRecord();
             }
 
-            this.record.Add(new HighScorePlayerInfo("JTS", 5, 3));
+            this.record.Add(new HighScorePlayerInfo(this.Initials, 5, 3));
             this.HighScores = this.record.HighScores.ToObservableCollection();
 
         }

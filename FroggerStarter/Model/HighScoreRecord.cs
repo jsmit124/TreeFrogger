@@ -12,12 +12,23 @@ namespace FroggerStarter.Model
         /// <summary>The high scores</summary>
         public readonly IList<HighScorePlayerInfo> HighScores;
 
+        /// <summary>Gets or sets the <see cref="HighScorePlayerInfo"/> with the specified i.</summary>
+        /// <param name="i">The i.</param>
+        /// <value>The <see cref="HighScorePlayerInfo"/>.</value>
+        /// <returns></returns>
+        public HighScorePlayerInfo this[int i]
+        {
+            get => HighScores[i];
+            set => this.HighScores[i] = value;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HighScorePlayerInfo"/> class.
         /// </summary>
         public HighScoreRecord()
         {
             this.HighScores = new List<HighScorePlayerInfo>();
+            this.HighScores.Add(new HighScorePlayerInfo("JIS", 5, 6));
         }
 
         /// <summary>
